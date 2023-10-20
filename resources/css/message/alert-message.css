@@ -1,0 +1,25 @@
+.alert {
+    position: relative;
+}
+
+.alert.success {background-color: #04AA6D;}
+.alert.info {background-color: #2196F3;}
+.alert.warning {background-color: #ff9800;}
+.alert.danger {background-color: #f44336;}
+  
+.alert label {
+    order: 3;
+} 
+  
+.alert label {
+    position: absolute;
+    top: -3px;
+    right: -8px;
+    font-size: 21px;
+}
+  
+input#closeMessage:checked + div.alert {
+    opacity: 0;
+    display: none;
+    transition: opacity .5s linear;
+}
