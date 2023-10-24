@@ -5,7 +5,6 @@ namespace App\Repositories;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Libs\ConfigUtil;
 
@@ -78,7 +77,6 @@ abstract class BaseRepository {
             return false;
         }
        
-
         return false;
     }
 
