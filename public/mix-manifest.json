@@ -1,0 +1,14 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/js/bootstrap.js": "/js/bootstrap.js",
+    "/js/common.js": "/js/common.js",
+    "/js/libs/bootstrap/js/bootstrap.js": "/js/libs/bootstrap/js/bootstrap.js",
+    "/js/libs/jquery/jquery/jquery.min.js": "/js/libs/jquery/jquery/jquery.min.js",
+    "/js/libs/jquery/jquery/jquery.validate.min.js": "/js/libs/jquery/jquery/jquery.validate.min.js",
+    "/js/libs/jquery/jquery-validation/custom-message.js": "/js/libs/jquery/jquery-validation/custom-message.js",
+    "/js/libs/jquery/jquery-validation/custom-method.js": "/js/libs/jquery/jquery-validation/custom-method.js",
+    "/js/libs/jquery/jquery-validation/jquery.validate.min.js": "/js/libs/jquery/jquery-validation/jquery.validate.min.js",
+    "/css/app.css": "/css/app.css",
+    "/css/bootstrap/bootstrap.css": "/css/bootstrap/bootstrap.css",
+    "/css/message/alert-message.css": "/css/message/alert-message.css"
+}
