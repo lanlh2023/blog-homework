@@ -18,3 +18,6 @@ Route::get('/', function () {
 });
 
 Route::get('/login', [UserController::class, 'login'])->name('login');
+Route::post('/checkLogin', [UserController::class, 'checkLogin'])->name('checkLogin');
+Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+
