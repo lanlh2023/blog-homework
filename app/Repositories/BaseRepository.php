@@ -64,11 +64,11 @@ abstract class BaseRepository {
         try {
             $result = $this->model->find($id);
 
-            if($isActive && $result->deleted_date != null) {
+            if ($isActive && $result->deleted_date != null) {
                 return false;
             }
-           
-            if($result) { 
+
+            if ($result) { 
                 return $result;
             }
         } catch (\Throwable $e) {
