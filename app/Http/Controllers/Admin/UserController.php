@@ -7,12 +7,15 @@ use App\Http\Requests\UserRequest;
 use App\Repositories\RepositoryInterface\UserRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Config;
 use App\Http\Requests\RegisterUserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
 use App\Notifications\RegisterNotification;
+=======
+>>>>>>> 57081e57afdd8fbfff506933755dbf026b34a872
 
 class userController extends Controller
 {
