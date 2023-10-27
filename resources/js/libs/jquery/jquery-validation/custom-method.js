@@ -1,19 +1,19 @@
-$().ready(function() {
-    $.validator.addMethod('filesize', function(value, element, param) {
+$().ready(function () {
+    $.validator.addMethod('filesize', function (value, element, param) {
         let size = param.split('MB')[0] * 1024 * 1024;
-       return this.optional(element) || (size !== NaN && element.files[0].size <= size)
+        return this.optional(element) || (size !== NaN && element.files[0].size <= size)
     });
 
     $.validator.addMethod('extension', function (value, element, param) {
-       param = typeof param === 'string' ? param.replace(/,/g, '|') : 'png|jpe?g';
-       return this.optional(element) || value.match(new RegExp('.(' + param + ')$', 'i'));
+        param = typeof param === 'string' ? param.replace(/,/g, '|') : 'png|jpe?g';
+        return this.optional(element) || value.match(new RegExp('.(' + param + ')$', 'i'));
     });
 
     $.validator.addMethod('email', function (value, element) {
         const regexIfHasQuotes = /^["].+["]@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/
         const regexForEmail = /^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/;
 
-        if(regexIfHasQuotes.test(value)) {
+        if (regexIfHasQuotes.test(value)) {
             return true;
         }
 
@@ -21,6 +21,6 @@ $().ready(function() {
     });
 
     $.validator.addMethod('stringValueRange', function (value, element, param) {
-        return this.optional(element) || param[0] <= value.length &&  value.length <= param[1];
+        return this.optional(element) || param[0] <= value.length && value.length <= param[1];
     });
 });
