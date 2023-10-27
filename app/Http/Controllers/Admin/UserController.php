@@ -7,6 +7,12 @@ use App\Http\Requests\UserRequest;
 use App\Repositories\RepositoryInterface\UserRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
+use App\Http\Requests\RegisterUserRequest;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Response;
+use App\Notifications\RegisterNotification;
 
 class userController extends Controller
 {
@@ -69,5 +75,61 @@ class userController extends Controller
         $request->session()->regenerateToken();
     
         return redirect('/login');
+    }
+
+     /**
+     * Render screen register-form 
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function register() 
+    {
+        $pageTitle = 'Register';
+        return view('partial.form.register-form', compact('pageTitle'));
+    }
+
+     /**
+     * Registration new user
+     * @param App\Http\Requests\RegisterUserRequest $request
+     * @return mixed redirect dashboard | back
+     */
+    public function checkRegister(RegisterUserRequest $request) 
+    {
+        $user = new User;
+        $password = Hash::make($request->password);
+        $data = collect($request->only(['name', 'email']))
+            ->merge([
+                'password' => $password,
+            ])
+            ->toArray();
+
+        $result = $this->userRepository->save($user, $data);
+
+        if ($result) {
+            Auth::login($result);
+            Auth::user()->notify(new RegisterNotification());
+
+            return redirect()->route('home')
+                ->with('message', Config::get('form-notification.REGISTER_SUCESS_MESSAGE'))
+                ->with('success', true);
+        }
+
+        return redirect()->route('register')
+            ->withErrors(['error' => Config::get('form-notification.REGISTER_ERROR_MESSAGE')])
+            ->with('success', false);
+    }
+
+    /** 
+     * Check duplicate email in database 
+     * @param App\Http\Requests\Request $request
+     * @return boolean true|false
+     */
+    public function checkDuplicateEmail(Request $request) {
+        $users = $this->userRepository->getByEmail($request->email);
+        
+        if ($users->count() > 0) {
+            return Response::json(true);
+        }
+        
+        return Response::json(false);
     }
 }

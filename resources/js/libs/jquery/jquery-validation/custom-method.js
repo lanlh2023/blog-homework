@@ -19,4 +19,8 @@ $().ready(function() {
 
         return this.optional(element) || regexForEmail.test(value);
     });
+
+    $.validator.addMethod('stringValueRange', function (value, element, param) {
+        return this.optional(element) || param[0] <= value.length &&  value.length <= param[1];
+    });
 });
