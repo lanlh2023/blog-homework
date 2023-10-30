@@ -36,7 +36,7 @@ class userController extends Controller
         return view('partial.form.login-form', compact('pageTitle'));
     }
 
-     /**
+    /**
      * Handle check account exists or not
      *
      * @param App\Http\Requests\UserRequest $request
@@ -76,7 +76,7 @@ class userController extends Controller
         return redirect('/login');
     }
 
-     /**
+    /**
      * Render screen register-form
      * @return \Illuminate\Contracts\View\View
      */
@@ -86,7 +86,7 @@ class userController extends Controller
         return view('partial.form.register-form', compact('pageTitle'));
     }
 
-     /**
+    /**
      * Registration new user
      * @param App\Http\Requests\RegisterUserRequest $request
      * @return mixed redirect dashboard | back
@@ -122,13 +122,10 @@ class userController extends Controller
      * @param App\Http\Requests\Request $request
      * @return boolean true|false
      */
-    public function checkDuplicateEmail(Request $request) {
+    public function checkDuplicateEmail(Request $request)
+    {
         $users = $this->userRepository->getByEmail($request->email);
 
-        if ($users) {
-            return Response::json(true);
-        }
-
-        return Response::json(false);
+        return Response::json(!is_null($users));
     }
 }

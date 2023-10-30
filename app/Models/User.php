@@ -45,7 +45,7 @@ class User extends Authenticatable
     ];
 
     public function routeNotificationForSlack()
-   {
+    {
        return env('SLACK_HOOK', '');
-   }
+    }
 }

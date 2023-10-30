@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterUserRequest extends FormRequest
@@ -27,7 +28,7 @@ class RegisterUserRequest extends FormRequest
             'name' => [
                 'required'
             ],
-            'email'=> [
+            'email' => [
                 'required',
                 'email',
                 'unique:users,email,'.$id,
@@ -58,20 +59,20 @@ class RegisterUserRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => getMessage('form-notification.required', [':attribute']),
-            'email.required' => getMessage('form-notification.required', [':attribute']),
-            'email.email' => getMessage('form-notification.email'),
-            'email.unique'=> getMessage('form-notification.unique'),
-            'email.max' => getMessage('form-notification.max', [
+            'name.required' => User::getMessage('form-notification.required', [':attribute']),
+            'email.required' => User::getMessage('form-notification.required', [':attribute']),
+            'email.email' => User::getMessage('form-notification.email'),
+            'email.unique'=> User::getMessage('form-notification.unique'),
+            'email.max' => User::getMessage('form-notification.max', [
                 ':attribute',
                 ':max',
                 $this->getLenghtOfValueByAttributeName('email'),
             ]),
-            'password.required' => getMessage('form-notification.required', [':attribute']),
-            'password.between' =>  getMessage('form-notification.between'),
-            'password_confirmation.required' => getMessage('form-notification.required', [':attribute']),
-            'password_confirmation.same' => getMessage('form-notification.same'),
-            'password_confirmation.between' =>  getMessage('form-notification.between'),
+            'password.required' => User::getMessage('form-notification.required', [':attribute']),
+            'password.between' =>  User::getMessage('form-notification.between'),
+            'password_confirmation.required' => User::getMessage('form-notification.required', [':attribute']),
+            'password_confirmation.same' => User::getMessage('form-notification.same'),
+            'password_confirmation.between' =>  User::getMessage('form-notification.between'),
         ];
     }
 

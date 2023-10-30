@@ -14,7 +14,7 @@
     </div>
 @stop
 @section('scripts')
-    @if(! is_null(session('message'))) 
+    @if (!is_null(session('message')))
         <script>
             alert("{{ session('message') }}")
         </script>

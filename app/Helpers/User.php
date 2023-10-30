@@ -1,13 +1,18 @@
 <?php
- /**
-* Get message from message_file, params is optional
-* 
-* @param string $key
-* @param array $paramArray
-* @return mixed|null
-*/
-if (!function_exists('getMessage')) { 
-  function getMessage($key, $paramArray = []) {
+
+namespace App\Helpers;
+
+class User
+{
+    /**
+     * Get message from message_file, params is optional
+     *
+     * @param string $key
+     * @param array $paramArray
+     * @return mixed|null
+     */
+    public static function getMessage($key, $paramArray = [])
+    {
         $message = config($key);
 
         if ($message && is_string($message)) {
