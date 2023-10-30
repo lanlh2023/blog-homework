@@ -31,7 +31,7 @@ class RegisterUserRequest extends FormRequest
             'email' => [
                 'required',
                 'email',
-                'unique:users,email,'.$id,
+                'unique:users,email,' . $id,
                 'max:255',
             ],
             'password' => [
@@ -51,7 +51,8 @@ class RegisterUserRequest extends FormRequest
      * @param string $attributeName
      * @return integer
      */
-    public function getLenghtOfValueByAttributeName(string $attributeName) {
+    public function getLenghtOfValueByAttributeName(string $attributeName)
+    {
         $attribute = $this->get($attributeName);
         return strlen($attribute);
     }
@@ -62,7 +63,7 @@ class RegisterUserRequest extends FormRequest
             'name.required' => User::getMessage('form-notification.required', [':attribute']),
             'email.required' => User::getMessage('form-notification.required', [':attribute']),
             'email.email' => User::getMessage('form-notification.email'),
-            'email.unique'=> User::getMessage('form-notification.unique'),
+            'email.unique' => User::getMessage('form-notification.unique'),
             'email.max' => User::getMessage('form-notification.max', [
                 ':attribute',
                 ':max',
