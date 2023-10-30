@@ -28,22 +28,21 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         } catch (\Exception $e) {
             Log::error($e->getMessage());
         }
-        
+
         return [];
     }
 
      /**
      * Get user list by email
-     * 
+     *
      * @param string email
      * @return @mixed $result
      */
-    public function getByEmail(string $email) 
+    public function getByEmail(string $email)
     {
-        $result = $this->model->where('email', $email)
-            ->get();
+        $result = $this->model->where('email', $email)->first();
 
-        if ($result) { 
+        if ($result) {
             return $result;
         }
 

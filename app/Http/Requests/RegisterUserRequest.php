@@ -21,7 +21,6 @@ class RegisterUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $requriedOrNullableForPasswordConfirm = isset($this->password) ? 'required' : 'nullable';
         $id = $this->id ?? -1;
 
         return [
@@ -39,7 +38,6 @@ class RegisterUserRequest extends FormRequest
                 'between:8,20',
             ],
             'password_confirmation' => [
-                $requriedOrNullableForPasswordConfirm,
                 'between:8,20',
                 'same:password',
             ]
@@ -48,9 +46,9 @@ class RegisterUserRequest extends FormRequest
 
     /**
      * Get length of value by atrribute name
-     * 
+     *
      * @param string $attributeName
-     * @return integer 
+     * @return integer
      */
     public function getLenghtOfValueByAttributeName(string $attributeName) {
         $attribute = $this->get($attributeName);
