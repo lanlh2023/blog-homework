@@ -22,8 +22,6 @@ class RegisterUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->id ?? -1;
-
         return [
             'name' => [
                 'required'
@@ -31,7 +29,7 @@ class RegisterUserRequest extends FormRequest
             'email' => [
                 'required',
                 'email',
-                'unique:users,email,' . $id,
+                'unique:users,email',
                 'max:255',
             ],
             'password' => [

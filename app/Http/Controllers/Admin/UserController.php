@@ -47,7 +47,7 @@ class userController extends Controller
         if (Auth::attempt([...$request->only(['email', 'password']), 'deleted_date' => null])) {
             $ridirecTo = 'admin/dashboard';
 
-            if($request->session()->get('previous_url')) {
+            if ($request->session()->get('previous_url')) {
                 $ridirecTo = $request->session()->get('previous_url');
                 $request->session()->forget('previous_url');
             }
