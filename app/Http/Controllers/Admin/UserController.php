@@ -126,6 +126,6 @@ class userController extends Controller
     {
         $users = $this->userRepository->getByEmail($request->email);
 
-        return Response::json(!is_null($users));
+        return Response::json(!empty($users));
     }
 }
