@@ -1,6 +1,4 @@
 <?php
-use Illuminate\Support\Facades\Config;
-
  /**
 * Get message from message_file, params is optional
 * 
@@ -10,7 +8,7 @@ use Illuminate\Support\Facades\Config;
 */
 if (!function_exists('getMessage')) { 
   function getMessage($key, $paramArray = []) {
-        $message = Config::get($key);
+        $message = config($key);
 
         if ($message && is_string($message)) {
             foreach ($paramArray as $param => $value) {

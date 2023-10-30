@@ -7,7 +7,6 @@ use App\Http\Requests\UserRequest;
 use App\Repositories\RepositoryInterface\UserRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
 use App\Http\Requests\RegisterUserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -109,12 +108,12 @@ class userController extends Controller
             Auth::user()->notify(new RegisterNotification());
 
             return redirect()->route('home')
-                ->with('message', Config::get('form-notification.REGISTER_SUCESS_MESSAGE'))
+                ->with('message', config('form-notification.REGISTER_SUCESS_MESSAGE'))
                 ->with('success', true);
         }
 
         return redirect()->route('register')
-            ->withErrors(['error' => Config::get('form-notification.REGISTER_ERROR_MESSAGE')])
+            ->withErrors(['error' => config('form-notification.REGISTER_ERROR_MESSAGE')])
             ->with('success', false);
     }
 
