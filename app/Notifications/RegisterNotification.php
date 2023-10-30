@@ -31,8 +31,15 @@ class RegisterNotification extends Notification
 
     public function toSlack($notifiable)
     {
+        $content = "New user registration "."\n".
+            "------------------------------ "."\n".
+            "UserID : $notifiable->id,"."\n".
+            "User name: $notifiable->name,"."\n".
+            "URL: ".url()->previous();
+
         return (new SlackMessage)
-            ->content("$notifiable->name joined this conversation");
+            ->content($content)
+            ->success();
     }
 
     /**
