@@ -17,6 +17,6 @@ class ActiveScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        $builder->where('deleted_date', '=', null);
+        $builder->whereNull('deleted_date');
     }
 }

@@ -7,7 +7,7 @@ $(document).ready(function () {
                 e.preventDefault();
             } else {
                 $(this).data('is-submit', true);
-            }      
+            }
         })
     });
 
@@ -18,5 +18,17 @@ $(document).ready(function () {
             }
         };
     })();
+
+    $("#navbar-checkbox").change(function() {
+        if($(window).width() >= 768) {
+            if($(this).prop('checked')) {
+                $('.sidebar').addClass('col-xl-1 col-lg-1')
+                $('.menu-list').addClass('collapse')
+            } else {
+                $('.sidebar').removeClass('col-xl-1 col-lg-1')
+                $('.menu-list').removeClass('collapse')
+            }
+        }
+    });
 })
 
