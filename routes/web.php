@@ -26,10 +26,10 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/register', [UserController::class, 'register'])->name('register');
 Route::post('/checkRegister', [UserController::class, 'checkRegister'])->name('checkRegister');
 Route::post('/checkDuplicateEmail', [UserController::class, 'checkDuplicateEmail'])->name('checkDuplicateEmail');
-Route::group(['prefix'=>'admin','as'=>'admin.'], function(){
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
 
-    Route::group(['prefix'=>'post','as'=>'post.'], function() {
+    Route::group(['prefix' => 'post', 'as' => 'post.'], function () {
         Route::get('/', [PostController::class, 'index'])->name('index');
     });
 });
