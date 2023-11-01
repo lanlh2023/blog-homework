@@ -4,24 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Scopes\ActiveScope;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Post extends Model
 {
     use HasFactory;
-
-    // /**
-    //  * Add the ActiveScope scope.
-    //  *
-    //  * @return void
-    //  */
-    // protected static function boot()
-    // {
-    //     parent::boot();
-
-    //     static::addGlobalScope(new ActiveScope);
-    // }
 
     /**
      * Get the user that owns the phone.

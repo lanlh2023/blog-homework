@@ -3,10 +3,7 @@
 namespace App\Repositories;
 
 use Carbon\Carbon;
-use Exception;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
-use App\Libs\ConfigUtil;
 
 abstract class BaseRepository
 {
@@ -122,11 +119,9 @@ abstract class BaseRepository
     public function getAll($limit = 10, $isActive = true)
     {
         try {
-            if ($isActive) {
-                return $this->model->active()->paginate($limit);
-            }
-
-            return $this->model->paginate($limit);
+            return $this->model->when($isActive, function ($query) {
+                return $query->active();
+            })->paginate($limit);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
         }
