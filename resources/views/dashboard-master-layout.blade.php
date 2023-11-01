@@ -15,14 +15,7 @@
     @yield('style-libraries')
     <link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap.css') }}">
     {{-- Font-awesome --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    {{-- Google Font: Source Sans Pro --}}
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-
-    {{-- Styles custom --}}
+    <link rel="stylesheet" href="{{ asset('js/libs/fontawesome-free-6.4.2-web/css/all.min.css') }}">
     @yield('styles')
 </head>
 

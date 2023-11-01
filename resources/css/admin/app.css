@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback);
+
 .dashboard-content {
     height: 100vh;
 }
@@ -14,6 +16,10 @@
     text-decoration: none;
 }
 
+.sidebar {
+    transition: max-width .3s linear, flex .3s linear;
+}
+
 .sidebar .menu-item {
     cursor: pointer;
 }
@@ -26,10 +32,6 @@
 .sidebar .menu-item.active i,
 .sidebar .menu-item.active a {
     color: #343a40;
-}
-
-.menu-list {
-    transition: all 2s linear;
 }
 
 .menu-list.collapse {
@@ -73,6 +75,11 @@
     border-radius: 5px;
     z-index: 100;
     background-color: #e6e6e6;
+}
+
+.content-table-wrap {
+    transition: max-width .5s linear;
+    transform-origin: center;
 }
 
 @media only screen and (max-width: 991px) {

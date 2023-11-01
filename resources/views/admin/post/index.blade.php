@@ -11,8 +11,8 @@
 
 @section('content')
     <!--Container Main start-->
-    <div class="col-12 col-xl-10 col-lg-9 col-md-9 content-table">
-        @if (count($posts))
+    <div class="col-12 col-xl-10 col-lg-9 col-md-9 content-table-wrap">
+        @if (!empty($posts))
             <div class="pagination-wrap d-flex justify-content-end px-4 pt-4">
                 {{ $posts->withQueryString()->links('vendor.pagination.custom') }}
             </div>
@@ -24,14 +24,14 @@
                         <tr>
                             <th class="align-middle" scope="col" style="width: 5%"><label>ID</label></th>
                             <th class="align-middle" scope="col" style="width: 10%"><label>User</label></th>
-                            <th class="align-middle" scope="col" style="width: 10%"><label>Post Title</label></th>
-                            <th class="align-middle" scope="col" style="width: 35%"><label>Post Cotent</label></th>
+                            <th class="align-middle" scope="col" style="width: 15%"><label>Post Title</label></th>
+                            <th class="align-middle" scope="col" style="width: 40%"><label>Post Cotent</label></th>
                             <th class="align-middle" scope="col" style="width: 10%"><label>Created Date</label></th>
                             <th class="align-middle" scope="col" style="width: 10%"><label>Updated Date</label></th>
                             <th class="align-middle" scope="col" style="width: 10%"><label>Action</label></th>
                         </tr>
                     </thead>
-                    @if (count($posts))
+                    @if (!empty($posts))
                         <tbody>
                             @foreach ($posts as $post)
                                 <tr class="align-middle">
@@ -50,7 +50,7 @@
                         </tbody>
                     @endif
                 </table>
-                @if (count($posts) == 0)
+                @if (empty($posts))
                     <div class="d-flex justify-content-center" style="font-size: 20px">
                         No Post Found
                     </div>
