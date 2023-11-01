@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('dashboard-master-layout')
 
 @section('title', 'Dashboard')
 
@@ -9,11 +9,12 @@
 @stop
 
 @section('content')
+    <!--Container Main start-->
    <h1>
-        Dashboard
+    dashboard
    </h1>
+    <!--Container Main end-->
 @stop
 
 @section('scripts')
-    <!-- Custome scripts -->
 @stop
