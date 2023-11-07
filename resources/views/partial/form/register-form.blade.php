@@ -55,5 +55,5 @@
         </form>
     @endsection
     @section('scripts')
-        <script src="{{ asset('js/validation/register-form.js') }}"></script>
+        <script src="{{ asset('js/validation/form-validation.js') }}"></script>
     @endsection

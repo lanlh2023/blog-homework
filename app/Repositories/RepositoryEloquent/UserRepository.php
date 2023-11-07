@@ -19,20 +19,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
      /**
-     * Get all
-     * @return mixed
-     */
-    public function getAll() {
-        try {
-            return $this->model->all();
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-        }
-
-        return [];
-    }
-
-     /**
      * Get user list by email
      *
      * @param string email

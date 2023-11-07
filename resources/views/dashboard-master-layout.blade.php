@@ -10,12 +10,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- Styles css common --}}
-    <link rel="stylesheet" href="{{ asset('css/admin/app.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/admin/app.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
     @yield('style-libraries')
-    <link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap.css') }}">
     {{-- Font-awesome --}}
-    <link rel="stylesheet" href="{{ asset('js/libs/fontawesome-free-6.4.2-web/css/all.min.css') }}">
     @yield('styles')
 </head>
 
