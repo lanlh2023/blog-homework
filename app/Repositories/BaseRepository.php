@@ -3,12 +3,10 @@
 namespace App\Repositories;
 
 use Carbon\Carbon;
-use Exception;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
-use App\Libs\ConfigUtil;
 
-abstract class BaseRepository {
+abstract class BaseRepository
+{
     protected $model;
 
     public function __construct()
@@ -17,12 +15,12 @@ abstract class BaseRepository {
     }
 
     abstract public function getModel();
-    
+
     /**
-    * Set model by classes that inherit it
-    *
-    * @return void
-    */
+     * Set model by classes that inherit it
+     *
+     * @return void
+     */
     public function setModel()
     {
         $this->model = app()->make(
@@ -31,12 +29,12 @@ abstract class BaseRepository {
     }
 
     /**
-    * Soft delete entity
-    *
-    * @param mixed $entity,
-    * @return true|false
-    */
-    public function delete($entity) 
+     * Soft delete entity
+     *
+     * @param mixed $entity,
+     * @return true|false
+     */
+    public function delete($entity)
     {
         try {
             $entity->update([
@@ -49,16 +47,16 @@ abstract class BaseRepository {
 
             return false;
         }
-        
+
         return false;
     }
 
     /**
-    * Find data in databse by ID 
-    * 
-    * @param string|int $id,
-    * @return colection|false
-    */
+     * Find data in databse by ID
+     *
+     * @param string|int $id,
+     * @return colection|false
+     */
     public function getById($id, $isActive = null)
     {
         try {
@@ -68,7 +66,7 @@ abstract class BaseRepository {
                 return false;
             }
 
-            if ($result) { 
+            if ($result) {
                 return $result;
             }
         } catch (\Throwable $e) {
@@ -76,42 +74,58 @@ abstract class BaseRepository {
 
             return false;
         }
-       
+
         return false;
     }
 
     /**
-    * Save record in table by array data
-    *  
-    * @param mixed $entity,
-    * @param array $data,
-    * @return mixed|false
-    */
-    public function save($entity, $data) 
+     * Save record in table by array data
+     *
+     * @param mixed $entity,
+     * @param array $data,
+     * @return mixed|false
+     */
+    public function save($entity, $data)
     {
         $primaryKey = $this->model->getKeyName();
         try {
-            if(isset($entity[$primaryKey])) {
+            if (isset($entity[$primaryKey])) {
                 return $entity->update($data);
             }
-            
+
             return $this->model->create($data);
-    
         } catch (\Exception $e) {
             Log::error($e->getMessage());
 
             return false;
-        }        
+        }
     }
 
     /**
-    * Save records in table by array data
-    *  
-    * @param array $data 
-    * @return string|false
-    */
-    public function saveMany($data) 
+     * Save records in table by array data
+     *
+     * @param array $data
+     * @return string|false
+     */
+    public function saveMany($data)
     {
         return false;
+    }
+
+    /**
+     * Get all
+     * @return mixed
+     */
+    public function getAll($limit = 10, $isActive = true)
+    {
+        try {
+            return $this->model->when($isActive, function ($query) {
+                return $query->active();
+            })->paginate($limit);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+        }
+
+        return [];
     }
 }

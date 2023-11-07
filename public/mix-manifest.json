@@ -1,14 +1,10 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/js/bootstrap.js": "/js/bootstrap.js",
-    "/js/common.js": "/js/common.js",
-    "/js/libs/bootstrap/js/bootstrap.js": "/js/libs/bootstrap/js/bootstrap.js",
-    "/js/libs/jquery/jquery/jquery.min.js": "/js/libs/jquery/jquery/jquery.min.js",
-    "/js/libs/jquery/jquery/jquery.validate.min.js": "/js/libs/jquery/jquery/jquery.validate.min.js",
-    "/js/libs/jquery/jquery-validation/custom-message.js": "/js/libs/jquery/jquery-validation/custom-message.js",
-    "/js/libs/jquery/jquery-validation/custom-method.js": "/js/libs/jquery/jquery-validation/custom-method.js",
-    "/js/libs/jquery/jquery-validation/jquery.validate.min.js": "/js/libs/jquery/jquery-validation/jquery.validate.min.js",
-    "/css/app.css": "/css/app.css",
-    "/css/bootstrap/bootstrap.css": "/css/bootstrap/bootstrap.css",
-    "/css/message/alert-message.css": "/css/message/alert-message.css"
+    "/js/app.js": "/js/app.js?id=9e9e7276323dda5b4bc0138995ace0bc",
+    "/js/common.js": "/js/common.js?id=dcb3d55ed64aa4aee041fcb863276961",
+    "/js/custom-jquery/custom-jquery-validation.js": "/js/custom-jquery/custom-jquery-validation.js?id=e5c6adde05dd34b5a20ceb23eab89e31",
+    "/js/admin/add.js": "/js/admin/add.js?id=0fb0569e60deeac24714a785acff05f5",
+    "/js/validation/form-validation.js": "/js/validation/form-validation.js?id=113524706d7d4b629c0cc199b58fd623",
+    "/css/app.css": "/css/app.css?id=d143b0d1b5b6ee239d33f9e2276a5648",
+    "/css/message/alert-message.css": "/css/message/alert-message.css?id=67c0319c00916d4a62b47a45fba638ba",
+    "/css/admin/app.css": "/css/admin/app.css?id=c4753d7b8de78bd32c134bdbbddf7777"
 }
