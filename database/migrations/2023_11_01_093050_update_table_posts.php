@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('posts', function($table) {
             $table->string('image_title');
+            $table->string('content_title');
         });
     }
 
@@ -23,6 +24,7 @@ return new class extends Migration
     {
         Schema::table('posts', function($table) {
             $table->dropColumn('image_title');
+            $table->dropColumn('content_title');
         });
     }
 };

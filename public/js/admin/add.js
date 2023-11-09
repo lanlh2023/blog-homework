@@ -3,33 +3,75 @@ var __webpack_exports__ = {};
 /*!****************************************!*\
   !*** ./resources/js/admin/post/add.js ***!
   \****************************************/
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 $().ready(function () {
-  var imageDetailList = [];
-  var elementListImage = $('.list-image');
-  $('#form-add-images').on('submit', function (e) {
-    e.preventDefault();
-    var file = $('#image')[0].files[0];
-    var description = $('#description').val();
-    imageDetailList.push({
-      file: file,
-      description: description
-    });
-    var formData = new FormData();
-    formData.append('file', file);
-    formData.append('description', description);
-    $.ajax({
-      url: "/admin/image/uploadTempImage",
-      type: 'POST',
-      data: formData,
-      headers: {
-        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-      },
-      processData: false,
-      contentType: false,
-      success: function success(data) {
-        console.log(data);
+  var subContentList = [];
+  $('#add-image').on('click', function () {
+    var elementFile = $('#file');
+    var elementContent = $('#content');
+    var file = $(elementFile).prop('files')[0];
+    var content = $(elementContent).val();
+    elementFile.val('');
+    elementContent.val('');
+    if (file) {
+      var reader = new FileReader();
+      reader.onloadend = function () {
+        var imagePath = this.result;
+        var item = {
+          content: content,
+          'imagePath': imagePath
+        };
+        subContentList.push(item);
+        renderImages(subContentList);
+      };
+      reader.readAsDataURL(file);
+    }
+    function renderImages(subContentList) {
+      $('#content-detail-list').html('');
+      var _iterator = _createForOfIteratorHelper(subContentList),
+        _step;
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var item = _step.value;
+          var div = $('<div>').attr('class', 'content-detail-item d-flex justify-content-between align-items-center border').append($('<img>').attr('class', 'rounded float-left object-fit-cover').attr('src', item.imagePath)).append($('<div>').attr('class', 'content-detail-body w-50').append(item.content));
+          $('#content-detail-list').append(div);
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
       }
-    });
+    }
+  });
+  $('.btn-add-post').on('click', function (e) {
+    var form = $("#post-form");
+    if (form.valid() && subContentList.length) {
+      var title = $('#title').val();
+      var contentTitle = $('#content_title').val();
+      var imageTitle = $('#image_title').prop('files')[0];
+      var data = new FormData();
+      data.append('title', title);
+      data.append('content_title', contentTitle);
+      data.append('image_title', imageTitle);
+      data.append('content', JSON.stringify(subContentList));
+      e.preventDefault();
+      $.ajax({
+        url: "/admin/post/store",
+        type: 'POST',
+        method: 'POST',
+        data: data,
+        headers: {
+          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        processData: false,
+        contentType: false,
+        success: function success(data) {
+          console.log(data);
+        }
+      });
+    }
   });
 });
 /******/ })()
