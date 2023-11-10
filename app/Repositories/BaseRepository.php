@@ -128,21 +128,4 @@ abstract class BaseRepository
 
         return [];
     }
-
-    /**
-     * Create new record in table by array data
-     *
-     * @param array $data,
-     * @return mixed|false
-     */
-    public function create($data)
-    {
-        try {
-            return $this->model->create($data);
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-
-            return false;
-        }
-    }
 }
