@@ -38,6 +38,7 @@ $().ready(function () {
                     .attr('class', 'content-detail-item d-flex justify-content-between align-items-center border')
                     .append($('<img>')
                         .attr('class', 'rounded float-left object-fit-cover')
+                        .css({"height": '300px', "width": "300px"})
                         .attr('src', item.imagePath),
                     )
                     .append($('<div>')
@@ -49,7 +50,10 @@ $().ready(function () {
             }
         }
     });
-
+    function resetAllForm() {
+        $('#content-detail-list').html('');
+        $('#post-form')[0].reset();
+    }
     $('.btn-add-post').on('click', function (e) {
         const form = $("#post-form");
         if (form.valid() && subContentList.length) {
@@ -73,7 +77,13 @@ $().ready(function () {
                 processData: false,
                 contentType: false,
                 success: function (data) {
-                    console.log(data);
+                    if (data.success) {
+                        resetAllForm();
+                        alert(data.message)
+                    }
+                },
+                error: function(error) {
+                    console.log(error);
                 }
             })
         }

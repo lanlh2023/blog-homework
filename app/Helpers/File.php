@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File as FacadesFile;
-
+use \Illuminate\Http\UploadedFile;
 class File
 {
     /**
@@ -13,7 +13,7 @@ class File
      * @param string $file
      * @return mixed|null
      */
-    public static function uploadFileBase64ToPublic($image_64)
+    public static function uploadFileBase64ToPublic(string $image_64)
     {
         $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];
 
@@ -50,5 +50,27 @@ class File
         $tagImange .= $imagePath;
         $tagImange .= "\">";
         return $tagImange;
+    }
+
+     /**
+     * upload image to public
+     *
+     * @param UploadedFile $file
+     * @return array
+     */
+    public static function uploadImageToPublic(UploadedFile $file)
+    {
+
+        $pathInfo = pathinfo($file->getClientOriginalName());
+        $fileName = $pathInfo['filename'];
+        $extension = $pathInfo['extension'];
+        $fileName = $fileName . '_' . Carbon::now('Asia/Ho_Chi_Minh')->format('YmdHisu') . '.' . $extension;
+
+        $path = $file->move(public_path('images/post_title'), $fileName);
+
+        return [
+            'path' => $path,
+            'fileName' => $fileName,
+        ];
     }
 }

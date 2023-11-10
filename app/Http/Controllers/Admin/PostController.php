@@ -8,7 +8,6 @@ use App\Repositories\RepositoryInterface\PostRepositoryInterface;
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\UploadedFile;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Lang;
 use App\Helpers\File as FileHelpers;
 use Illuminate\Support\Facades\Response;
@@ -51,13 +50,13 @@ class PostController extends Controller
             ->with('pageTitle', $pageTitle);
     }
 
-    public function imageUpload(UploadedFile $file)
-    {
-    }
     /**
      * Store a newly created resource in storage.
+     *
+     * @param PostRequest $request
+     * @return mixed array
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         $subContentList = json_decode($request->content);
         $content = '';
@@ -79,13 +78,8 @@ class PostController extends Controller
             ]);
         }
 
-        $pathInfo = pathinfo($file->getClientOriginalName());
-        $fileName = $pathInfo['filename'];
-        $extension = $pathInfo['extension'];
-        $fileName = $fileName . '_' . Carbon::now('Asia/Ho_Chi_Minh')->format('YmdHisu') . '.' . $extension;
-
-        $path = $file->move(public_path('images/post_title'), $fileName);
-        if (!$path) {
+        $image = FileHelpers::uploadImageToPublic($file);
+        if (!$image['path']) {
             return Response::json([
                 'success' => false,
                 'message' => Lang::get('notification-message.FILE_MOVE_ERROR'),
@@ -94,7 +88,7 @@ class PostController extends Controller
 
         $data = collect($request->only(['title', 'content_title']))
             ->merge([
-                'image_title' => 'iamges/post_title' . $fileName,
+                'image_title' => 'iamges/post_title' . $image['fileName'],
                 'content' => $content,
             ])
             ->toArray();
