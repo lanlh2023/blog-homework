@@ -145,4 +145,28 @@ abstract class BaseRepository
             return false;
         }
     }
+
+     /**
+     * Soft destroy entity
+     *
+     * @param string $id,
+     * @return true|false
+     */
+    public function destroy($id)
+    {
+        $primaryKey = $this->model->getKeyName();
+        try {
+            $this->model->where($primaryKey, $id)
+            ->update(['deleted_date' => Carbon::now(),]);
+
+            return true;
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+
+            return false;
+        }
+
+        return false;
+    }
+
 }

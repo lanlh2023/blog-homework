@@ -33,5 +33,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('/', [PostController::class, 'index'])->name('index');
         Route::get('/create', [PostController::class, 'create'])->name('create');
         Route::post('/store', [PostController::class, 'store'])->name('store');
+        Route::post('/destroy/{id}', [PostController::class, 'destroy'])->name('destroy');
+        Route::get('/show/{id}', [PostController::class, 'show'])->name('show');
     });
 });

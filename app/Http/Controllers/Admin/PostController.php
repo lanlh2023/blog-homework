@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
 use App\Helpers\File as FileHelpers;
 use Illuminate\Support\Facades\Response;
+use Ramsey\Uuid\Type\Integer;
 
 class PostController extends Controller
 {
@@ -113,7 +114,16 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $pageTitle = 'Post show';
+        $post = $this->postRepository->getById($id);
+        if ($post) {
+            return view('admin.post.show')
+                ->with('post', $post)
+                ->with('pageTitle', $pageTitle);
+        }
+        return redirect()->route('admin.post.index')
+            ->with('message', Lang::get('notification-message.NOT_FOUND', ['model' => "Post with $id "]))
+            ->with('success', false);
     }
 
     /**
@@ -137,6 +147,16 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $result = $this->postRepository->destroy($id);
+
+        if ($result) {
+            return redirect()->route('admin.post.index')
+                ->with('message', Lang::get('notification-message.DELETE_SUCESS'))
+                ->with('success', true);
+        }
+
+        return redirect()->route('admin.post.index')
+            ->with('message', Lang::get('notification-message.DELETE_ERROR'))
+            ->with('success', false);
     }
 }
