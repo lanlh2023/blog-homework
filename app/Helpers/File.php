@@ -24,7 +24,7 @@ class File
 
         $image = str_replace(' ', '+', $image);
 
-        $imageName = 'post_' . Carbon::now('Asia/Ho_Chi_Minh')->format('YmdHisu') . '.' . $extension;
+        $imageName = 'post_' . Carbon::now()->format('YmdHisu') . '.' . $extension;
 
         $path = public_path() . FilePath::IMAGE_POSTS . $imageName;
 
