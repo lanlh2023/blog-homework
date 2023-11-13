@@ -32,24 +32,44 @@ $().ready(function () {
 
         function renderImages(subContentList) {
             $('#content-detail-list').html('');
-
+            let index = 0;
             for (const item of subContentList) {
                 let div = $('<div>')
                     .attr('class', 'content-detail-item d-flex justify-content-between align-items-center border')
                     .append($('<img>')
-                        .attr('class', 'rounded float-left object-fit-cover')
-                        .css({ "height": '300px', "width": "300px" })
+                        .attr('class', 'rounded float-left object-fit-cover ml-2')
+                        .css({ 'max-height': '300px', 'max-width': '200px', 'min-height': '200px', 'object-fit': 'cover' })
                         .attr('src', item.imagePath),
                     )
                     .append($('<div>')
                         .attr('class', 'content-detail-body w-50')
                         .append(item.content)
+                    )
+                    .append($('<div>')
+                        .attr('class', 'btn btn-secondary btn-delete-sub-content-item mr-2')
+                        .attr('data-index', index)
+                        .append('x')
                     );
-
+                index++;
                 $('#content-detail-list').append(div);
             }
+
+            addEventClickForButtonDelete(renderImages, subContentList);
         }
     });
+
+    function addEventClickForButtonDelete(callback, subContentList) {
+        let elementsButtonDelete = $('.btn-delete-sub-content-item');
+        elementsButtonDelete.each(function (index, element) {
+            $(element).on('click', function () {
+                subContentList = subContentList.filter((val, i) => {
+                    return index != i
+                })
+                callback(subContentList);
+            })
+        });
+    };
+
     function resetAllForm() {
         $('#content-detail-list').html('');
         $('#post-form')[0].reset();
