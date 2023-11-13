@@ -38,7 +38,7 @@ $().ready(function () {
                     .attr('class', 'content-detail-item d-flex justify-content-between align-items-center border')
                     .append($('<img>')
                         .attr('class', 'rounded float-left object-fit-cover')
-                        .css({"height": '300px', "width": "300px"})
+                        .css({ "height": '300px', "width": "300px" })
                         .attr('src', item.imagePath),
                     )
                     .append($('<div>')
@@ -73,7 +73,6 @@ $().ready(function () {
                 type: 'POST',
                 method: 'POST',
                 data: data,
-                headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') },
                 processData: false,
                 contentType: false,
                 success: function (data) {
@@ -82,7 +81,7 @@ $().ready(function () {
                         alert(data.message)
                     }
                 },
-                error: function(error) {
+                error: function (error) {
                     console.log(error);
                 }
             })
