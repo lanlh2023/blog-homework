@@ -28,7 +28,7 @@ class PostRequest extends FormRequest
             ],
             'image_title' => [
                 'required',
-                'mimes:jpeg,png',
+                'mimes:png,jpeg,jpg',
             ],
             'content' => [
                 'required',
@@ -44,7 +44,7 @@ class PostRequest extends FormRequest
         return [
             'title.required' => Lang::get('messages.required'),
             'image_title.required' => Lang::get('messages.required'),
-            'image_title.mimes' => Lang::get('messages.mimes', ['mimes' => 'jpeg,png,jpg,gif']),
+            'image_title.mimes' => Lang::get('messages.mimes', ['mimes' => 'png,jpeg,jpg']),
             'content.required' => Lang::get('messages.required'),
             'content_title.required' => Lang::get('messages.required'),
         ];

@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\FilePath;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Repositories\RepositoryInterface\PostRepositoryInterface;
-use Carbon\Carbon;
-use GuzzleHttp\Psr7\UploadedFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
 use App\Helpers\File as FileHelpers;
@@ -60,14 +59,17 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         $subContentList = json_decode($request->content);
-        $content = '';
+        $content = [];
 
         foreach ($subContentList as $contentItem) {
             $imagePath = FileHelpers::uploadFileBase64ToPublic($contentItem->imagePath);
 
             if ($imagePath) {
-                $content .= FileHelpers::createNewTagImage($imagePath);
-                $content .= "<div>$contentItem->content</div>";
+                $data = [
+                    'image' => $imagePath,
+                    'content' => $contentItem->content
+                ];
+                array_push($content, $data);
             }
         }
 
@@ -89,8 +91,8 @@ class PostController extends Controller
 
         $data = collect($request->only(['title', 'content_title']))
             ->merge([
-                'image_title' => 'iamges/post_title' . $image['fileName'],
-                'content' => $content,
+                'image_title' => FilePath::IMAGE_POST_TITLE . $image['fileName'],
+                'content' => json_encode($content),
             ])
             ->toArray();
 

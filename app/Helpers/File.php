@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Enums\FilePath;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File as FacadesFile;
 use \Illuminate\Http\UploadedFile;
@@ -23,15 +24,13 @@ class File
 
         $image = str_replace(' ', '+', $image);
 
-        $imageName = 'post_' . Carbon::now('Asia/Ho_Chi_Minh')->format('YmdHisu') . '.' . $extension;
+        $imageName = 'post_' . Carbon::now()->format('YmdHisu') . '.' . $extension;
 
-        $path = public_path() . '/images/' . $imageName;
+        $path = public_path() . FilePath::IMAGE_POSTS . $imageName;
 
         $result = FacadesFile::put($path, base64_decode($image));
 
-        $assetLink = "{{ asset('/images/$imageName') }}";
-
-        return $result ? $assetLink : false;
+        return $result ? FilePath::IMAGE_POSTS.$imageName : false;
     }
 
     /**
@@ -46,10 +45,7 @@ class File
             return false;
         }
 
-        $tagImange = "<img src=\"";
-        $tagImange .= $imagePath;
-        $tagImange .= "\">";
-        return $tagImange;
+        return "<img src=\"$imagePath\">";
     }
 
      /**
@@ -64,9 +60,9 @@ class File
         $pathInfo = pathinfo($file->getClientOriginalName());
         $fileName = $pathInfo['filename'];
         $extension = $pathInfo['extension'];
-        $fileName = $fileName . '_' . Carbon::now('Asia/Ho_Chi_Minh')->format('YmdHisu') . '.' . $extension;
+        $fileName = $fileName . '_' . Carbon::now()->format('YmdHisu') . '.' . $extension;
 
-        $path = $file->move(public_path('images/post_title'), $fileName);
+        $path = $file->move(public_path(FilePath::IMAGE_POST_TITLE), $fileName);
 
         return [
             'path' => $path,
