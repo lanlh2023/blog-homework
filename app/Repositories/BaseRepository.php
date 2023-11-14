@@ -146,7 +146,7 @@ abstract class BaseRepository
         }
     }
 
-     /**
+    /**
      * Soft destroy entity by id
      *
      * @param string $id,
@@ -157,7 +157,7 @@ abstract class BaseRepository
         $primaryKey = $this->model->getKeyName();
         try {
             $this->model->where($primaryKey, $id)
-            ->update(['deleted_date' => Carbon::now(),]);
+                ->update(['deleted_date' => Carbon::now(),]);
 
             return true;
         } catch (\Exception $e) {
@@ -168,5 +168,4 @@ abstract class BaseRepository
 
         return false;
     }
-
 }
