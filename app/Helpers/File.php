@@ -30,9 +30,7 @@ class File
 
         $result = FacadesFile::put($path, base64_decode($image));
 
-        $assetLink = "{{ asset('".FilePath::IMAGE_POSTS.$imageName."') }}";
-
-        return $result ? $assetLink : false;
+        return $result ? FilePath::IMAGE_POSTS.$imageName : false;
     }
 
     /**

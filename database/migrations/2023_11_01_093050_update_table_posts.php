@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('posts', function($table) {
             $table->string('image_title');
+            $table->string('content_title');
         });
     }
 

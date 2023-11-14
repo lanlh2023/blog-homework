@@ -58,14 +58,17 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         $subContentList = json_decode($request->content);
-        $content = '';
+        $content = [];
 
         foreach ($subContentList as $contentItem) {
             $imagePath = FileHelpers::uploadFileBase64ToPublic($contentItem->imagePath);
 
             if ($imagePath) {
-                $content .= FileHelpers::createNewTagImage($imagePath);
-                $content .= "<div>$contentItem->content</div>";
+                $data = [
+                    'image' => $imagePath,
+                    'content' => $contentItem->content
+                ];
+                array_push($content, $data);
             }
         }
 
@@ -88,7 +91,7 @@ class PostController extends Controller
         $data = collect($request->only(['title', 'content_title']))
             ->merge([
                 'image_title' => FilePath::IMAGE_POST_TITLE . $image['fileName'],
-                'content' => $content,
+                'content' => json_encode($content),
             ])
             ->toArray();
 
