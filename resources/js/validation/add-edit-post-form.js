@@ -1,4 +1,4 @@
-$().ready(function() {
+$().ready(function () {
     $('#post-form').validate({
         onclick: false,
         rules: {
@@ -8,7 +8,7 @@ $().ready(function() {
             'image_title': {
                 required: true,
                 extension: 'png|jpeg|jpg',
-                filesize : '1MB',
+                filesize: '1MB',
             },
             'content_title': {
                 required: true,
@@ -16,43 +16,43 @@ $().ready(function() {
         },
         messages: {
             'title': {
-                required: function() {
+                required: function () {
                     return jQuery.validator.messages.required('Ttile');
                 },
             },
             'image_title': {
-                required: function() {
+                required: function () {
                     return jQuery.validator.messages.required('Image title');
                 },
-                filesize: function(size) {
+                filesize: function (size) {
                     return jQuery.validator.messages.filesize(size);
                 },
-                extension: function(extension) {
+                extension: function (extension) {
                     return jQuery.validator.messages.extension('IMAGE/JPG');
                 }
             },
             'content_title': {
-                required: function() {
+                required: function () {
                     return jQuery.validator.messages.required('Content title');
                 },
             },
         },
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.addClass('text-danger');
             const errorDiv = $(`div.error-div.error-${$(element).attr('name')}`);
             errorDiv.html(error);
         },
-        onfocusin: function(element) {
-           $('div.alert').css('display', 'none');
+        onfocusin: function (element) {
+            $('div.alert').css('display', 'none');
         },
-        onkeyup: function(element) {
+        onkeyup: function (element) {
             $(element).valid();
         },
-        onfocusout: function(element) {
+        onfocusout: function (element) {
             $(element).valid();
         },
-        submitHandler: function(form) {
-            if($(form).data('is-submitted') === undefined) {
+        submitHandler: function (form) {
+            if ($(form).data('is-submitted') === undefined) {
                 $(form).data('is-submitted', true)
                 form.submit();
             }

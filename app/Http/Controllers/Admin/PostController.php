@@ -72,8 +72,7 @@ class PostController extends Controller
             }
         }
 
-        $file = $request->file('image_title');
-        $image = FileHelpers::uploadImageToPublic($file);
+        $image = FileHelpers::uploadImageToPublic($request->file('image_title'));
         if (!$image) {
             return Response::json([
                 'success' => false,
