@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('posts', function($table) {
-            $table->string('image_title');
-            $table->string('content_title');
+            $table->text('image_title');
+            $table->text('content_title');
         });
     }
 
