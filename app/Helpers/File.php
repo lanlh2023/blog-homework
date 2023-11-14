@@ -27,9 +27,11 @@ class File
 
         $path = public_path(FilePath::IMAGE_POSTS . $imageName);
 
-        file_put_contents($path, file_get_contents($image_base64));
+        if(file_put_contents($path, file_get_contents($image_base64))) {
+            return FilePath::IMAGE_POSTS . $imageName;
+        }
 
-        return FilePath::IMAGE_POSTS . $imageName;
+        return false;
     }
 
     /**
