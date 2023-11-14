@@ -23,7 +23,8 @@ class File
             return false;
         }
 
-        $imageName = 'post_' . Carbon::now()->format('YmdHisu') . '.' . $mimeType[1];
+        $extension = explode('/', $mimeType)[1];
+        $imageName = 'post_' . Carbon::now()->format('YmdHisu') . '.' . $extension;
 
         $path = public_path(FilePath::IMAGE_POSTS . $imageName);
 
