@@ -37,8 +37,7 @@ $().ready(function () {
                 let div = $('<div>')
                     .attr('class', 'content-detail-item d-flex justify-content-between align-items-center border')
                     .append($('<img>')
-                        .attr('class', 'rounded float-left object-fit-cover ml-2')
-                        .css({ 'max-height': '300px', 'max-width': '200px', 'min-height': '200px', 'object-fit': 'cover' })
+                        .attr('class', 'rounded float-left object-fit-cover ml-2 img-sub-item')
                         .attr('src', item.imagePath),
                     )
                     .append($('<div>')

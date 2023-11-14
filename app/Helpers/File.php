@@ -4,8 +4,10 @@ namespace App\Helpers;
 
 use App\Enums\FilePath;
 use Carbon\Carbon;
+use finfo;
 use Illuminate\Support\Facades\File as FacadesFile;
 use \Illuminate\Http\UploadedFile;
+
 class File
 {
     /**
@@ -14,23 +16,20 @@ class File
      * @param string $file
      * @return mixed|null
      */
-    public static function uploadFileBase64ToPublic(string $image_64)
+    public static function uploadFileBase64ToPublic(string $image_base64)
     {
-        $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];
+        $mimeType = mime_content_type($image_base64);
+        if (empty($mimeType)) {
+            return false;
+        }
 
-        $replace = substr($image_64, 0, strpos($image_64, ',') + 1);
-
-        $image = str_replace($replace, '', $image_64);
-
-        $image = str_replace(' ', '+', $image);
-
-        $imageName = 'post_' . Carbon::now()->format('YmdHisu') . '.' . $extension;
+        $imageName = 'post_' . Carbon::now()->format('YmdHisu') . '.' . $mimeType[1];
 
         $path = public_path(FilePath::IMAGE_POSTS . $imageName);
 
-        $result = FacadesFile::put($path, base64_decode($image));
+        file_put_contents($path, file_get_contents($image_base64));
 
-        return $result ? FilePath::IMAGE_POSTS.$imageName : false;
+        return FilePath::IMAGE_POSTS . $imageName;
     }
 
     /**
@@ -48,7 +47,7 @@ class File
         return "<img src=\"$imagePath\">";
     }
 
-     /**
+    /**
      * upload image to public
      *
      * @param UploadedFile $file
@@ -58,9 +57,11 @@ class File
     {
 
         $pathInfo = pathinfo($file->getClientOriginalName());
-        $fileName = $pathInfo['filename'];
-        $extension = $pathInfo['extension'];
-        $fileName = $fileName . '_' . Carbon::now()->format('YmdHisu') . '.' . $extension;
+        if (empty($pathInfo)) {
+            return false;
+        }
+
+        $fileName = $pathInfo['filename'] . '_' . Carbon::now()->format('YmdHisu') . '.' . $pathInfo['extension'];
 
         $path = $file->move(public_path(FilePath::IMAGE_POST_TITLE), $fileName);
 
