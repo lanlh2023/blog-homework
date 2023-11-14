@@ -147,7 +147,7 @@ abstract class BaseRepository
     }
 
      /**
-     * Soft destroy entity
+     * Soft destroy entity by id
      *
      * @param string $id,
      * @return true|false

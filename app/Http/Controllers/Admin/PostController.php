@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
 use App\Helpers\File as FileHelpers;
 use Illuminate\Support\Facades\Response;
-use Ramsey\Uuid\Type\Integer;
 
 class PostController extends Controller
 {
