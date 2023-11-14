@@ -74,15 +74,8 @@ class PostController extends Controller
         }
 
         $file = $request->file('image_title');
-        if (!$file) {
-            return Response::json([
-                'success' => false,
-                'message' => Lang::get('notification-message.FILE_UPLOAD_ERROR'),
-            ]);
-        }
-
         $image = FileHelpers::uploadImageToPublic($file);
-        if (!$image['path']) {
+        if (!$image) {
             return Response::json([
                 'success' => false,
                 'message' => Lang::get('notification-message.FILE_MOVE_ERROR'),
@@ -96,19 +89,17 @@ class PostController extends Controller
             ])
             ->toArray();
 
-        $result = $this->postRepository->create($data);
-
-        if ($result) {
+        if ($this->postRepository->create($data)) {
             return Response::json([
                 'success' => true,
                 'message' => Lang::get('notification-message.REGISTER_SUCESS'),
             ]);
+        } else {
+            return Response::json([
+                'success' => false,
+                'message' => Lang::get('notification-message.REGISTER_ERROR'),
+            ]);
         }
-
-        return Response::json([
-            'success' => false,
-            'message' => Lang::get('notification-message.REGISTER_ERROR'),
-        ]);
     }
 
     /**

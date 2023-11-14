@@ -7,6 +7,7 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ mix('css/message/alert-message.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/admin/post.css') }}">
 @endsection
 
 @section('content')
