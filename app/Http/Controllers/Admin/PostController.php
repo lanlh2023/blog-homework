@@ -109,6 +109,7 @@ class PostController extends Controller
         $pageTitle = 'Post show';
         $post = $this->postRepository->getById($id);
         if ($post) {
+            $post->content = json_decode($post->content);
             return view('admin.post.show')
                 ->with('post', $post)
                 ->with('pageTitle', $pageTitle);
