@@ -26,7 +26,7 @@ class File
 
         $imageName = 'post_' . Carbon::now()->format('YmdHisu') . '.' . $extension;
 
-        $path = public_path() . FilePath::IMAGE_POSTS . $imageName;
+        $path = public_path(FilePath::IMAGE_POSTS . $imageName);
 
         $result = FacadesFile::put($path, base64_decode($image));
 
