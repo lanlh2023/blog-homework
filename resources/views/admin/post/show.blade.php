@@ -27,7 +27,7 @@
                             <img src="{{ asset($subContent->image) }}" alt="" class="w-100">
                         </div>
                         <div class="m-2">
-                            {{$subContent->content}}
+                            {{ $subContent->content }}
                         </div>
                     @endforeach
                 </div>
