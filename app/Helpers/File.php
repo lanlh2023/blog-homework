@@ -25,9 +25,9 @@ class File
         $extension = explode('/', $mimeType)[1];
         $imageName = 'post_' . Carbon::now()->format('YmdHisu') . '.' . $extension;
 
-        $path = public_path(FilePath::IMAGE_POSTS . $imageName);
+        $path = FilePath::IMAGE_POSTS . $imageName;
 
-        if (FacadesFile::put($path, file_get_contents($image_base64))) {
+        if (FacadesFile::put(public_path($path), file_get_contents($image_base64))) {
             return  $path;
         }
 
