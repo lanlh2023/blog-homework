@@ -4,7 +4,6 @@ namespace App\Helpers;
 
 use App\Enums\FilePath;
 use Carbon\Carbon;
-use finfo;
 use Illuminate\Support\Facades\File as FacadesFile;
 use \Illuminate\Http\UploadedFile;
 
@@ -28,8 +27,8 @@ class File
 
         $path = public_path(FilePath::IMAGE_POSTS . $imageName);
 
-        if (file_put_contents($path, file_get_contents($image_base64))) {
-            return FilePath::IMAGE_POSTS . $imageName;
+        if (FacadesFile::put($path, file_get_contents($image_base64))) {
+            return  $path;
         }
 
         return false;
