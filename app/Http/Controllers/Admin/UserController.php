@@ -127,7 +127,11 @@ class userController extends Controller
      */
     public function checkDuplicateEmail(Request $request)
     {
-        $users = $this->userRepository->getByEmail($request->email);
+        if (!empty($request->id)) {
+            $users = $this->userRepository->getByEmail($request->email, $request->id);
+        } else {
+            $users = $this->userRepository->getByEmail($request->email);
+        }
 
         return Response::json(!empty($users));
     }
@@ -226,6 +230,62 @@ class userController extends Controller
 
         return redirect()->route('admin.user.index')
             ->with('message', Lang::get('notification-message.DELETE_ERROR'))
+            ->with('success', false);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param string $id
+     * redirect| \Illuminate\Contracts\View\View
+     */
+    public function edit(string $id)
+    {
+        $pageTitle = 'Edit User';
+        $user = $this->userRepository->getById($id);
+
+        if ($user) {
+            return view('admin.user.add-edit')
+                ->with('user', $user)
+                ->with('pageTitle', $pageTitle);
+        }
+
+        return redirect()->route('admin.user.index')
+            ->with('message', Lang::get('notification-message.NOT_FOUND', ['model' => "User with $id "]))
+            ->with('success', false);
+    }
+
+    /**
+     * Update user by id
+     *
+     * @param string $id
+     * redirect
+     */
+    public function update(RegisterUserRequest $request, string $id)
+    {
+        $pageTitle = 'Edit User';
+        $password = Hash::make($request->password);
+        $data = collect($request->only(['name', 'email']))->merge(['password' => $password]);
+        // avatar is optionnal
+        if ($request->hasFile('avatar')) {
+            $imagePathOfAvatar = File::uploadImageToPublic($request->file('avatar'), FilePath::IMAGE_AVATAR_FOLDER);
+            if ($imagePathOfAvatar) {
+                $data = $data->merge(['avatar' => $imagePathOfAvatar]);
+            }
+        }
+
+        $user = $this->userRepository->update($id, $data->toArray());
+
+        if ($user) {
+            return redirect()->back()
+                ->with('user', $user)
+                ->with('message', Lang::get('notification-message.UPDATE_SUCESS'))
+                ->with('success', true)
+                ->with('pageTitle', $pageTitle);
+        }
+
+        return redirect()->route('admin.user.index')
+            ->with('message', Lang::get('notification-message.UPDATE_ERROR'))
             ->with('success', false);
     }
 }

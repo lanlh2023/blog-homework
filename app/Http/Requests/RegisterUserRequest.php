@@ -23,6 +23,14 @@ class RegisterUserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $requiredOrNull = 'required';
+        $id = -1;
+
+        if (!empty($this->id)) {
+            $requiredOrNull = 'nullable';
+            $id = $this->id;
+        }
+
         return [
             'name' => [
                 'required'
@@ -30,18 +38,17 @@ class RegisterUserRequest extends FormRequest
             'email' => [
                 'required',
                 'email',
-                'unique:users,email',
+                'unique:users,email,' . $id,
                 'max:255',
             ],
             'avatar' => [
                 'mimes:png,jpeg,jpg',
             ],
             'password' => [
-                'required',
+                $requiredOrNull,
                 'between:8,20',
             ],
             'password_confirmation' => [
-                'between:8,20',
                 'same:password',
             ]
         ];
@@ -76,7 +83,6 @@ class RegisterUserRequest extends FormRequest
             'password.between' =>  User::getMessage('form-notification.between'),
             'password_confirmation.required' => User::getMessage('form-notification.required', [':attribute']),
             'password_confirmation.same' => User::getMessage('form-notification.same'),
-            'password_confirmation.between' =>  User::getMessage('form-notification.between'),
         ];
     }
 

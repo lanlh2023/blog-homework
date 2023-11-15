@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\RepositoryEloquent;
 
 use App\Models\User;
@@ -18,14 +19,16 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return User::class;
     }
 
-     /**
+    /**
      * Get user list by email
      *
      * @param string email
      * @return @mixed $result
      */
-    public function getByEmail(string $email)
+    public function getByEmail(string $email, string $id = null)
     {
-        return $this->model->where('email', $email)->first();
+        return $this->model->when($id, function ($query, $id) {
+            return $query->whereNotIn('id', [$id]);
+        })->where('email', $email)->first();
     }
 }

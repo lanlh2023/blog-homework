@@ -14,6 +14,7 @@ $().ready(function () {
                     url: "/checkDuplicateEmail",
                     type: "post",
                     data: {
+                        id: () => $("input#userID").val(),
                         email: () => $("input[name='email']").val(),
                         _token: () => _token = $("input[name='_token']").val(),
                     },
@@ -30,7 +31,10 @@ $().ready(function () {
                 filesize: '1MB',
             },
             'password': {
-                required: true,
+                required: function() {
+                    let userID = $("input#userID").val();
+                    return !Boolean(userID);
+                },
                 stringValueRange: [8, 20],
             },
             'password_confirmation': {
@@ -39,7 +43,6 @@ $().ready(function () {
 
                     return Boolean(passWord.length);
                 },
-                stringValueRange: [8, 20],
                 equalTo: "#password",
             },
         },
@@ -86,10 +89,6 @@ $().ready(function () {
                 required: function (param, element) {
                     let attributeName = $(element).data('content').slice(0, -1);
                     return jQuery.validator.messages.required(attributeName);
-                },
-                stringValueRange: function (param, element) {
-                    let attributeName = $(element).data('content').slice(0, -1);
-                    return jQuery.validator.messages.stringValueRange(attributeName, param[0], param[1]);
                 },
             },
         },
