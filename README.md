@@ -3,6 +3,6 @@
 - [X] Login Page
 - [X] Register account
 - [ ] Manage role: admin, editor
-- [ ] Manage Post: CRUD
-- [ ] Manage User: CRUD
+- [ ] Manage Post: CRUD (done: CRD)
+- [ ] Manage User: CRUD (done: CR)
 - [ ] Send mail: send a mail after update post 
