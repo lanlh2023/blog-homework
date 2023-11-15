@@ -14,6 +14,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
 use App\Notifications\RegisterNotification;
+use Illuminate\Support\Facades\Lang;
 
 class userController extends Controller
 {
@@ -178,12 +179,12 @@ class userController extends Controller
 
         if ($this->userRepository->create($data->toArray())) {
             return redirect()->route('admin.user.create')
-                ->with('message', config('form-notification.REGISTER_SUCESS_MESSAGE'))
+                ->with('message', Lang::get('notification-message.REGISTER_SUCESS'))
                 ->with('success', true);
         }
 
         return redirect()->route('admin.user.create')
-            ->withErrors(['error' => config('form-notification.REGISTER_ERROR_MESSAGE')])
+            ->with(['message' =>  Lang::get('notification-message.REGISTER_ERROR')])
             ->with('success', false);
     }
 }

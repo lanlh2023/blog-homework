@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Helpers\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Lang;
 
 class RegisterUserRequest extends FormRequest
 {
