@@ -6,7 +6,7 @@
 @stop
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/admin/post.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/admin/user.css') }}">
 @stop
 
 @section('content')
@@ -36,8 +36,8 @@
                             @foreach ($users as $user)
                                 <tr class="align-middle">
                                     <td class="align-middle"> <label>{{ $user->id }}</label></td>
-                                    <td class="align-middle"> <label>{{ $user->name }}</label></td>
-                                    <td class="align-middle"><img src="{{ $user->avatar ?? '' }}" alt=""> </td>
+                                    <td class="align-middle"> <label>{{ $user->name}}</label></td>
+                                    <td class="align-middle text-center"><img class="rounded-circle avatar-user mw-25" src="{{ $user->avatar ?? '' }}" alt=""> </td>
                                     <td class="align-middle"> <label>{{ $user->position }}</label></td>
                                     <td class="align-middle"> <label>{{ $user->created_at }}</label></td>
                                     <td class="align-middle"> <label>{{ $user->updated_at }}</label></td>
