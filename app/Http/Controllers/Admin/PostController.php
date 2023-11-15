@@ -82,7 +82,7 @@ class PostController extends Controller
 
         $data = collect($request->only(['title', 'content_title']))
             ->merge([
-                'image_title' => FilePath::IMAGE_POST_TITLE . $image['fileName'],
+                'image_title' => $image,
                 'content' => json_encode($content),
             ])
             ->toArray();
