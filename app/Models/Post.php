@@ -41,4 +41,13 @@ class Post extends Model
     {
         return $query->whereNull('deleted_date');
     }
+
+    protected function getUpdatedAtAttribute($value) {
+        if(! isset($value)) {
+            return $value;
+        }
+
+        return \Carbon\Carbon::parse($value)->format('F, d Y');
+    }
+
 }
