@@ -32,6 +32,9 @@ class RegisterUserRequest extends FormRequest
                 'unique:users,email',
                 'max:255',
             ],
+            'avatar' => [
+                'mimes:png,jpeg,jpg',
+            ],
             'password' => [
                 'required',
                 'between:8,20',
@@ -67,6 +70,7 @@ class RegisterUserRequest extends FormRequest
                 ':max',
                 $this->getLenghtOfValueByAttributeName('email'),
             ]),
+            'avatar.mimes' => Lang::get('messages.mimes', ['mimes' => 'png,jpeg,jpg']),
             'password.required' => User::getMessage('form-notification.required', [':attribute']),
             'password.between' =>  User::getMessage('form-notification.between'),
             'password_confirmation.required' => User::getMessage('form-notification.required', [':attribute']),

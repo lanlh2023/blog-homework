@@ -25,6 +25,10 @@ $().ready(function () {
                     }
                 },
             },
+            'avatar': {
+                extension: 'png|jpeg|jpg',
+                filesize: '1MB',
+            },
             'password': {
                 required: true,
                 stringValueRange: [8, 20],
@@ -59,6 +63,14 @@ $().ready(function () {
                 remote: function () {
                     return jQuery.validator.messages.existsEmail();
                 },
+            },
+            'avatar': {
+                filesize: function (size) {
+                    return jQuery.validator.messages.filesize(size);
+                },
+                extension: function (extension) {
+                    return jQuery.validator.messages.extension('IMAGE/JPG');
+                }
             },
             'password': {
                 required: function (param, element) {
