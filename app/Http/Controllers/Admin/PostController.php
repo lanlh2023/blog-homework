@@ -105,7 +105,16 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $pageTitle = 'Post show';
+        $post = $this->postRepository->getById($id);
+        if ($post) {
+            return view('admin.post.show')
+                ->with('post', $post)
+                ->with('pageTitle', $pageTitle);
+        }
+        return redirect()->route('admin.post.index')
+            ->with('message', Lang::get('notification-message.NOT_FOUND', ['model' => "Post with $id "]))
+            ->with('success', false);
     }
 
     /**
@@ -129,6 +138,14 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if ($this->postRepository->destroy($id)) {
+            return redirect()->route('admin.post.index')
+                ->with('message', Lang::get('notification-message.DELETE_SUCESS'))
+                ->with('success', true);
+        }
+
+        return redirect()->route('admin.post.index')
+            ->with('message', Lang::get('notification-message.DELETE_ERROR'))
+            ->with('success', false);
     }
 }
