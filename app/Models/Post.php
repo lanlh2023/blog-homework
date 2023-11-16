@@ -41,4 +41,13 @@ class Post extends Model
     {
         return $query->whereNull('deleted_date');
     }
+
+    protected function getContentAttribute($value)
+    {
+        if (!empty($value)) {
+            return json_decode($value);
+        }
+
+        return $value;
+    }
 }
