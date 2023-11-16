@@ -77,3 +77,20 @@ a:hover {
 #content-user-detail-in-show-blog {
     margin-block: 70px;
 }
+
+.nav-item:not(.nav-item:first-of-type) {
+    margin-left: 1.25rem;
+    display: inline-flex;
+}
+
+@media only screen and (max-width: 768px) {
+    .navbar {
+        display: flex;
+        justify-content: center;
+        padding-inline: 0;
+    }
+
+    .nav-item:not(.nav-item:first-of-type) {
+        margin-left: 1rem;
+    }
+}
