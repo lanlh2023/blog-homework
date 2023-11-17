@@ -130,7 +130,8 @@ class userController extends Controller
     }
 
     /**
-     * Render screen post list
+     * Render screen user list
+     *
      * @return \Illuminate\Contracts\View\View
      */
     public function index()
