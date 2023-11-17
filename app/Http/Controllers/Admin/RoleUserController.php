@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RoleUserRequest;
 use App\Repositories\RepositoryInterface\RoleRepositoryInterface;
 use App\Repositories\RepositoryInterface\UserRepositoryInterface;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Response;
 
 class RoleUserController extends Controller
 {
@@ -22,7 +24,13 @@ class RoleUserController extends Controller
         $this->roleRepostiory = $roleRepostiory;
     }
 
-    public function index() {
+    /**
+     * Render screen user and role of user
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function index()
+    {
         $pageTitle = 'Role User';
         $users = $this->userRepository->getAll();
         $users = $users->onEachSide($users->lastPage());
@@ -34,11 +42,24 @@ class RoleUserController extends Controller
             ->with('pageTitle', $pageTitle);
     }
 
-    public function create() {
+    /**
+     * Set role for user
+     *
+     * @param RoleUserRequest $request
+     * @return mixed array
+     */
+    public function store(RoleUserRequest $request)
+    {
+        if ($this->userRepository->setRole($request->userId, $request->roleId)) {
+            return Response::json([
+                'success' => true,
+                'message' => Lang::get('notification-message.SET_ROLE_SUCCESS'),
+            ]);
+        }
 
-    }
-
-    public function store() {
-
+        return Response::json([
+            'success' => false,
+            'message' => Lang::get('notification-message.SET_ROLE_ERROR'),
+        ]);
     }
 }

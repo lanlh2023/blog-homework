@@ -12,6 +12,7 @@
 @section('content')
     <!--Container Main start-->
     <div class="col-12 col-xl-10 col-lg-9 col-md-9 content-table-wrap">
+        @include('partial.form.toast-message')
         @if (!empty($posts))
             <div class="pagination-wrap d-flex justify-content-end px-4 pt-4">
                 {{ $posts->withQueryString()->links('vendor.pagination.custom') }}
@@ -38,7 +39,7 @@
                                     <td class="align-middle"> <label>{{ $post->id }}</label></td>
                                     <td class="align-middle"> <label>{{ $post->user?->name ?? '' }}</label></td>
                                     <td class="align-middle"> <label>{{ $post->title }}</label></td>
-                                    <td class="align-middle"> <label>{{ $post->content }}</label></td>
+                                    <td class="align-middle"> <label>{{ $post->content_title }}</label></td>
                                     <td class="align-middle"> <label>{{ $post->created_at }}</label></td>
                                     <td class="align-middle"> <label>{{ $post->updated_at }}</label></td>
                                     <td class="align-middle action-group">
@@ -74,9 +75,5 @@
     <!--Container Main end-->
 @stop
 @section('scripts')
-    @if (!is_null(session('message')))
-        <script>
-            alert("{{ session('message') }}")
-        </script>
-    @endif
+   @include('includes.loadNotification')
 @stop

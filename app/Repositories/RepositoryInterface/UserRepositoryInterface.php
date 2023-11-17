@@ -15,4 +15,14 @@ interface UserRepositoryInterface extends RepositoryInterface
      * @return @mixed $result
      */
     public function getByEmail(string $email, string $id = null);
+
+       /**
+     * Set role for user
+     *
+     * @param string userId
+     * @param string roleId
+     *
+     * @return @mixed $result
+     */
+    public function setRole(string $userId, string $roleId);
 }

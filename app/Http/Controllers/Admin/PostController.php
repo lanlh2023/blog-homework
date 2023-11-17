@@ -108,7 +108,6 @@ class PostController extends Controller
         $pageTitle = 'Post show';
         $post = $this->postRepository->getById($id);
         if ($post) {
-            $post->content = json_decode($post->content);
             return view('admin.post.show')
                 ->with('post', $post)
                 ->with('pageTitle', $pageTitle);
@@ -139,9 +138,7 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        $result = $this->postRepository->destroy($id);
-
-        if ($result) {
+        if ($this->postRepository->destroy($id)) {
             return redirect()->route('admin.post.index')
                 ->with('message', Lang::get('notification-message.DELETE_SUCESS'))
                 ->with('success', true);
