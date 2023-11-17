@@ -29,12 +29,12 @@ mix.styles('resources/css/message/alert-message.css', 'public/css/message/alert-
 // Group for common end
 
 // Group for admin start
-mix.js('resources/js/validation/add-edit-post-form.js', 'public/js/validation/post-validation.js').version();
-mix.js('resources/js/admin/post/add.js', 'public/js/admin/post/add.js').version();
-mix.js('resources/js/admin/post/delete.js', 'public/js/admin/post/delete.js').version();
+mix.js('resources/js/validation/add-edit-post-form.js', 'public/js/validation/post-validation.js')
+    .js('resources/js/admin/post/add.js', 'public/js/admin/post/')
+    .js('resources/js/admin/post/delete.js', 'public/js/admin/post/').version()
+    .styles('resources/css/admin/app.css', 'public/css/admin/app.css')
+    .styles('resources/css/admin/post.css', 'public/css/admin/post.css');
 
-mix.styles('resources/css/admin/app.css', 'public/css/admin/app.css');
-mix.styles('resources/css/admin/post.css', 'public/css/admin/post.css');
 mix.styles('resources/css/admin/user.css', 'public/css/admin/user.css');
 
 // Group for admin end
