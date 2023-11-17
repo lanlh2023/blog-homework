@@ -4,5 +4,5 @@
 - [X] Register account
 - [ ] Manage role: admin, editor
 - [ ] Manage Post: CRUD (done: CRD)
-- [ ] Manage User: CRUD (done: CR)
+- [X] Manage User: CRUD
 - [ ] Send mail: send a mail after update post 
