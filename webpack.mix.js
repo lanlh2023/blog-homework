@@ -13,18 +13,14 @@ mix.webpackConfig({
 });
 
 // Group for common start
-mix.js('resources/js/app.js', 'public/js').version();
-
-mix.sass('resources/sass/app.scss', 'public/css');
-
-mix.js('resources/js/common.js', 'public/js').version();
-
-mix.js([
-    'resources/js/custom-jquery/custom-message.js',
-    'resources/js/custom-jquery/custom-method.js',
-], 'public/js/custom-jquery/custom-jquery-validation.js').version();
-
-mix.styles('resources/css/message/alert-message.css', 'public/css/message/alert-message.css');
+mix.js('resources/js/app.js', 'public/js')
+    .js('resources/js/common.js', 'public/js')
+    .js([
+        'resources/js/custom-jquery/custom-message.js',
+        'resources/js/custom-jquery/custom-method.js',
+    ], 'public/js/custom-jquery/custom-jquery-validation.js').version()
+    .sass('resources/sass/app.scss', 'public/css')
+    .styles('resources/css/message/alert-message.css', 'public/css/message/alert-message.css');
 
 // Group for common end
 
