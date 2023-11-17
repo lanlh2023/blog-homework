@@ -2,11 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\Role;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\RepositoryInterface\UserRepositoryInterface;
 use App\Repositories\RepositoryEloquent\UserRepository;
 use App\Repositories\RepositoryInterface\PostRepositoryInterface;
 use App\Repositories\RepositoryEloquent\PostRepository;
+use App\Repositories\RepositoryEloquent\RoleRepository;
+use App\Repositories\RepositoryInterface\RoleRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +25,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             PostRepositoryInterface::class,
             PostRepository::class
+        );
+        $this->app->singleton(
+            RoleRepositoryInterface::class,
+            RoleRepository::class
         );
     }
 

@@ -6,7 +6,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -60,4 +59,41 @@ class User extends Authenticatable
     {
         return $query->whereNull('deleted_date');
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function hasRole($role)
+    {
+        return $this->roles->contains('name', $role);
+    }
+
+    public function hasPermission($permission)
+    {
+        foreach ($this->roles as $role) {
+            if ($role->permissions->contains('name', $permission)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    public function getPermissions()
+    {
+        $role = $this->roles->first();
+        if ($role) {
+            if (! $role->relationLoaded('permissions')) {
+                $this->roles->load('permissions');
+            }
+
+            $this->permissionList = $this->roles->pluck('permissions')->flatten();
+        }
+
+        return $this->permissionList ?? collect();
+    }
+
 }
