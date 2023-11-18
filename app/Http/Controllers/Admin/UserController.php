@@ -128,4 +128,21 @@ class userController extends Controller
 
         return Response::json(!empty($users));
     }
+
+    /**
+     * Render screen user list
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function index()
+    {
+        $pageTitle = 'User List';
+        $users = $this->userRepository->getAll();
+        $users = $users->onEachSide($users->lastPage());
+
+        return view('admin.user.index')
+            ->with('users', $users)
+            ->with('pageTitle', $pageTitle);
+    }
+
 }
