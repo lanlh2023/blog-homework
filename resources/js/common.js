@@ -36,5 +36,24 @@ $(document).ready(function () {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    const loadNotification = function ({ success, message }) {
+        $("#toast").toast('hide');
+
+        let classForNotification = 'bg-danger'
+        if (success) {
+            classForNotification = 'bg-success'
+        }
+
+        $('#toast-body').text(message)
+        $('#toast-body').addClass(classForNotification)
+
+        $("#toast").toast('show');
+
+        $('#toast').on('hidden.bs.toast', function () {
+            $('#toast-body').text('')
+            $('#toast-body').removeClass(classForNotification)
+        })
+    }
 })
 

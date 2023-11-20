@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\FilePath;
+use App\Enums\TypeImage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Repositories\RepositoryInterface\PostRepositoryInterface;
@@ -14,7 +15,6 @@ use Illuminate\Support\Facades\Response;
 class PostController extends Controller
 {
     protected PostRepositoryInterface $postRepository;
-
     /**
      * PostController constructor
      * @param PostRepositoryInterface $PostRepositoryInterface
@@ -118,19 +118,78 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the post.
+     *
+     * @param string $id
+     *
      */
     public function edit(string $id)
     {
-        //
+        $pageTitle = 'Post edit';
+        $post = $this->postRepository->getById($id);
+        if ($post) {
+            return view('admin.post.edit')
+                ->with('post', $post)
+                ->with('pageTitle', $pageTitle);
+        }
+        return redirect()->route('admin.post.index')
+            ->with('message', Lang::get('notification-message.NOT_FOUND', ['model' => "Post with $id "]))
+            ->with('success', false);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PostRequest $request, string $id)
     {
-        //
+        $subContentList = json_decode($request->content);
+        $content = [];
+        $dataUpdate = collect($request->only(['title', 'content_title']));
+
+        foreach ($subContentList as $contentItem) {
+            $imagePath = $contentItem->image;
+            if ($contentItem->type == TypeImage::BASE64) {
+                $imagePath = FileHelpers::uploadFileBase64ToPublic($contentItem->image);
+            }
+
+            $data = [
+                'image' => $imagePath,
+                'content' => $contentItem->content
+            ];
+            array_push($content, $data);
+        }
+        //when update post then image title may or may not change
+        if ($request->hasFile('image_title')) {
+
+            $image = FileHelpers::uploadImageToPublic($request->file('image_title'));
+            if (!$image) {
+                return Response::json([
+                    'success' => false,
+                    'message' => Lang::get('notification-message.FILE_MOVE_ERROR'),
+                ]);
+            } else {
+                $dataUpdate = $dataUpdate->merge([
+                    'image_title' => $image,
+                ]);
+            }
+        }
+
+        $dataUpdate = $dataUpdate->merge([
+            'content' => json_encode($content),
+        ])
+            ->toArray();
+
+        if ($this->postRepository->update($id, $dataUpdate)) {
+            return Response::json([
+                'success' => true,
+                'message' => Lang::get('notification-message.REGISTER_SUCESS'),
+            ]);
+        } else {
+            return Response::json([
+                'success' => false,
+                'message' => Lang::get('notification-message.REGISTER_ERROR'),
+            ]);
+        }
     }
 
     /**

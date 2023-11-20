@@ -43,7 +43,7 @@
                                     <td class="align-middle"> <label>{{ $post->created_at }}</label></td>
                                     <td class="align-middle"> <label>{{ $post->updated_at }}</label></td>
                                     <td class="align-middle action-group">
-                                        <a href="" class="btn btn-warning">
+                                        <a href="{{ route('admin.post.edit', ['id' => $post->id]) }}" class="btn btn-warning">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="1em"
                                                 viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                                                 <path

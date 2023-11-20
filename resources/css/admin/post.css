@@ -1,3 +1,7 @@
+.content-detail-item {
+    cursor: pointer;
+}
+
 .img-sub-item {
     max-height: 300px;
     max-width: 200px;
