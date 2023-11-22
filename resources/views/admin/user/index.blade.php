@@ -17,6 +17,7 @@
                 {{ $users->withQueryString()->links('vendor.pagination.custom') }}
             </div>
         @endif
+        @include('partial.form.toast-message')
         <div class="table w-100 py-4">
             <div class="content-table col-12">
                 <table class="table table-striped table-hover table-bordered align-middle table-responsive">
@@ -36,8 +37,9 @@
                             @foreach ($users as $user)
                                 <tr class="align-middle">
                                     <td class="align-middle"> <label>{{ $user->id }}</label></td>
-                                    <td class="align-middle"> <label>{{ $user->name}}</label></td>
-                                    <td class="align-middle text-center"><img class="rounded-circle avatar-user mw-25" src="{{ $user->avatar ?? '' }}" alt=""> </td>
+                                    <td class="align-middle"> <label>{{ $user->name }}</label></td>
+                                    <td class="align-middle text-center"><img class="rounded-circle avatar-user mw-25"
+                                            src="{{ $user->avatar ?? '' }}" alt=""> </td>
                                     <td class="align-middle"> <label>{{ $user->position }}</label></td>
                                     <td class="align-middle"> <label>{{ $user->created_at }}</label></td>
                                     <td class="align-middle"> <label>{{ $user->updated_at }}</label></td>
@@ -83,9 +85,5 @@
     <!--Container Main end-->
 @stop
 @section('scripts')
-    @if (!is_null(session('message')))
-        <script>
-            alert("{{ session('message') }}")
-        </script>
-    @endif
+    @include('includes.loadNotification')
 @stop
