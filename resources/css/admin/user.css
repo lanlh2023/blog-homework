@@ -1,6 +1,7 @@
 .avatar-user {
     min-height: 70px;
     max-height: 120px;
+    max-width: 110px;
     object-fit: cover;
 }
 

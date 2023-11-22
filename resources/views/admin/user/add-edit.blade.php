@@ -13,6 +13,7 @@
 @section('content')
     <!--Container Main start-->
     <div class="col-12 col-xl-10 col-lg-9 col-md-9 content-table">
+        @include('partial.form.toast-message')
         <form enctype='multipart/form-data' id="register-form" method="POST" action="{{ route('admin.user.store') }}">
             @csrf
             <div class="row mt-3">
@@ -28,7 +29,7 @@
                                 <x-slot:label>
                                     Email:
                                 </x-slot:label>
-                                <x-slot:input value="{{ old('email') }}" name="email">
+                                <x-slot:input value="{{ old('email') ?? '' }}" name="email">
                                 </x-slot:input>
                             </x-form.group-input>
                             <x-form.group-input>
@@ -37,7 +38,7 @@
                                 <x-slot:label>
                                     Name:
                                 </x-slot:label>
-                                <x-slot:input value="{{ old('name') }}" name="name">
+                                <x-slot:input value="{{ old('name') ?? '' }}" name="name">
                                 </x-slot:input>
                             </x-form.group-input>
                             <x-form.group-input>
@@ -46,7 +47,8 @@
                                 <x-slot:label>
                                     Avatar:
                                 </x-slot:label>
-                                <x-slot:input value="{{ old('avatar') }}" name="avatar" type="file">
+                                <x-slot:input value="{{ old('avatar') ?? '' }}" name="avatar"
+                                    type="file">
                                 </x-slot:input>
                             </x-form.group-input>
                             <x-form.group-input>
@@ -64,8 +66,8 @@
                                 <x-slot:label>
                                     Password Confirmation:
                                 </x-slot:label>
-                                <x-slot:input name="password_confirmation" value="{{ old('password__confirmation') }}"
-                                    type="password">
+                                <x-slot:input name="password_confirmation"
+                                    value="{{ old('password__confirmation') }}" type="password">
                                 </x-slot:input>
                             </x-form.group-input>
                         </div>
@@ -76,18 +78,11 @@
                 </div>
             </div>
         </form>
-        @error('error')
-            @include('partial.notification.alert-message')
-        @enderror
     </div>
     <!--Container Main end-->
 @stop
 
 @section('scripts')
     <script src="{{ mix('js/validation/form-validation.js') }}"></script>
-    @if (!is_null(session('message')))
-        <script>
-            alert("{{ session('message') }}")
-        </script>
-    @endif
+    @include('includes.loadNotification')
 @stop

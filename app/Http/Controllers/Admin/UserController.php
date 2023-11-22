@@ -133,7 +133,8 @@ class userController extends Controller
     }
 
     /**
-     * Render screen post list
+     * Render screen user list
+     *
      * @return \Illuminate\Contracts\View\View
      */
     public function index()
@@ -184,7 +185,7 @@ class userController extends Controller
         }
 
         return redirect()->route('admin.user.create')
-            ->with(['message' =>  Lang::get('notification-message.REGISTER_ERROR')])
+            ->with('message', Lang::get('notification-message.REGISTER_ERROR'))
             ->with('success', false);
     }
 
