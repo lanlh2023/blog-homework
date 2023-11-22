@@ -30,7 +30,7 @@ Route::post('/checkDuplicateEmail', [UserController::class, 'checkDuplicateEmail
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => "checkManager"], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
 
-    Route::group(['prefix' => 'post', 'as' => 'post.', 'middleware' => "checkRole:" . RoleType::ADMIN . '|' . RoleType::EDITOR], function () {
+    Route::group(['prefix' => 'post', 'as' => 'post.', 'middleware' => "checkRole:" . RoleType::ADMIN . "," . RoleType::EDITOR], function () {
         Route::get('/', [PostController::class, 'index'])->name('index');
         Route::get('/create', [PostController::class, 'create'])->name('create');
         Route::post('/store', [PostController::class, 'store'])->name('store');

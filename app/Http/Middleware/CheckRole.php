@@ -16,14 +16,15 @@ class CheckRole
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      *
      */
-    public function handle(Request $request, Closure $next, string $role): Response
+    public function handle(Request $request, Closure $next, string ...$roles): Response
     {
-        $roles = explode('|', $role);
         $hasRoles = false;
-        foreach ($roles as $roleItem) {
-            if (Auth::user()->hasRole($roleItem)) {
-                $hasRoles = true;
-                break;
+        if (is_array($roles)) {
+            foreach ($roles as $roleItem) {
+                if (Auth::user()->hasRole($roleItem)) {
+                    $hasRoles = true;
+                    break;
+                }
             }
         }
 
