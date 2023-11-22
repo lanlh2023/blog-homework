@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Helpers\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Lang;
 
 class RegisterUserRequest extends FormRequest
 {
@@ -31,6 +32,9 @@ class RegisterUserRequest extends FormRequest
                 'email',
                 'unique:users,email',
                 'max:255',
+            ],
+            'avatar' => [
+                'mimes:png,jpeg,jpg',
             ],
             'password' => [
                 'required',
@@ -67,6 +71,7 @@ class RegisterUserRequest extends FormRequest
                 ':max',
                 $this->getLenghtOfValueByAttributeName('email'),
             ]),
+            'avatar.mimes' => Lang::get('messages.mimes', ['mimes' => 'png,jpeg,jpg']),
             'password.required' => User::getMessage('form-notification.required', [':attribute']),
             'password.between' =>  User::getMessage('form-notification.between'),
             'password_confirmation.required' => User::getMessage('form-notification.required', [':attribute']),

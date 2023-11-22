@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\FilePath;
+use App\Helpers\File;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Repositories\RepositoryInterface\UserRepositoryInterface;
@@ -12,6 +14,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
 use App\Notifications\RegisterNotification;
+use Illuminate\Support\Facades\Lang;
 
 class userController extends Controller
 {
@@ -145,4 +148,44 @@ class userController extends Controller
             ->with('pageTitle', $pageTitle);
     }
 
+    /**
+     * Render screen user crate
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function create()
+    {
+        $pageTitle = 'Add User';
+
+        return view('admin.user.add-edit')
+            ->with('pageTitle', $pageTitle);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param RegisterUserRequest $request
+     * @return mixed array
+     */
+    public function store(RegisterUserRequest $request)
+    {
+        $password = Hash::make($request->password);
+        $data = collect($request->only(['name', 'email']))->merge(['password' => $password]);
+        // avatar is optionnal
+        if ($request->hasFile('avatar')) {
+            $imagePathOfAvatar = File::uploadImageToPublic($request->file('avatar'), FilePath::IMAGE_AVATAR_FOLDER);
+            if ($imagePathOfAvatar) {
+                $data = $data->merge(['avatar' => $imagePathOfAvatar]);
+            }
+        }
+
+        if ($this->userRepository->create($data->toArray())) {
+            return redirect()->route('admin.user.create')
+                ->with('message', Lang::get('notification-message.REGISTER_SUCESS'))
+                ->with('success', true);
+        }
+
+        return redirect()->route('admin.user.create')
+            ->with('message', Lang::get('notification-message.REGISTER_ERROR'))
+            ->with('success', false);
+    }
 }
