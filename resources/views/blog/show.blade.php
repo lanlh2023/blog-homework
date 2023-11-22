@@ -38,8 +38,8 @@
                         <div class="d-flex justify-content-start">
                             <img class="object-fit-cover rounded-circle border image-user-in-show-blog" src="{{ asset($post->user->avatar) }}" alt="" class="w-100">
                             <div class="ml-3 d-flex flex-column justify-content-around">
-                                <h6>By <span class="name-user-in-show-blog">{{ $post->user->name }}</span></h6>
-                                <span class="text-break">{{ $post->user->email }}</span>
+                                <h6>By <span class="name-user-in-show-blog">{{ optional($post->user)->name }}</span></h6>
+                                <span class="text-break">{{ optional($post->user)->email }}</span>
                                 <span class="flex-1 text-muted">Join {{ $post->created_at }}</span>
                             </div>
                         </div>

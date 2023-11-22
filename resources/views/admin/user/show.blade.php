@@ -37,10 +37,5 @@
 @stop
 
 @section('scripts')
-    @if (!is_null(session('message')))
-        <script>
-            alert("{{ session('message') }}")
-        </script>
-    @endif
     <script src="{{ mix('js/admin/post/delete.js') }}"></script>
 @stop

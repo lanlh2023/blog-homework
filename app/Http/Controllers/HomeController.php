@@ -44,7 +44,6 @@ class HomeController extends Controller
         $pageTitle = 'Blog detail';
         $post = $this->postRepository->getById($id);
         if ($post) {
-            $post->content = json_decode($post->content);
             return view('blog.show')
                 ->with('post', $post)
                 ->with('pageTitle', $pageTitle);
