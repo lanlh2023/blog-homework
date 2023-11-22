@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Helpers\User;
+use App\Rules\RegisterUserRule;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Lang;
 
@@ -23,31 +25,16 @@ class RegisterUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $requiredOrNull = 'required';
-        $id = -1;
-
-        if (!empty($this->id)) {
-            $requiredOrNull = 'nullable';
-            $id = $this->id;
-        }
-
+        $rules = $this->getRulesForUser();
         return [
             'name' => [
                 'required'
             ],
-            'email' => [
-                'required',
-                'email',
-                'unique:users,email,' . $id,
-                'max:255',
-            ],
+            'email' => $rules['email'],
             'avatar' => [
                 'mimes:png,jpeg,jpg',
             ],
-            'password' => [
-                $requiredOrNull,
-                'between:8,20',
-            ],
+            'password' => $rules['password'],
             'password_confirmation' => [
                 'same:password',
             ]
@@ -64,6 +51,24 @@ class RegisterUserRequest extends FormRequest
     {
         $attribute = $this->get($attributeName);
         return strlen($attribute);
+    }
+
+    /**
+     * Get rules if exists user
+     *
+     * @return array $rules
+     */
+    public function getRulesForUser()
+    {
+        $rules['email'] = 'required|email|max:255|unique:users,email';
+
+        if (!empty($this->id)) {
+            $rules['password'] = 'nullable';
+            $rules['email'] .= ", $this->id";
+        } else {
+            $rules['password'] = 'required|between:8,20';
+        }
+        return $rules;
     }
 
     public function messages()

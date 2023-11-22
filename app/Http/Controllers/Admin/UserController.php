@@ -137,7 +137,8 @@ class userController extends Controller
     }
 
     /**
-     * Render screen post list
+     * Render screen user list
+     *
      * @return \Illuminate\Contracts\View\View
      */
     public function index()
@@ -188,7 +189,7 @@ class userController extends Controller
         }
 
         return redirect()->route('admin.user.create')
-            ->with(['message' =>  Lang::get('notification-message.REGISTER_ERROR')])
+            ->with('message', Lang::get('notification-message.REGISTER_ERROR'))
             ->with('success', false);
     }
 
@@ -220,9 +221,7 @@ class userController extends Controller
      */
     public function destroy(string $id)
     {
-        $result = $this->userRepository->destroy($id);
-
-        if ($result) {
+        if ($this->userRepository->destroy($id)) {
             return redirect()->route('admin.user.index')
                 ->with('message', Lang::get('notification-message.DELETE_SUCESS'))
                 ->with('success', true);

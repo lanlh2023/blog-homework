@@ -42,12 +42,12 @@ class Post extends Model
         return $query->whereNull('deleted_date');
     }
 
-    protected function getUpdatedAtAttribute($value) {
-        if(! isset($value)) {
-            return $value;
+    protected function getContentAttribute($value)
+    {
+        if (!empty($value)) {
+            return json_decode($value);
         }
 
-        return \Carbon\Carbon::parse($value)->format('F, d Y');
+        return $value;
     }
-
 }
