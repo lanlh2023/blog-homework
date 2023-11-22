@@ -37,6 +37,7 @@ mix.styles('resources/css/admin/app.css', 'public/css/admin/app.css');
 mix.styles('resources/css/admin/post.css', 'public/css/admin/post.css');
 mix.styles('resources/css/admin/user.css', 'public/css/admin/user.css');
 
+mix.js('resources/js/admin/role_user/update.js', 'public/js/admin/role_user/').version();
 // Group for admin end
 
 // Group for user start
