@@ -13,14 +13,13 @@
 @section('content')
     <!--Container Main start-->
     @php
-        $actions = explode('.', Route::current()->getName());
-        if ($actions[2] == 'edit' && !empty($user)) {
+        $route = '/admin/user/store';
+        if (!empty($user)) {
             $route = "/admin/user/update/$user->id";
-        } else {
-            $route = '/admin/user/store';
         }
     @endphp
     <div class="col-12 col-xl-10 col-lg-9 col-md-9 content-table">
+        @include('partial.form.toast-message')
         <form enctype='multipart/form-data' id="register-form" method="POST" action="{{ $route }}">
             @csrf
             <div class="row mt-3">
@@ -97,9 +96,5 @@
 
 @section('scripts')
     <script src="{{ mix('js/validation/form-validation.js') }}"></script>
-    @if (!is_null(session('message')))
-        <script>
-            alert("{{ session('message') }}")
-        </script>
-    @endif
+    @include('includes.loadNotification')
 @stop

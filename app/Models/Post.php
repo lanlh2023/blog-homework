@@ -50,4 +50,12 @@ class Post extends Model
         return \Carbon\Carbon::parse($value)->format('F, d Y');
     }
 
+    protected function getContentAttribute($value)
+    {
+        if (!empty($value)) {
+            return json_decode($value);
+        }
+
+        return $value;
+    }
 }
