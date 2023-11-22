@@ -216,9 +216,7 @@ class userController extends Controller
      */
     public function destroy(string $id)
     {
-        $result = $this->userRepository->destroy($id);
-
-        if ($result) {
+        if ($this->userRepository->destroy($id)) {
             return redirect()->route('admin.user.index')
                 ->with('message', Lang::get('notification-message.DELETE_SUCESS'))
                 ->with('success', true);
