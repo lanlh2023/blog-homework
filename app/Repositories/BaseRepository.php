@@ -166,4 +166,23 @@ abstract class BaseRepository
             return false;
         }
     }
+
+
+    /**
+     * Update record in table by array data
+     * @param string $id
+     * @param array $data,
+     * @return mixed|false
+     */
+    public function update(string $id, array $data)
+    {
+        $primaryKey = $this->model->getKeyName();
+        try {
+            return $this->model->where($primaryKey, $id)->update($data);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+
+            return false;
+        }
+    }
 }

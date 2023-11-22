@@ -45,5 +45,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::post('/store', [UserController::class, 'store'])->name('store');
         Route::get('/show/{id}', [UserController::class, 'show'])->name('show');
         Route::post('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy');
+        Route::get('/edit/{id}', [UserController::class, 'edit'])->middleware(['isUserLogin'])->name('edit');
+        Route::post('/update/{id}', [UserController::class, 'update'])->middleware(['isUserLogin'])->name('update');
     });
 });

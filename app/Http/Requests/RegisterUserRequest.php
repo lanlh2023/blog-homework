@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Helpers\User;
+use App\Rules\RegisterUserRule;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Lang;
 
@@ -23,25 +25,17 @@ class RegisterUserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $rules = $this->getRulesForUser();
         return [
             'name' => [
                 'required'
             ],
-            'email' => [
-                'required',
-                'email',
-                'unique:users,email',
-                'max:255',
-            ],
+            'email' => $rules['email'],
             'avatar' => [
                 'mimes:png,jpeg,jpg',
             ],
-            'password' => [
-                'required',
-                'between:8,20',
-            ],
+            'password' => $rules['password'],
             'password_confirmation' => [
-                'between:8,20',
                 'same:password',
             ]
         ];
@@ -57,6 +51,24 @@ class RegisterUserRequest extends FormRequest
     {
         $attribute = $this->get($attributeName);
         return strlen($attribute);
+    }
+
+    /**
+     * Get rules if exists user
+     *
+     * @return array $rules
+     */
+    public function getRulesForUser()
+    {
+        $rules['email'] = 'required|email|max:255|unique:users,email';
+
+        if (!empty($this->id)) {
+            $rules['password'] = 'nullable';
+            $rules['email'] .= ", $this->id";
+        } else {
+            $rules['password'] = 'required|between:8,20';
+        }
+        return $rules;
     }
 
     public function messages()
@@ -76,7 +88,6 @@ class RegisterUserRequest extends FormRequest
             'password.between' =>  User::getMessage('form-notification.between'),
             'password_confirmation.required' => User::getMessage('form-notification.required', [':attribute']),
             'password_confirmation.same' => User::getMessage('form-notification.same'),
-            'password_confirmation.between' =>  User::getMessage('form-notification.between'),
         ];
     }
 
