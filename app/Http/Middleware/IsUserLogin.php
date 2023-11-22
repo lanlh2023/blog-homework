@@ -16,7 +16,7 @@ class IsUserLogin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(auth()->user()->id == $request->id) {
+        if (auth()->user()->id == $request->id) {
             return $next($request);
         }
 

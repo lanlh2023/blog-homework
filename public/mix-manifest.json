@@ -1,10 +1,14 @@
 {
-    "/js/app.js": "/js/app.js?id=9e9e7276323dda5b4bc0138995ace0bc",
-    "/js/common.js": "/js/common.js?id=dcb3d55ed64aa4aee041fcb863276961",
+    "/js/app.js": "/js/app.js?id=a1be499f5c36a2763d5c2885f552379c",
+    "/js/common.js": "/js/common.js?id=a93ad98d56a373bda5ff0bf33deb985a",
     "/js/custom-jquery/custom-jquery-validation.js": "/js/custom-jquery/custom-jquery-validation.js?id=e5c6adde05dd34b5a20ceb23eab89e31",
-    "/js/admin/add.js": "/js/admin/add.js?id=0fb0569e60deeac24714a785acff05f5",
-    "/js/validation/form-validation.js": "/js/validation/form-validation.js?id=113524706d7d4b629c0cc199b58fd623",
-    "/css/app.css": "/css/app.css?id=d143b0d1b5b6ee239d33f9e2276a5648",
+    "/js/validation/post-validation.js": "/js/validation/post-validation.js?id=70826e0e2c047fba27e31c9452f06c17",
+    "/js/admin/post/add.js": "/js/admin/post/add.js?id=f4060029fcab5bcfee2b9e009073969c",
+    "/js/admin/post/delete.js": "/js/admin/post/delete.js?id=30d9a645474440ac17b56481d0b7a4d6",
+    "/js/validation/form-validation.js": "/js/validation/form-validation.js?id=13f0e168a00c353ad7b911d3e4393b9f",
+    "/css/app.css": "/css/app.css?id=a419e49f656eb8fb90d830058a5b68fe",
     "/css/message/alert-message.css": "/css/message/alert-message.css?id=67c0319c00916d4a62b47a45fba638ba",
-    "/css/admin/app.css": "/css/admin/app.css?id=c4753d7b8de78bd32c134bdbbddf7777"
+    "/css/admin/app.css": "/css/admin/app.css?id=3978bb0f8e8d1c6c494c11b980d61315",
+    "/css/admin/post.css": "/css/admin/post.css?id=94167df57908426649a656aa4576e7d8",
+    "/css/admin/user.css": "/css/admin/user.css?id=143be58b3eb263eb20dfcd9813afb0c0"
 }
