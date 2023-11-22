@@ -13,7 +13,7 @@
     <div class="col-12 col-xl-10 col-lg-9 col-md-9 content-table-wrap m-auto">
         <div class="container">
             <div class="post-list d-flex flex-column align-items-center">
-                @forelse ($posts as $postItem)
+                @foreach ($posts as $postItem)
                     <div class="post-item border shadow">
                         <div class="image-post-item w-100 mb-2">
                             <img src="{{ asset($postItem->image_title) }}" alt="">
@@ -28,7 +28,7 @@
                         </div>
                         <div class="footer-info d-flex justify-content-between align-items-center">
                             <div class="info-user d-flex align-items-center">
-                                <img src="{{ asset(optional($postItem->user)->avatar) }}" class="rounded" alt=""
+                                <img src="{{ asset($postItem->user->avatar) }}" class="rounded" alt=""
                                     height="40px" width="40px">
                                 <span class="text-muted ml-2">{{ $postItem->user->name }}</span>
                             </div>
@@ -37,11 +37,7 @@
                             </div>
                         </div>
                     </div>
-                @empty
-                    <div class="d-flex justify-content-center" style="font-size: 20px">
-                        No Post Found
-                    </div>
-                @endforelse
+                @endforeach
             </div>
             @if (!empty($posts))
                 <div class="pagination-wrap d-flex justify-content-end px-4 pt-4">

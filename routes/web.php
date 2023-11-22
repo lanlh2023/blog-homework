@@ -46,3 +46,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::post('/update/{id}', [UserController::class, 'update'])->middleware(['isUserLogin'])->name('update');
     });
 });
+
+Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
+    Route::get('/show/{id}', [HomeController::class, 'show'])->name('show');
+});
