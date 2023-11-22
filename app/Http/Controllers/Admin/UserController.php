@@ -188,4 +188,43 @@ class userController extends Controller
             ->with('message', Lang::get('notification-message.REGISTER_ERROR'))
             ->with('success', false);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param string $id
+     * @return redirect| \Illuminate\Contracts\View\View
+     */
+    public function show(string $id)
+    {
+        $pageTitle = 'User show';
+        $user = $this->userRepository->getById($id);
+        if ($user) {
+            return view('admin.user.show')
+                ->with('user', $user)
+                ->with('pageTitle', $pageTitle);
+        }
+        return redirect()->route('admin.user.index')
+            ->with('message', Lang::get('notification-message.NOT_FOUND', ['model' => "User with $id "]))
+            ->with('success', false);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param string $id
+     * @return redirect
+     */
+    public function destroy(string $id)
+    {
+        if ($this->userRepository->destroy($id)) {
+            return redirect()->route('admin.user.index')
+                ->with('message', Lang::get('notification-message.DELETE_SUCESS'))
+                ->with('success', true);
+        }
+
+        return redirect()->route('admin.user.index')
+            ->with('message', Lang::get('notification-message.DELETE_ERROR'))
+            ->with('success', false);
+    }
 }

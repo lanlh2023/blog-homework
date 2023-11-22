@@ -43,5 +43,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
         Route::get('/create', [UserController::class, 'create'])->name('create');
         Route::post('/store', [UserController::class, 'store'])->name('store');
+        Route::get('/show/{id}', [UserController::class, 'show'])->name('show');
+        Route::post('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy');
     });
 });
