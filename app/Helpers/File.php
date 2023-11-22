@@ -53,9 +53,9 @@ class File
      * upload image to public
      *
      * @param UploadedFile $file
-     * @return array
+     * @return string|false
      */
-    public static function uploadImageToPublic(UploadedFile $file)
+    public static function uploadImageToPublic(UploadedFile $file, string $folderPublic = '')
     {
 
         $pathInfo = pathinfo($file->getClientOriginalName());
@@ -65,11 +65,14 @@ class File
 
         $fileName = $pathInfo['filename'] . '_' . Carbon::now()->format('YmdHisu') . '.' . $pathInfo['extension'];
 
-        $path = $file->move(public_path(FilePath::IMAGE_POST_TITLE), $fileName);
+        $pathFolderPublic = $folderPublic ?? FilePath::IMAGE_POST_TITLE;
 
-        return [
-            'path' => $path,
-            'fileName' => $fileName,
-        ];
+        $path = $pathFolderPublic . $fileName;
+
+        if (FacadesFile::put(public_path($path), file_get_contents($file))) {
+            return $path;
+        }
+
+        return false;
     }
 }
