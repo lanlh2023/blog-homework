@@ -21,6 +21,7 @@
         }
     @endphp
     <div class="col-12 col-xl-10 col-lg-9 col-md-9 content-table">
+        @include('partial.form.toast-message')
         <form enctype='multipart/form-data' id="register-form" method="POST" action="{{ $route }}">
             @csrf
             <div class="row mt-3">
