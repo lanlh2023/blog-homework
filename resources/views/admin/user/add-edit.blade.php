@@ -13,11 +13,9 @@
 @section('content')
     <!--Container Main start-->
     @php
-        $actions = explode('.', Route::current()->getName());
-        if ($actions[2] == 'edit' && !empty($user)) {
+        $route = '/admin/user/store';
+        if (!empty($user)) {
             $route = "/admin/user/update/$user->id";
-        } else {
-            $route = '/admin/user/store';
         }
     @endphp
     <div class="col-12 col-xl-10 col-lg-9 col-md-9 content-table">
