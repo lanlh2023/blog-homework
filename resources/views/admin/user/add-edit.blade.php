@@ -12,9 +12,15 @@
 
 @section('content')
     <!--Container Main start-->
+    @php
+        $route = '/admin/user/store';
+        if (!empty($user)) {
+            $route = "/admin/user/update/$user->id";
+        }
+    @endphp
     <div class="col-12 col-xl-10 col-lg-9 col-md-9 content-table">
         @include('partial.form.toast-message')
-        <form enctype='multipart/form-data' id="register-form" method="POST" action="{{ route('admin.user.store') }}">
+        <form enctype='multipart/form-data' id="register-form" method="POST" action="{{ $route }}">
             @csrf
             <div class="row mt-3">
                 <div class="col-12 m-auto">
@@ -29,7 +35,7 @@
                                 <x-slot:label>
                                     Email:
                                 </x-slot:label>
-                                <x-slot:input value="{{ old('email') ?? '' }}" name="email">
+                                <x-slot:input value="{{ old('email', $user['email'] ?? '') }}" name="email">
                                 </x-slot:input>
                             </x-form.group-input>
                             <x-form.group-input>
@@ -38,7 +44,7 @@
                                 <x-slot:label>
                                     Name:
                                 </x-slot:label>
-                                <x-slot:input value="{{ old('name') ?? '' }}" name="name">
+                                <x-slot:input value="{{ old('name', $user['name'] ?? '') }}" name="name">
                                 </x-slot:input>
                             </x-form.group-input>
                             <x-form.group-input>
@@ -47,7 +53,7 @@
                                 <x-slot:label>
                                     Avatar:
                                 </x-slot:label>
-                                <x-slot:input value="{{ old('avatar') ?? '' }}" name="avatar"
+                                <x-slot:input value="{{ old('name', $user['name'] ?? '') }}" name="avatar"
                                     type="file">
                                 </x-slot:input>
                             </x-form.group-input>
@@ -70,6 +76,9 @@
                                     value="{{ old('password__confirmation') }}" type="password">
                                 </x-slot:input>
                             </x-form.group-input>
+                            @if (!empty($user))
+                                <input type="text" hidden id="userID" value="{{ $user->id }}">
+                            @endif
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-success btn-add-post"> Save </button>
@@ -78,6 +87,9 @@
                 </div>
             </div>
         </form>
+        @error('error')
+            @include('partial.notification.alert-message')
+        @enderror
     </div>
     <!--Container Main end-->
 @stop

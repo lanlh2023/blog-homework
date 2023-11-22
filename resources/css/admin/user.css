@@ -1,8 +1,9 @@
 .avatar-user {
     min-height: 70px;
-    max-height: 120px;
-    max-width: 110px;
+    max-height: 90px;
+    max-width: 90px;
     object-fit: cover;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .avatar-user-show {

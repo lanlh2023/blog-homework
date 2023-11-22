@@ -8,4 +8,7 @@ return [
     'NOT_FOUND' => ':model is not found.',
     'DELETE_SUCESS' => 'Delete processing was successful.',
     'DELETE_ERROR' => 'Delete processing was failed.',
+    'UPDATE_SUCESS' => 'Update processing was successful.',
+    'UPDATE_ERROR' => 'Update processing failed.',
+    'ACCESS_ERROR' => 'Access denied.',
 ];
