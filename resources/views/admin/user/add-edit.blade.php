@@ -97,9 +97,5 @@
 
 @section('scripts')
     <script src="{{ mix('js/validation/form-validation.js') }}"></script>
-    @if (!is_null(session('message')))
-        <script>
-            alert("{{ session('message') }}")
-        </script>
-    @endif
+    @include('includes.loadNotification')
 @stop

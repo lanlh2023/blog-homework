@@ -65,7 +65,7 @@ class File
 
         $fileName = $pathInfo['filename'] . '_' . Carbon::now()->format('YmdHisu') . '.' . $pathInfo['extension'];
 
-        $pathFolderPublic = empty($folderPublic) ? FilePath::IMAGE_POST_TITLE : $folderPublic;
+        $pathFolderPublic = $folderPublic ?? FilePath::IMAGE_POST_TITLE;
 
         $path = $pathFolderPublic . $fileName;
 

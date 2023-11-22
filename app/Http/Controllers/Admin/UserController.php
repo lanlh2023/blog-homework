@@ -188,7 +188,7 @@ class userController extends Controller
         }
 
         return redirect()->route('admin.user.create')
-            ->with(['message' =>  Lang::get('notification-message.REGISTER_ERROR')])
+            ->with('message', Lang::get('notification-message.REGISTER_ERROR'))
             ->with('success', false);
     }
 
