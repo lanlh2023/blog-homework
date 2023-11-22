@@ -1,13 +1,1 @@
-.avatar-user {
-    min-height: 70px;
-    max-height: 120px;
-    max-width: 110px;
-    object-fit: cover;
-}
-
-.avatar-user-show {
-    min-height: 150px;
-    max-height: 200px;
-    min-width: 150px;
-    object-fit: cover;
-}
+.avatar-user{min-height:70px;max-height:120px;max-width:110px;object-fit:cover}.avatar-user-show{min-height:150px;max-height:200px;min-width:150px;object-fit:cover}
