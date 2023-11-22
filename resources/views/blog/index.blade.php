@@ -28,7 +28,7 @@
                         </div>
                         <div class="footer-info d-flex justify-content-between align-items-center">
                             <div class="info-user d-flex align-items-center">
-                                <img src="{{ asset($postItem->user?->avatar ?? '') }}" class="rounded" alt=""
+                                <img src="{{ asset(optional($postItem->user)->avatar) }}" class="rounded" alt=""
                                     height="40px" width="40px">
                                 <span class="text-muted ml-2">{{ $postItem->user->name }}</span>
                             </div>
