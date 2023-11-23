@@ -73,7 +73,7 @@
     left: calc(100% - 56px);
     height: 40px;
     width: 40px;
-    line-height: 50px;
+    line-height: 40px;
     text-align: center;
     border-radius: 5px;
     z-index: 100;
@@ -94,6 +94,21 @@
 
 svg {
     fill: #fff;
+}
+
+#wrap-toast {
+    position: fixed;
+    top: 0;
+    z-index: -2;
+    right: -100px;
+    min-height: 120px;
+    min-width: 400px;
+    transition: right linear .5s;
+}
+
+#wrap-toast.open-toast {
+    z-index: 99;
+    right: 0;
 }
 
 @media only screen and (max-width: 991px) {
