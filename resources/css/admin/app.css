@@ -69,8 +69,8 @@
 
 .icon-bar {
     position: absolute;
-    top: 5px;
-    left: calc(100% - 56px);
+    top: 0;
+    left: calc(100% - 40px);
     height: 40px;
     width: 40px;
     line-height: 40px;
@@ -98,7 +98,7 @@ svg {
 
 #wrap-toast {
     position: fixed;
-    top: 0;
+    top: -100px;
     z-index: -2;
     right: -100px;
     min-height: 120px;
@@ -109,11 +109,17 @@ svg {
 #wrap-toast.open-toast {
     z-index: 99;
     right: 0;
+    top: 0;
 }
 
 @media only screen and (max-width: 991px) {
     a.nav-item.nav-link {
         margin-left: 10px;
+    }
+
+
+    .content {
+        max-width: fit-content;
     }
 }
 
@@ -127,6 +133,7 @@ svg {
     div.content {
         position: absolute;
         min-height: 300px;
+        max-width: none;
         left: 0;
         right: 0;
     }
@@ -134,10 +141,10 @@ svg {
     .menu-list {
         opacity: 0;
         position: absolute;
-        transition: all 0.3s linear;
-        top: -50px;
+        transition: all 1s linear;
+        top: -410px;
         transform-origin: center center;
-        z-index: 2;
+        z-index: 10;
         margin-bottom: 10px;
         overflow-y: scroll;
         scroll-snap-type: mandatory;

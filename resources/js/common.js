@@ -19,14 +19,41 @@ $(document).ready(function () {
         };
     })();
 
+    const toggleClassForSildebar = (isAdd = true) => {
+        if (isAdd) {
+            $('.sidebar').addClass('col-xl-1 col-lg-1')
+            $('.menu-list').addClass('collapse')
+            return;
+        }
+        $('.sidebar').removeClass('col-xl-1 col-lg-1')
+        $('.menu-list').removeClass('collapse')
+    }
+
+    window.onload = function () {
+        if (localStorage.getItem("collapse") == null) {
+            localStorage.setItem("collapse", false);
+        }
+
+        let isClose = JSON.parse(localStorage.getItem("collapse"));
+        if ($(window).width() >= 768) {
+            if (isClose) {
+                toggleClassForSildebar()
+            }
+        }
+    };
+
     $("#navbar-checkbox").change(function () {
+        if (localStorage.getItem("collapse") == null) {
+            localStorage.setItem("collapse", false);
+        }
+
         if ($(window).width() >= 768) {
             if ($(this).prop('checked')) {
-                $('.sidebar').addClass('col-xl-1 col-lg-1')
-                $('.menu-list').addClass('collapse')
+                localStorage.setItem("collapse", true);
+                toggleClassForSildebar();
             } else {
-                $('.sidebar').removeClass('col-xl-1 col-lg-1')
-                $('.menu-list').removeClass('collapse')
+                localStorage.setItem("collapse", false);
+                toggleClassForSildebar(false);
             }
         }
     });
