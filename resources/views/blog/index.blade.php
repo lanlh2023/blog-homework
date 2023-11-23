@@ -12,6 +12,7 @@
 @section('content')
     <div class="col-12 col-xl-10 col-lg-9 col-md-9 content-table-wrap m-auto">
         <div class="container">
+            @include('partial.form.toast-message')
             <div class="post-list d-flex flex-column align-items-center">
                 @forelse ($posts as $postItem)
                     <div class="post-item border shadow">
@@ -52,9 +53,5 @@
     </div>
 @stop
 @section('scripts')
-    @if (!is_null(session('message')))
-        <script>
-            alert("{{ session('message') }}")
-        </script>
-    @endif
+    @include('includes.loadNotification')
 @stop
