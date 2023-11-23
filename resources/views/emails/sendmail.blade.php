@@ -1,4 +1,4 @@
-@if (empty(!$post))
+@if (!empty($post))
     <x-mail::message>
         # {{ $post->title }}
 
