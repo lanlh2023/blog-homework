@@ -2,10 +2,12 @@
     margin-bottom: 40px;
     padding: 24px;
     transition: all ease 0.1s;
-    max-width: 700px;
     width: 100%;
 }
-
+.post-item-show {
+    max-width: 710px;
+    width: 100%;
+}
 .post-item:hover {
     transform: translateY(-10px);
     box-shadow: 0 0.6rem 1rem rgba(0, 0, 0, 0.2) !important;
