@@ -12,9 +12,9 @@
 @section('content')
     <div class="col-12 col-xl-10 col-lg-9 col-md-9 content-table-wrap m-auto">
         <div class="container">
-            @include('partial.form.toast-message')
             <div class="post-list d-flex flex-column align-items-center">
                 @foreach ($posts as $postItem)
+                <a href="{{ route('blog.show', ['id' => $postItem->id])}}" class="text-reset post-item-show">
                     <div class="post-item border shadow">
                         <div class="image-post-item w-100 mb-2">
                             <img src="{{ asset($postItem->image_title) }}" alt="">
@@ -38,6 +38,7 @@
                             </div>
                         </div>
                     </div>
+                </a>
                 @endforeach
             </div>
             @if (!empty($posts))
@@ -49,5 +50,9 @@
     </div>
 @stop
 @section('scripts')
-    @include('includes.loadNotification')
+    @if (!is_null(session('message')))
+        <script>
+            alert("{{ session('message') }}")
+        </script>
+    @endif
 @stop
