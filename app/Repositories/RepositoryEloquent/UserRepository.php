@@ -10,16 +10,15 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
 
-use function PHPUnit\Framework\throwException;
-
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
     /**
-    * Get model by classes that inherit it
-    *
-    * @return model
-    */
-    public function getModel() {
+     * Get model by classes that inherit it
+     *
+     * @return model
+     */
+    public function getModel()
+    {
         return User::class;
     }
 
@@ -36,7 +35,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         })->where('email', $email)->first();
     }
 
-      /**
+    /**
      * Set role for user
      *
      * @param string userId
@@ -44,7 +43,8 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
      *
      * @return @mixed $result
      */
-    public function setRole(string $userId, string $roleId) {
+    public function setRole(string $userId, string $roleId)
+    {
         try {
             DB::beginTransaction();
             $user = $this->getById($userId);
@@ -62,6 +62,5 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             Log::error($e->getMessage());
             return false;
         }
-
     }
 }

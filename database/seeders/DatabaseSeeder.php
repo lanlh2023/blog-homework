@@ -13,6 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+        DB::table('roles')->truncate();
          $roles = [
             ['name' => 'admin'],
             ['name' => 'editor'],
@@ -28,6 +31,8 @@ class DatabaseSeeder extends Seeder
             ['name' => 'edit_user'],
             ['name' => 'delete_user'],
         ];
+
+        DB::table('permissions')->truncate();
         DB::table('permissions')->insert($permissions);
 
         $rolePermissions = [
@@ -42,6 +47,10 @@ class DatabaseSeeder extends Seeder
             ['role_id' => 2, 'permission_id' => 3], // editor - delete_post
             ['role_id' => 3, 'permission_id' => 1], // user - create_post
         ];
+
+        DB::table('permission_role')->truncate();
         DB::table('permission_role')->insert($rolePermissions);
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
