@@ -17,4 +17,7 @@ return [
     'next' => 'Next &raquo;',
     'previousText' => 'First',
     'nextText' => 'Last',
+
+    'nextForIndex' => 'CHECK MORE ARTICLES',
+    'previousForIndex' => 'MORE RECENT ARTICLES',
 ];

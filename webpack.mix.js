@@ -37,7 +37,7 @@ mix.js('resources/js/validation/add-edit-post-form.js', 'public/js/validation/po
 // Group for admin end
 
 // Group for user start
-
+mix.styles('resources/css/blog/index.css', 'public/css/blog/index.css');
 mix.js([
     'resources/js/validation/login-form.js',
     'resources/js/validation/register-form.js',

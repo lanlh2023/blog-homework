@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +17,7 @@ use App\Http\Controllers\Admin\PostController;
 |
 */
 
-Route::get('/', function () {
-    return view('blog.index');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/login', [UserController::class, 'login'])->name('login');
 Route::post('/checkLogin', [UserController::class, 'checkLogin'])->name('checkLogin');
@@ -48,4 +47,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('/edit/{id}', [UserController::class, 'edit'])->middleware(['isUserLogin'])->name('edit');
         Route::post('/update/{id}', [UserController::class, 'update'])->middleware(['isUserLogin'])->name('update');
     });
+});
+
+Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
+    Route::get('/show/{id}', [HomeController::class, 'show'])->name('show');
 });
