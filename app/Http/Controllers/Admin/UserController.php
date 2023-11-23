@@ -263,8 +263,12 @@ class userController extends Controller
     public function update(RegisterUserRequest $request, string $id)
     {
         $pageTitle = 'Edit User';
-        $password = Hash::make($request->password);
-        $data = collect($request->only(['name', 'email']))->merge(['password' => $password]);
+        $data = collect($request->only(['name', 'email']));
+        // Password is optionnal
+        if (!empty($request->passwor)) {
+            $password = Hash::make($request->password);
+            $data = $data->merge(['password' => $password]);
+        }
         // avatar is optionnal
         if ($request->hasFile('avatar')) {
             $imagePathOfAvatar = File::uploadImageToPublic($request->file('avatar'), FilePath::IMAGE_AVATAR_FOLDER);
