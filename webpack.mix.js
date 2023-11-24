@@ -32,7 +32,7 @@ mix.js('resources/js/validation/add-edit-post-form.js', 'public/js/validation/po
     .styles('resources/css/admin/app.css', 'public/css/admin/app.css')
     .styles('resources/css/admin/post.css', 'public/css/admin/post.css');
 
-// mix.styles('resources/css/admin/user.css', 'public/css/admin/user.css');
+mix.styles('resources/css/admin/user.css', 'public/css/admin/user.css');
 
 // Group for admin end
 
