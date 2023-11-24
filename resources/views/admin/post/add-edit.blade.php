@@ -12,6 +12,7 @@
 
 @section('content')
     <!--Container Main start-->
+    @include('partial.form.toast-message')
     <div class="col-12 col-xl-10 col-lg-9 col-md-9 content-table">
         <form  enctype='multipart/form-data' id="post-form">
             @csrf
@@ -112,10 +113,5 @@
 @section('scripts')
     <script src="{{ mix('js/validation/post-validation.js') }}"></script>
     <script src="{{ mix('js/admin/post/add.js') }}"></script>
-
-    @if (!is_null(session('message')))
-        <script>
-            alert("{{ session('message') }}")
-        </script>
-    @endif
+    @include('includes.loadNotification')
 @stop

@@ -37,7 +37,7 @@ $(document).ready(function () {
         }
     });
 
-    const loadNotification = function ({ success, message }) {
+    window.loadNotification = function ({ success, message }) {
         $("#toast").toast('hide');
 
         let classForNotification = 'bg-danger'
