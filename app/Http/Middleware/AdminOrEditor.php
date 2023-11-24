@@ -2,12 +2,13 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\RoleType;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckManager
+class AdminOrEditor
 {
     /**
      * Handle an incoming request.
@@ -16,9 +17,10 @@ class CheckManager
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check() || empty(Auth::user()->getPermissions()->first())) {
-            abort(403, 'Unauthorized');
+        if (Auth::user()->hasRole(RoleType::ADMIN) || Auth::user()->hasRole(RoleType::EDITOR)) {
+            return $next($request);
         }
-        return $next($request);
+
+        abort(403, 'Unauthorized');
     }
 }
