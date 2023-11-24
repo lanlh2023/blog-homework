@@ -1,25 +1,4 @@
 $().ready(function () {
-    const loadNotification = function ({ success, message }) {
-        $("#toast").toast('hide');
-
-        let classForNotification = 'bg-danger'
-        if (success) {
-            classForNotification = 'bg-success'
-        }
-
-        $('#toast-body').text(message)
-        $('#toast-body').addClass(classForNotification)
-        $('#wrap-toast').addClass('open-toast')
-
-        $("#toast").toast('show');
-
-        $('#toast').on('hidden.bs.toast', function () {
-            $('#toast-body').text('')
-            $('#toast-body').removeClass(classForNotification)
-            $('#wrap-toast').removeClass('open-toast')
-        })
-    }
-
     $('.btn-update-role').on('click', function () {
         let elementTr = $(this).closest('.item-user');
         let tdIncludeSelect = $(elementTr).children("td.role_user_td")[0];

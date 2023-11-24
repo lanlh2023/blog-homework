@@ -74,12 +74,14 @@ $(document).ready(function () {
 
         $('#toast-body').text(message)
         $('#toast-body').addClass(classForNotification)
+        $('#wrap-toast').addClass('open-toast')
 
         $("#toast").toast('show');
 
         $('#toast').on('hidden.bs.toast', function () {
             $('#toast-body').text('')
             $('#toast-body').removeClass(classForNotification)
+            $('#wrap-toast').removeClass('open-toast')
         })
     }
 })

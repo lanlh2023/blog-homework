@@ -12,7 +12,7 @@
 @section('content')
     <!--Container Main start-->
     <div class="col-12 col-xl-10 col-lg-9 col-md-9 content-table-wrap">
-        @include('partial.notification.toast-message')
+        @include('partial.form.toast-message')
         @if (!empty($users))
             <div class="pagination-wrap d-flex justify-content-end px-4 pt-4">
                 {{ $users->withQueryString()->links('vendor.pagination.custom') }}
