@@ -1,15 +1,26 @@
 $().ready(function () {
+    tinymce.init({
+        selector: '#content',
+        skin: false,
+        content_css: false,
+        toolbar: 'undo redo | formatselect| bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table',
+    });
+
     const subContentList = [];
 
     $('#add-image').on('click', function () {
         let elementFile = $('#file');
-        let elementContent = $('#content');
 
         let file = $(elementFile).prop('files')[0];
-        let content = $(elementContent).val();
+        let content = tinymce.get("content").getContent();
 
         elementFile.val('');
-        elementContent.val('');
+        tinymce.get("content").setContent("");
+
+        if (content.length == 0) {
+            loadNotification({ success: false, message: 'Please enter sub content for post' })
+            return;
+        }
 
         if (file) {
             let reader = new FileReader();
@@ -97,15 +108,18 @@ $().ready(function () {
                 success: function (data) {
                     if (data.success) {
                         resetAllForm();
-                        alert(data.message)
+                        window.loadNotification(data)
                     }
                 },
-                error: function (error) {
+                error: function (xhr, status, error) {
                     console.log(error);
+
+                    loadNotification({ success: false, message: xhr.responseJSON.message })
                 }
             })
+        } else {
+            loadNotification({ success: false, message: 'Please add sub content for post' })
         }
 
     })
-
 })
