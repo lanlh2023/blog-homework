@@ -18,6 +18,7 @@ class CheckRole
     public function handle(Request $request, Closure $next): Response
     {
         // RoleType same Role->name
+        // And route ex: admin.post.*
         $groupPermissions[RoleType::ADMIN] = RoleType::ADMIN;
         $groupPermissions[RoleType::EDITOR] = 'post';
 
