@@ -57,6 +57,11 @@ $().ready(function () {
 
         elementFile.val('');
         tinymce.get("content").setContent("");
+        if (content.length == 0) {
+            loadNotification({ success: false, message: 'Please enter sub content for post' })
+            return;
+        }
+
         if (file) {
             let reader = new FileReader();
             reader.onloadend = function () {
@@ -80,12 +85,16 @@ $().ready(function () {
 
     $('#update-subcontent').on('click', function () {
         let elementFile = $('#file');
-        let elementContent = $('#content');
         let file = $(elementFile).prop('files')[0];
         let content = tinymce.get("content").getContent();
         let item = {
             content: content,
             type: PUBLIC
+        }
+
+        if (content.length == 0) {
+            loadNotification({ success: false, message: 'Please enter sub content for post' })
+            return;
         }
 
         if (file) {
@@ -154,25 +163,6 @@ $().ready(function () {
         });
     };
 
-    const loadNotification = function ({ success, message }) {
-        $("#toast").toast('hide');
-
-        let classForNotification = 'bg-danger'
-        if (success) {
-            classForNotification = 'bg-success'
-        }
-
-        $('#toast-body').text(message)
-        $('#toast-body').addClass(classForNotification)
-
-        $("#toast").toast('show');
-
-        $('#toast').on('hidden.bs.toast', function () {
-            $('#toast-body').text('')
-            $('#toast-body').removeClass(classForNotification)
-        })
-    }
-
     $('.btn-update-post').on('click', function (e) {
         const form = $("#post-form");
         let id = $('#post-id').val();
@@ -186,7 +176,7 @@ $().ready(function () {
             data.append('content_title', contentTitle);
             data.append('content', JSON.stringify(subContentList));
 
-            if(imageTitleFile) {
+            if (imageTitleFile) {
                 data.append('image_title', imageTitleFile);
             } else {
                 data.append('image_title', $('#image_title').attr('value'));
@@ -202,12 +192,12 @@ $().ready(function () {
                 success: function (data) {
                     loadNotification(data)
                 },
-                error: function (xhr, status, error) {
-                    console.log(error);
-
+                error: function (xhr) {
                     loadNotification({ success: false, message: xhr.responseJSON.message })
                 }
             })
+        } else {
+            loadNotification({ success: false, message: 'Please add sub content for post' })
         }
 
     })
