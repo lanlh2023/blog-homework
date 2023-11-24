@@ -93,7 +93,7 @@ class User extends Authenticatable
             $this->permissionList = $this->roles->pluck('permissions')->flatten();
         }
 
-        return $this->permissionList ?? collect();
+        return $this->permissionList ?? [];
     }
 
 }

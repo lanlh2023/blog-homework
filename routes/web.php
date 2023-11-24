@@ -30,7 +30,7 @@ Route::post('/checkDuplicateEmail', [UserController::class, 'checkDuplicateEmail
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => "checkManager"], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
 
-    Route::group(['prefix' => 'post', 'as' => 'post.', 'middleware' => 'adminOrEditor'], function () {
+    Route::group(['prefix' => 'post', 'as' => 'post.', 'middleware' => 'checkRole'], function () {
         Route::get('/', [PostController::class, 'index'])->name('index');
         Route::get('/create', [PostController::class, 'create'])->name('create');
         Route::post('/store', [PostController::class, 'store'])->name('store');
@@ -38,7 +38,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => "checkManag
         Route::get('/show/{id}', [PostController::class, 'show'])->name('show');
     });
 
-    Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'admin'], function () {
+    Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'checkRole'], function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
         Route::get('/create', [UserController::class, 'create'])->name('create');
         Route::post('/store', [UserController::class, 'store'])->name('store');
@@ -48,7 +48,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => "checkManag
         Route::post('/update/{id}', [UserController::class, 'update'])->middleware(['isUserLogin'])->name('update');
     });
 
-    Route::group(['prefix' => 'role_user', 'as' => 'role_user.', 'middleware' => 'admin'], function () {
+    Route::group(['prefix' => 'role_user', 'as' => 'role_user.', 'middleware' => 'checkRole'], function () {
         Route::get('/', [RoleUserController::class, 'index'])->name('index');
         Route::get('/create', [RoleUserController::class, 'create'])->name('create');
         Route::post('/store', [RoleUserController::class, 'store'])->name('store');

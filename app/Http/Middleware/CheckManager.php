@@ -16,7 +16,7 @@ class CheckManager
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check() || empty(Auth::user()->getPermissions()->first())) {
+        if (!Auth::check() || empty(Auth::user()->getPermissions())) {
             abort(403, 'Unauthorized');
         }
         return $next($request);

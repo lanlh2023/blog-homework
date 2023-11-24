@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminOrEditor
+class CheckRole
 {
     /**
      * Handle an incoming request.
@@ -17,10 +17,14 @@ class AdminOrEditor
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->hasRole(RoleType::ADMIN) || Auth::user()->hasRole(RoleType::EDITOR)) {
+        // RoleType same Role->name
+        $groupPermissions[RoleType::ADMIN] = RoleType::ADMIN;
+        $groupPermissions[RoleType::EDITOR] = 'post';
+
+        if (strpos($request->route()->getName(), $groupPermissions[Auth::user()->roles->first()->name])) {
             return $next($request);
         }
 
-        abort(403, 'Unauthorized');
+        return abort(403, 'Unauthorized');
     }
 }
