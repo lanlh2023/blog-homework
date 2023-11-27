@@ -29,30 +29,11 @@ $(document).ready(function () {
         $('.menu-list').removeClass('collapse')
     }
 
-    window.onload = function () {
-        if (localStorage.getItem("collapse") == null) {
-            localStorage.setItem("collapse", false);
-        }
-
-        let isClose = JSON.parse(localStorage.getItem("collapse"));
-        if ($(window).width() >= 768) {
-            if (isClose) {
-                toggleClassForSildebar()
-            }
-        }
-    };
-
     $("#navbar-checkbox").change(function () {
-        if (localStorage.getItem("collapse") == null) {
-            localStorage.setItem("collapse", false);
-        }
-
         if ($(window).width() >= 768) {
             if ($(this).prop('checked')) {
-                localStorage.setItem("collapse", true);
                 toggleClassForSildebar();
             } else {
-                localStorage.setItem("collapse", false);
                 toggleClassForSildebar(false);
             }
         }
