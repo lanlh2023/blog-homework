@@ -26,13 +26,4 @@ class Role extends Model
     {
         return $this->belongsToMany(Permission::class, 'permission_role');
     }
-
-     public function getPermissions()
-    {
-        if (!$this->relationLoaded('permissions')) {
-            $this->permissionList = $this->permissions()->get();
-        }
-
-        return $this->permissionList->toArray() ?? [];
-    }
 }
