@@ -23,7 +23,7 @@ class PostObserver
     /**
      * Handle the Post "created" event.
      */
-    public function created(Post $post): void
+    public function creating(Post $post): void
     {
         $post->user_id = auth()->user()->id;
     }
