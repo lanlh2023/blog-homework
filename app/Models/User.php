@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'avatar',
         'password',
+        'role_id',
     ];
 
     /**
@@ -46,7 +47,7 @@ class User extends Authenticatable
 
     public function routeNotificationForSlack()
     {
-       return env('SLACK_HOOK', '');
+        return env('SLACK_HOOK', '');
     }
 
     /**
@@ -60,40 +61,13 @@ class User extends Authenticatable
         return $query->whereNull('deleted_date');
     }
 
-    public function roles()
+    public function role()
     {
-        return $this->belongsToMany(Role::class);
-    }
-
-    public function hasRole($role)
-    {
-        return $this->roles->contains('name', $role);
+        return $this->belongsTo(Role::class);
     }
 
     public function hasPermission($permission)
     {
-        foreach ($this->roles as $role) {
-            if ($role->permissions->contains('name', $permission)) {
-                return true;
-            }
-        }
-
-        return false;
+        return collect($this->role->getPermissions())->contains('name', $permission);
     }
-
-
-    public function getPermissions()
-    {
-        $role = $this->roles->first();
-        if ($role) {
-            if (! $role->relationLoaded('permissions')) {
-                $this->roles->load('permissions');
-            }
-
-            $this->permissionList = $this->roles->pluck('permissions')->flatten();
-        }
-
-        return $this->permissionList ?? [];
-    }
-
 }

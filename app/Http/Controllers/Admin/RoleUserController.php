@@ -50,7 +50,7 @@ class RoleUserController extends Controller
      */
     public function store(RoleUserRequest $request)
     {
-        if ($this->userRepository->setRole($request->userId, $request->roleId)) {
+        if ($this->userRepository->update($request->userId, ['role_id' => $request->roleId])) {
             return Response::json([
                 'success' => true,
                 'message' => Lang::get('notification-message.SET_ROLE_SUCCESS'),

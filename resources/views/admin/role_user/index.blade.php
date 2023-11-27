@@ -21,7 +21,7 @@
         <div class="table w-100 py-4">
             <div class="content-table col-12">
                 <table class="table table-striped table-hover table-bordered align-middle table-responsive">
-                    <thead>
+                    <thead class="">
                         <tr>
                             <th class="align-middle" scope="col" style="width: 5%"><label>ID</label></th>
                             <th class="align-middle" scope="col" style="width: 20%"><label>User Name</label></th>
@@ -40,10 +40,9 @@
                                     <td class="align-middle"> <label>{{ $user->name }}</label></td>
                                     <td class="align-middle role_user_td">
                                         <select class="form-control role_user" name="role_user">
-                                            <option value="" selected>none</option>
                                             @foreach ($roles as $role)
                                                 <option class="" value="{{ $role->id }}"
-                                                    {{ isset($role->id) && $role->id == $user->roles->first()?->id ? 'selected' : '' }}>
+                                                    {{ isset($role->id) && $role->id == optional($user->role)->id ? 'selected' : '' }}>
                                                     {{ $role->name }}</option>
                                             @endforeach
                                         </select>

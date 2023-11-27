@@ -3,8 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
+use Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,42 +17,82 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-
+        // Insert roles into DB
         DB::table('roles')->truncate();
-         $roles = [
+        $roles = [
             ['name' => 'admin'],
             ['name' => 'editor'],
             ['name' => 'user'],
         ];
         DB::table('roles')->insert($roles);
 
-        $permissions = [
-            ['name' => 'create_post'],
-            ['name' => 'edit_post'],
-            ['name' => 'delete_post'],
-            ['name' => 'create_user'],
-            ['name' => 'edit_user'],
-            ['name' => 'delete_user'],
+        // Insert users into DB
+        DB::table('users')->truncate();
+        $users = [
+            [
+                'name' => 'admin',
+                'email' => 'admin@gmail.com',
+                'email_verified_at' => now(),
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'remember_token' => Str::random(10),
+                'role_id' => '1',
+            ],
+            [
+                'name' => 'editor',
+                'email' => 'editor@gmail.com',
+                'email_verified_at' => now(),
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'remember_token' => Str::random(10),
+                'role_id' => '2',
+            ],
+            [
+                'name' => 'user',
+                'email' => 'user@gmail.com',
+                'email_verified_at' => now(),
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'remember_token' => Str::random(10),
+                'role_id' => '3',
+            ],
         ];
+        DB::table('users')->insert($users);
 
+        // Insert permissions into DB
+        $prefix = 'admin';
+
+        $routes = collect(Route::getRoutes())->filter(function ($route) use ($prefix) {
+            return Str::startsWith($route->uri, $prefix);
+        });
+
+        $permissions = $routes->map(function ($route) use ($prefix) {
+            return ['name' => $route->getName()];
+        })->values()->toArray();
+
+        $prefixWithPost = 'admin.post';
+
+        $permissionsForPost = collect($permissions)->filter(function ($route) use ($prefixWithPost) {
+            return Str::startsWith($route['name'], $prefixWithPost);
+        })->values()->toArray();
+        // $permissions = [
+        //     '0' => "admin.index",
+        //     '1' => "admin.post.index",
+        //     '2' => "admin.post.create",
+        //     ...
+        // ];
         DB::table('permissions')->truncate();
         DB::table('permissions')->insert($permissions);
 
-        $rolePermissions = [
-            ['role_id' => 1, 'permission_id' => 1], // admin - create_post
-            ['role_id' => 1, 'permission_id' => 2], // admin - edit_post
-            ['role_id' => 1, 'permission_id' => 3], // admin - delete_post
-            ['role_id' => 1, 'permission_id' => 4], // admin - create_user
-            ['role_id' => 1, 'permission_id' => 5], // admin - edit_user
-            ['role_id' => 1, 'permission_id' => 6], // admin - delete_user
-            ['role_id' => 2, 'permission_id' => 1], // editor - create_post
-            ['role_id' => 2, 'permission_id' => 2], // editor - edit_post
-            ['role_id' => 2, 'permission_id' => 3], // editor - delete_post
-            ['role_id' => 3, 'permission_id' => 1], // user - create_post
-        ];
+        // Role permissions for Admin
+        $rolePermissions = collect($permissions)->map(function ($permission, $index) {
+            return ['role_id' => 1, 'permission_id' => ++$index];
+        })->values()->toArray();
+
+        // Role permissions for Editor
+        $rolePermissionsForEditor = collect($permissionsForPost)->map(function ($permission, $index) {
+            return ['role_id' => 2, 'permission_id' => ++$index];
+        })->values()->toArray();
 
         DB::table('permission_role')->truncate();
-        DB::table('permission_role')->insert($rolePermissions);
+        DB::table('permission_role')->insert([...$rolePermissions, ...$rolePermissionsForEditor]);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

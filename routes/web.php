@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\RoleType;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -27,10 +26,10 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/register', [UserController::class, 'register'])->name('register');
 Route::post('/checkRegister', [UserController::class, 'checkRegister'])->name('checkRegister');
 Route::post('/checkDuplicateEmail', [UserController::class, 'checkDuplicateEmail'])->name('checkDuplicateEmail');
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => "checkManager"], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'checkRole']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
 
-    Route::group(['prefix' => 'post', 'as' => 'post.', 'middleware' => 'checkRole'], function () {
+    Route::group(['prefix' => 'post', 'as' => 'post.'], function () {
         Route::get('/', [PostController::class, 'index'])->name('index');
         Route::get('/create', [PostController::class, 'create'])->name('create');
         Route::post('/store', [PostController::class, 'store'])->name('store');
@@ -38,7 +37,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => "checkManag
         Route::get('/show/{id}', [PostController::class, 'show'])->name('show');
     });
 
-    Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'checkRole'], function () {
+    Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
         Route::get('/create', [UserController::class, 'create'])->name('create');
         Route::post('/store', [UserController::class, 'store'])->name('store');
@@ -48,7 +47,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => "checkManag
         Route::post('/update/{id}', [UserController::class, 'update'])->middleware(['isUserLogin'])->name('update');
     });
 
-    Route::group(['prefix' => 'role_user', 'as' => 'role_user.', 'middleware' => 'checkRole'], function () {
+    Route::group(['prefix' => 'role_user', 'as' => 'role_user.'], function () {
         Route::get('/', [RoleUserController::class, 'index'])->name('index');
         Route::get('/create', [RoleUserController::class, 'create'])->name('create');
         Route::post('/store', [RoleUserController::class, 'store'])->name('store');
