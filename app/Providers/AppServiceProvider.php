@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\Role;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\RepositoryInterface\UserRepositoryInterface;
 use App\Repositories\RepositoryEloquent\UserRepository;
