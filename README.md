@@ -3,6 +3,7 @@
 - [X] Login Page
 - [X] Register account
 - [X] Manage role basic: admin, editor
-- [ ] Manage Post: CRUD (done: CRD)
+- [X] Manage Post: CRUD (done: CRD)
 - [X] Manage User: CRUD
-- [ ] Send mail: send a mail after update post 
+- [X] Send mail: send a mail after update post 
+- [ ] Change CRUD user to vuejs 
