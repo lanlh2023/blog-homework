@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\RoleUserController;
 use App\Http\Controllers\HomeController;
 
 /*
@@ -25,7 +26,7 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/register', [UserController::class, 'register'])->name('register');
 Route::post('/checkRegister', [UserController::class, 'checkRegister'])->name('checkRegister');
 Route::post('/checkDuplicateEmail', [UserController::class, 'checkDuplicateEmail'])->name('checkDuplicateEmail');
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'checkRole']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
 
     Route::group(['prefix' => 'post', 'as' => 'post.'], function () {
@@ -44,6 +45,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::post('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy');
         Route::get('/edit/{id}', [UserController::class, 'edit'])->middleware(['isUserLogin'])->name('edit');
         Route::post('/update/{id}', [UserController::class, 'update'])->middleware(['isUserLogin'])->name('update');
+    });
+
+    Route::group(['prefix' => 'role_user', 'as' => 'role_user.'], function () {
+        Route::get('/', [RoleUserController::class, 'index'])->name('index');
+        Route::get('/create', [RoleUserController::class, 'create'])->name('create');
+        Route::post('/store', [RoleUserController::class, 'store'])->name('store');
     });
 });
 

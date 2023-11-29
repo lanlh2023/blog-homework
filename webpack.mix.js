@@ -33,6 +33,7 @@ mix.js('resources/js/validation/add-edit-post-form.js', 'public/js/validation/po
 
 mix.styles('resources/css/admin/user.css', 'public/css/admin/user.css');
 
+mix.js('resources/js/admin/role_user/update.js', 'public/js/admin/role_user/').version();
 // Group for admin end
 
 // Group for user start

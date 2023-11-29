@@ -6,7 +6,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -23,6 +22,7 @@ class User extends Authenticatable
         'email',
         'avatar',
         'password',
+        'role_id',
     ];
 
     /**
@@ -47,7 +47,7 @@ class User extends Authenticatable
 
     public function routeNotificationForSlack()
     {
-       return env('SLACK_HOOK', '');
+        return env('SLACK_HOOK', '');
     }
 
     /**
@@ -59,5 +59,10 @@ class User extends Authenticatable
     public function scopeActive($query)
     {
         return $query->whereNull('deleted_date');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 }
