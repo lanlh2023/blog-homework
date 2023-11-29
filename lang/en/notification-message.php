@@ -11,4 +11,6 @@ return [
     'UPDATE_SUCESS' => 'Update processing was successful.',
     'UPDATE_ERROR' => 'Update processing failed.',
     'ACCESS_ERROR' => 'Access denied.',
+    'SET_ROLE_ERROR' => 'Create role for user error',
+    'SET_ROLE_SUCCESS' => 'Create role for user success',
 ];
