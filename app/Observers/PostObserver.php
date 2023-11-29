@@ -2,22 +2,22 @@
 
 namespace App\Observers;
 
-use App\Mail\SendMailForUpdatePost;
 use App\Models\Post;
+use App\Repositories\RepositoryInterface\SendMailRepositoryInterface;
 use App\Repositories\RepositoryInterface\UserRepositoryInterface;
-use Illuminate\Support\Facades\Mail;
 
 class PostObserver
 {
     protected UserRepositoryInterface $userRepository;
-
+    protected SendMailRepositoryInterface $sendMailRepository;
     /**
      * UserController constructor
      * @param UserRepositoryInterface $userRepository
      */
-    public function __construct(UserRepositoryInterface $userRepository)
+    public function __construct(UserRepositoryInterface $userRepository, SendMailRepositoryInterface $sendMailRepository)
     {
         $this->userRepository = $userRepository;
+        $this->sendMailRepository = $sendMailRepository;
     }
 
     /**
@@ -33,12 +33,14 @@ class PostObserver
      */
     public function updated(Post $post): void
     {
-        // TODO: get list admins after merge feature manger role
-        $admins = ['admin@gmail.com', 'admin2@gmail.com'];
+    }
 
-        foreach ($admins as $recipient) {
-            Mail::to($recipient)->send(new SendMailForUpdatePost($post));
-        }
+    /**
+     * Handle the Post "saved" event.
+     */
+    public function saved(Post $post): void
+    {
+        $this->sendMailRepository->create(['post_id' => $post->id, 'email' => auth()->user()->email]);
     }
 
     /**

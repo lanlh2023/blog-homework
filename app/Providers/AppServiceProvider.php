@@ -7,6 +7,8 @@ use App\Repositories\RepositoryInterface\UserRepositoryInterface;
 use App\Repositories\RepositoryEloquent\UserRepository;
 use App\Repositories\RepositoryInterface\PostRepositoryInterface;
 use App\Repositories\RepositoryEloquent\PostRepository;
+use App\Repositories\RepositoryEloquent\SendMailRepostiory;
+use App\Repositories\RepositoryInterface\SendMailRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             PostRepositoryInterface::class,
             PostRepository::class
+        );
+        $this->app->singleton(
+            SendMailRepositoryInterface::class,
+            SendMailRepostiory::class
         );
     }
 
