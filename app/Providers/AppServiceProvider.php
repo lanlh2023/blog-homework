@@ -26,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
             PostRepository::class
         );
         $this->app->singleton(
+            RoleRepositoryInterface::class,
+            RoleRepository::class
+        );
+        $this->app->singleton(
             SendMailRepositoryInterface::class,
             SendMailRepostiory::class
         );
