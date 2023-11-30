@@ -5,10 +5,6 @@ namespace App\Repositories\RepositoryEloquent;
 use App\Models\User;
 use App\Repositories\BaseRepository;
 use App\Repositories\RepositoryInterface\UserRepositoryInterface;
-use Exception;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Log;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
