@@ -12,7 +12,7 @@
 @section('content')
     <!--Container Main start-->
     @include('partial.form.toast-message')
-    <user-list />
+    <user-list path="{{ url()->current() }}" />
     <!--Container Main end-->
 @stop
 @section('scripts')
