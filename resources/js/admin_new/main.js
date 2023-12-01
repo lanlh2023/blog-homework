@@ -3,9 +3,10 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import store from './store';
 
-import addEditUser from './components/user/AddEditUser.vue'
-import userList from './components/user/UserList.vue'
-import Pagination from './components/pagination/Pagination.vue';
+import addEdit from './components/user/AddEdit.vue'
+import List from './components/user/List.vue'
+import pagination from './components/pagination/Pagination.vue'
+
 /**
  * Plugins
  */
@@ -18,9 +19,9 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /**
  * Register Vue components
  */
-Vue.component('add-edit-user', addEditUser);
-Vue.component('user-list', userList);
-Vue.component('pagination', Pagination);
+Vue.component('add-edit-user', addEdit);
+Vue.component('user-list', List);
+Vue.component('pagination', pagination);
 
 const admin_app = new Vue({
     el: '#admin',

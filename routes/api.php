@@ -19,4 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/users', [UsersController::class, 'index'])->name('index');
+Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
+    Route::get('/', [UsersController::class, 'index'])->name('index');
+    Route::post('/store', [UsersController::class, 'store'])->name('store');
+});

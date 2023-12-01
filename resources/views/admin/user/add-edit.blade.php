@@ -20,7 +20,7 @@
     @endphp
     <div class="col-12 col-xl-10 col-lg-9 col-md-9 content-table">
         @include('partial.form.toast-message')
-        <form enctype='multipart/form-data' id="register-form" method="POST" action="{{ $route }}">
+        {{-- <form enctype='multipart/form-data' id="register-form" method="POST" action="{{ $route }}">
             @csrf
             <div class="row mt-3">
                 <div class="col-12 m-auto">
@@ -86,7 +86,8 @@
                     </div>
                 </div>
             </div>
-        </form>
+        </form> --}}
+        <add-edit-user/>
         @error('error')
             @include('partial.notification.alert-message')
         @enderror
