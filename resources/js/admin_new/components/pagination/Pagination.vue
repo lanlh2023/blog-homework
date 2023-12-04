@@ -2,7 +2,7 @@
     <nav class="d-flex justify-items-center justify-content-between">
         <div class="d-flex justify-content-between flex-fill d-sm-none">
             <ul class="pagination">
-                <!-- {{ --Previous Page Link-- }} -->
+                <!-- Previous Page Link -->
                 <li class="page-item disabled" v-if="meta.current_page == 1" aria-disabled="true">
                     <span class="page-link">&laquo; Previous</span>
                 </li>
@@ -11,7 +11,7 @@
                         @click.prevent="handleClick(meta.current_page - 1)">&laquo; Previous</a>
                 </li>
 
-                <!-- {{ --Next Page Link-- }} -->
+                <!-- Next Page Link -->
                 <li class="page-item">
                     <a class="page-link" rel="next" v-if="meta.current_page != meta.last_page"
                         @click.prevent="handleClick(meta.current_page + 1)">Next &raquo;</a>
@@ -22,11 +22,11 @@
             </ul>
         </div>
         <div class="d-none flex-sm-fill d-sm-flex align-items-sm-center justify-content-sm-between">
-            <!-- {{ --show in to-- }} -->
+            <!-- show in to -->
             <div>
                 <ul class="pagination">
 
-                    <!-- {{ --Previous Page Link-- }} -->
+                    <!-- Previous Page Link -->
                     <li v-if="meta.current_page == 1" class="page-item disabled" aria-disabled="true"
                         aria-label="@lang('pagination.previousText')">
                         <span class="page-link" href="1">First</span>
@@ -47,12 +47,12 @@
                             &laquo; Previous
                         </a>
                     </li>
-                    <!-- {{ --Pagination Elements-- }} -->
+                    <!-- Pagination Elements -->
                     <li v-for="link in getinks" v-if="link.url != null" class="page-item" :class="{ active: link.active }"
                         aria-current="page">
                         <a class="page-link" href="" @click.prevent="handleClick(Number(link.label))">{{ link.label }}</a>
                     </li>
-                    <!-- {{ --Next Page Link-- }} -->
+                    <!-- Next Page Link -->
                     <li v-if="meta.current_page == meta.last_page" class="page-item disabled" aria-disabled="true"
                         aria-label="@lang('pagination.previousText')">
                         <span class="page-link" href="1">Next &raquo</span>
