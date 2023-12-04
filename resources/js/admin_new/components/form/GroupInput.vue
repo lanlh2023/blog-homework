@@ -9,7 +9,7 @@
             :id="input.id"
             :placeholder="input.placeholder"
 			:value="inputValue"
-            :data-content="input.name"
+            :data-content="input.label"
             @input="handldeChange"
             />
 			<div class="error-div" :class="`error ${input.name}`">
