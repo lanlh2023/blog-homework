@@ -23,7 +23,7 @@
         @yield('form')
     @else
         @include('layouts.admin.header')
-        <div class="d-flex dashboard-content row">
+        <div class="d-flex dashboard-content row" id="admin">
             @include('layouts.admin.sidebar')
             @yield('content')
         </div>

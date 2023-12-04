@@ -34,6 +34,8 @@ mix.js('resources/js/validation/add-edit-post-form.js', 'public/js/validation/po
 mix.styles('resources/css/admin/user.css', 'public/css/admin/user.css');
 
 mix.js('resources/js/admin/role_user/update.js', 'public/js/admin/role_user/').version();
+
+mix.js('resources/js/admin_new/main.js', 'public/js/admin_new').vue({ version: 2 })
 // Group for admin end
 
 // Group for user start
