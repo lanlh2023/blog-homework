@@ -1,21 +1,17 @@
 <template>
-    <form enctype='multipart/form-data' id="register-form" ref="registerForm" method="post">
+    <form enctype="multipart/form-data" id="register-form" ref="registerForm" method="post">
         <div class="row mt-3">
             <div class="col-12 m-auto">
                 <div class="card shadow">
                     <div class="card-header">
-                        <!-- {{ $pageTitle ?? 'Add edit user' }} -->
                         <h4 class="card-title"></h4>
                     </div>
                     <div class="card-body">
-                        <GroupInput v-for="(input, index) in getInpus" :key="index" :input="input" :errors="getErrors"
-                            @setup-form-user="handleSetupUser">
-                        </GroupInput>
-                        <!-- <input type="text" hidden id="userID" value="{{ $user->id }}"> -->
+                        <GroupInput v-for="(input, key) in inputs" :key="key" :input="input"
+                            @setup-form="handleSetupUser"></GroupInput>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-success btn-add-post" @click.prevent="createUser"> Save
-                        </button>
+                        <button type="submit" class="btn btn-success btn-add-post" @click.prevent="createUser">Save</button>
                     </div>
                 </div>
             </div>
@@ -24,97 +20,95 @@
 </template>
 
 <script>
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
 import GroupInput from "../form/GroupInput.vue";
 
 export default {
-    name: 'AddEdit',
+    name: "AddEdit",
+    components: {
+        GroupInput,
+    },
     data() {
         return {
             inputs: reactive({
                 email: {
-                    'id': 'email',
-                    'name': 'email',
-                    'type': 'text',
-                    'label': 'Email',
-                    'plaplaceholderce': '',
+                    id: "email",
+                    name: "email",
+                    type: "text",
+                    label: "Email",
+                    placeholder: "",
+                    error: '',
                 },
                 name: {
-                    'id': 'name',
-                    'name': 'name',
-                    'type': 'text',
-                    'label': 'Name',
-                    'plaplaceholderce': '',
+                    id: "name",
+                    name: "name",
+                    type: "text",
+                    label: "Name",
+                    placeholder: "",
+                    error: '',
                 },
                 avatar: {
-                    'id': 'avatar',
-                    'name': 'avatar',
-                    'type': 'file',
-                    'label': 'Avatr',
-                    'plaplaceholderce': '',
+                    id: "avatar",
+                    name: "avatar",
+                    type: "file",
+                    label: "Avatar",
+                    placeholder: "",
+                    error: '',
                 },
                 password: {
-                    'id': 'password',
-                    'name': 'password',
-                    'type': 'password',
-                    'label': 'Password',
-                    'plaplaceholderce': '',
+                    id: "password",
+                    name: "password",
+                    type: "password",
+                    label: "Password",
+                    placeholder: "",
+                    error: '',
                 },
                 password_confirmation: {
-                    'id': 'password_confirmation',
-                    'name': 'password_confirmation',
-                    'type': 'password',
-                    'label': 'Password Confirmation',
-                    'plaplaceholderce': '',
-                }
+                    id: "password_confirmation",
+                    name: "password_confirmation",
+                    type: "password",
+                    label: "Password Confirmation",
+                    placeholder: "",
+                    error: '',
+                },
             }),
             user: {},
-            errors: reactive({}),
         };
-    },
-    components: {
-        GroupInput
-    },
-    mounted() {
-
-    },
-    computed: {
-        getInpus() {
-            return this.inputs;
-        },
-        getErrors() {
-            return this.errors;
-        }
     },
     methods: {
         async createUser() {
             if ($(this.$refs.registerForm).valid()) {
                 const formData = new FormData();
                 for (const [key, value] of Object.entries(this.user)) {
-                    formData.append(key, value)
+                    formData.append(key, value);
                 }
                 try {
-                    const response = await this.axios.post('/api/user/store', formData);
+                    const response = await this.axios.post("/api/user/store", formData);
+                    this.resetUser();
                     $(this.$refs.registerForm)[0].reset();
                     loadNotification({ success: response.data.success, message: response.data.message });
                 } catch (error) {
-                    if (!error.response.data.success) {
+                    if (error.response.status == 500) {
                         loadNotification({ success: error.response.data.success, message: error.response.data.message });
+                    } else if(error.response.status == 422) {
+                        const errors = Object.fromEntries(Object.entries(error.response.data.errors).map(([key, value]) => [key, value[0]]));
+                        Object.entries(errors).forEach(([key, value]) => {
+                            this.inputs[key].error = value;
+                        });
                     } else {
-                        const errors = Object.entries(error.response.data.errors);
-                        const errorsObject = {};
-                        errors.forEach(error => {
-                            error = error.flat();
-                            errorsObject[error[0]] = error[1];
-                        })
-                        this.errors = errorsObject
+                        console.log(error);
                     }
                 }
             }
         },
         handleSetupUser(name, value) {
-            this.user[name] = value;
+            this.user = { ...this.user, [name]: value };
         },
+        resetUser() {
+            Object.entries(this.user).forEach(([name, value]) => {
+                this.user[name] = '';
+            });
+        }
     },
 };
 </script>
