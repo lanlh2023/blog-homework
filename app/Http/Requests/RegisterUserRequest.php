@@ -32,6 +32,7 @@ class RegisterUserRequest extends FormRequest
             ],
             'email' => $rules['email'],
             'avatar' => [
+                'nullable',
                 'mimes:png,jpeg,jpg',
             ],
             'password' => $rules['password'],

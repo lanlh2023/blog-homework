@@ -1,5 +1,5 @@
 <template>
-	<div class="mb-3">
+	<div class="mb-3" v-show="!input.hidden">
 		<label :for="input.id" class="form-label">{{ input.label }}
 		</label>
 		<input

@@ -265,7 +265,7 @@ class userController extends Controller
         $pageTitle = 'Edit User';
         $data = collect($request->only(['name', 'email']));
         // Password is optionnal
-        if (!empty($request->passwor)) {
+        if (!empty($request->password)) {
             $password = Hash::make($request->password);
             $data = $data->merge(['password' => $password]);
         }

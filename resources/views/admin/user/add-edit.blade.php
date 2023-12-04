@@ -14,7 +14,7 @@
     <!--Container Main start-->
     <div class="col-12 col-xl-10 col-lg-9 col-md-9 content-table">
         @include('partial.form.toast-message')
-        <add-edit-user/>
+        <add-edit-user id="{{ !empty($user) ? $user->id : null }}"> </add-edit-user>
         @error('error')
             @include('partial.notification.alert-message')
         @enderror
@@ -23,6 +23,5 @@
 @stop
 
 @section('scripts')
-    <script src="{{ mix('js/validation/form-validation.js') }}"></script>
     @include('includes.loadNotification')
 @stop
