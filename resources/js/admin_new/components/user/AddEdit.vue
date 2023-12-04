@@ -7,8 +7,8 @@
                         <h4 class="card-title"></h4>
                     </div>
                     <div class="card-body">
-                        <GroupInput v-for="(input, key) in inputs" :key="key" :input="input"
-                            @setup-form="handleSetupUser"></GroupInput>
+                        <GroupInput v-for="(input, key) in inputs" :key="key" :input="input" @setup-form="handleSetupUser">
+                        </GroupInput>
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-success btn-add-post" @click.prevent="createUser">Save</button>
@@ -88,16 +88,32 @@ export default {
                     $(this.$refs.registerForm)[0].reset();
                     loadNotification({ success: response.data.success, message: response.data.message });
                 } catch (error) {
-                    if (error.response.status == 500) {
-                        loadNotification({ success: error.response.data.success, message: error.response.data.message });
-                    } else if(error.response.status == 422) {
-                        const errors = Object.fromEntries(Object.entries(error.response.data.errors).map(([key, value]) => [key, value[0]]));
-                        Object.entries(errors).forEach(([key, value]) => {
-                            this.inputs[key].error = value;
-                        });
-                    } else {
-                        console.log(error);
+                    switch (error.response.status) {
+                        case 500: {
+                            loadNotification({ success: error.response.data.success, message: error.response.data.message });
+                            break;
+                        }
+                        case 400: {
+                            const errors = Object.fromEntries(Object.entries(error.response.data.errors).map(([key, value]) => [key, value[0]]));
+                            Object.entries(errors).forEach(([key, value]) => {
+                                this.inputs[key].error = value;
+                            });
+                        }
+                        default: {
+                            console.log(error);
+                            break;
+                        }
                     }
+                    // if (error.response.status == 500) {
+                    //     loadNotification({ success: error.response.data.success, message: error.response.data.message });
+                    // } else if (error.response.status == 422) {
+                    //     const errors = Object.fromEntries(Object.entries(error.response.data.errors).map(([key, value]) => [key, value[0]]));
+                    //     Object.entries(errors).forEach(([key, value]) => {
+                    //         this.inputs[key].error = value;
+                    //     });
+                    // } else {
+                    //     console.log(error);
+                    // }
                 }
             }
         },
