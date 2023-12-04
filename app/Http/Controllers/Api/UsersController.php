@@ -24,9 +24,9 @@ class UsersController extends Controller
 
 
     /**
-     * Render screen user list
+     * Get collection user
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return UserCollection
      */
     public function index()
     {
