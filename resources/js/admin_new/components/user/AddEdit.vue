@@ -98,6 +98,7 @@ export default {
                             Object.entries(errors).forEach(([key, value]) => {
                                 this.inputs[key].error = value;
                             });
+                            break;
                         }
                         default: {
                             console.log(error);
