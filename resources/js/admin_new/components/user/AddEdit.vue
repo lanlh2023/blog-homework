@@ -104,16 +104,6 @@ export default {
                             break;
                         }
                     }
-                    // if (error.response.status == 500) {
-                    //     loadNotification({ success: error.response.data.success, message: error.response.data.message });
-                    // } else if (error.response.status == 422) {
-                    //     const errors = Object.fromEntries(Object.entries(error.response.data.errors).map(([key, value]) => [key, value[0]]));
-                    //     Object.entries(errors).forEach(([key, value]) => {
-                    //         this.inputs[key].error = value;
-                    //     });
-                    // } else {
-                    //     console.log(error);
-                    // }
                 }
             }
         },
