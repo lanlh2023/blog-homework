@@ -120,7 +120,7 @@ class PostController extends Controller
      * Show the form for editing the post.
      *
      * @param string $id
-     *
+     * @return redirect| \Illuminate\Contracts\View\View
      */
     public function edit(string $id)
     {
