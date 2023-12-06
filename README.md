@@ -6,4 +6,4 @@
 - [X] Manage Post: CRUD (done: CRD)
 - [X] Manage User: CRUD
 - [X] Send mail: send a mail after update post 
-- [ ] Change CRUD user to vuejs 
+- [X] Change CRUD user to vuejs 
