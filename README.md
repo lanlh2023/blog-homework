@@ -20,6 +20,8 @@ Laravel(10.32.1), laravel-mix(^6.0.49), vuejs(^2.6.12),...
 ![image](https://github.com/lanlh2023/blog-homework/assets/147787873/82ce1df3-d289-4c0f-bc62-d5a55a5992f9)
 # Admin user
 ![image](https://github.com/lanlh2023/blog-homework/assets/147787873/70851bb5-eb4a-4f94-a685-728fb177ad73)
+# Post edit
+![image](https://github.com/lanlh2023/blog-homework/assets/147787873/fbfb9579-c347-42ef-844c-131b5ecc3d1c)
 # Send notification to slack after register user
 ![image](https://github.com/lanlh2023/blog-homework/assets/147787873/12a0dbdf-969a-41de-871f-94a7a072a445)
 # Send mail by mail trap after save post
