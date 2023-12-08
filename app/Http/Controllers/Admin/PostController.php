@@ -7,7 +7,6 @@ use App\Enums\TypeImage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Repositories\RepositoryInterface\PostRepositoryInterface;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
 use App\Helpers\File as FileHelpers;
 use Illuminate\Support\Facades\Response;
@@ -121,7 +120,7 @@ class PostController extends Controller
      * Show the form for editing the post.
      *
      * @param string $id
-     *
+     * @return redirect| \Illuminate\Contracts\View\View
      */
     public function edit(string $id)
     {
@@ -139,6 +138,11 @@ class PostController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param string $id
+     * @param PostRequest $request
+     *
+     * return Illuminate\Support\Facades\Response
      */
     public function update(PostRequest $request, string $id)
     {

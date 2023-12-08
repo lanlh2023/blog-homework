@@ -1,12 +1,5 @@
 $().ready(function () {
-    tinymce.init({
-        selector: '#content',
-        skin: false,
-        content_css: false,
-        toolbar: 'undo redo | formatselect| bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table',
-    });
-
-    const subContentList = [];
+    let subContentList = [];
     const PUBLIC = 'PUBLIC';
     const BASE64 = 'BASE64';
     let subItemSelect = null;
@@ -46,7 +39,7 @@ $().ready(function () {
             $('#content-detail-list').append(div);
         }
 
-        addEventClickForButtonDelete(renderImages, subContentList);
+        addEventClickForButtonDelete();
         addEventClickForItemSubContent(subContentList);
     }
 
@@ -65,11 +58,11 @@ $().ready(function () {
         if (file) {
             let reader = new FileReader();
             reader.onloadend = function () {
-                let imagePath = this.result;
+                let image = this.result;
 
                 let item = {
                     content: content,
-                    'image': imagePath,
+                    image: image,
                     type: BASE64
                 };
 
@@ -151,14 +144,14 @@ $().ready(function () {
 
     }
 
-    function addEventClickForButtonDelete(callback, subContentList) {
+    function addEventClickForButtonDelete() {
         let elementsButtonDelete = $('.btn-delete-sub-content-item');
         elementsButtonDelete.each(function (index, element) {
             $(element).on('click', function () {
                 subContentList = subContentList.filter((val, i) => {
                     return index != i
                 })
-                callback(subContentList);
+                renderImages(subContentList);
             })
         });
     };
@@ -166,6 +159,7 @@ $().ready(function () {
     $('.btn-update-post').on('click', function (e) {
         const form = $("#post-form");
         let id = $('#post-id').val();
+        console.log(subContentList);
         if (form.valid() && subContentList.length && id) {
             let title = $('#title').val();
             let contentTitle = $('#content_title').val();

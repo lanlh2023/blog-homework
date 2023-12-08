@@ -1,17 +1,17 @@
 {
-    "/js/app.js": "/js/app.js?id=049cf13772052d55935aa2c1c2f04e8d",
-    "/js/common.js": "/js/common.js?id=2231ee2ae7f2223034650e1b03b06783",
-    "/js/custom-jquery/custom-jquery-validation.js": "/js/custom-jquery/custom-jquery-validation.js?id=c5621a1aa6f077ff491f8155f8d786ce",
-    "/js/validation/post-validation.js": "/js/validation/post-validation.js?id=6b6877d2d813e2e92183f64e65d0e827",
-    "/js/admin/post/add.js": "/js/admin/post/add.js?id=03e0adfee896e9b8ea1f390a0b51f0b2",
-    "/js/admin/post/delete.js": "/js/admin/post/delete.js?id=e0a02dc89fab844fc43af0e99c891854",
-    "/js/admin/post/update.js": "/js/admin/post/update.js?id=cb637739e2e67857bc1406d04b98ad80",
-    "/js/admin/role_user/update.js": "/js/admin/role_user/update.js?id=159b45698bc86cd30df8d33549aaca6a",
+    "/js/app.js": "/js/app.js?id=9e9e7276323dda5b4bc0138995ace0bc",
+    "/js/common.js": "/js/common.js?id=557e05d66e76b207475c1e8184b3e6dd",
+    "/js/custom-jquery/custom-jquery-validation.js": "/js/custom-jquery/custom-jquery-validation.js?id=e5c6adde05dd34b5a20ceb23eab89e31",
+    "/js/validation/post-validation.js": "/js/validation/post-validation.js?id=70826e0e2c047fba27e31c9452f06c17",
+    "/js/admin/post/add.js": "/js/admin/post/add.js?id=c16c22d906c2f0edabcb570d89c041b4",
+    "/js/admin/post/delete.js": "/js/admin/post/delete.js?id=30d9a645474440ac17b56481d0b7a4d6",
+    "/js/admin/post/update.js": "/js/admin/post/update.js?id=0f0f54a35ccb1ae0d07ab6fc60b4ffda",
+    "/js/admin/role_user/update.js": "/js/admin/role_user/update.js?id=33ead8a41115554b92493aa8454da742",
     "/js/validation/form-validation.js": "/js/validation/form-validation.js?id=faea7d5646e6e822fd8df9d54dc87a96",
-    "/css/app.css": "/css/app.css?id=ce643fb09dd90a1d996a5ea97cbddb0c",
+    "/css/app.css": "/css/app.css?id=d143b0d1b5b6ee239d33f9e2276a5648",
     "/css/message/alert-message.css": "/css/message/alert-message.css?id=67c0319c00916d4a62b47a45fba638ba",
     "/css/admin/app.css": "/css/admin/app.css?id=960880c6b49a04b8556300df80382ae2",
-    "/css/admin/post.css": "/css/admin/post.css?id=94167df57908426649a656aa4576e7d8",
+    "/css/admin/post.css": "/css/admin/post.css?id=2817ca068401baca46431549822cc880",
     "/css/admin/user.css": "/css/admin/user.css?id=da9928b313eb0bef2027d8ba8170416d",
-    "/css/blog/index.css": "/css/blog/index.css?id=9ec9f11167d938d2839f9a9d8975f9d9"
+    "/css/blog/index.css": "/css/blog/index.css?id=0be7cdd880e9ade0970cc30c86242d5e"
 }

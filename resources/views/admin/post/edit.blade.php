@@ -44,9 +44,7 @@
                             </x-form.group-input>
                             <div class="form-group">
                                 <label> Content Title: </label>
-                                <textarea class="form-control" placeholder="Enter the Content title" name="content_title" id="content_title">
-                                    {{ old('content_title', $post->content_title ?? '') }}
-                                </textarea>
+                                <textarea class="form-control" placeholder="Enter the Content title" name="content_title" id="content_title">{{ old('content_title', trim($post->content_title) ?? '') }}</textarea>
                                 <div class="error-div error-content_title">
                                     @if ($errors->has('content_title'))
                                         <label id="content_title-error pt-2" class="error text-danger"

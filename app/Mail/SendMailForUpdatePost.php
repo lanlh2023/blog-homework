@@ -4,22 +4,18 @@ namespace App\Mail;
 
 use App\Models\Post;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Mail\Markdown;
 use Illuminate\Queue\SerializesModels;
 
 class SendMailForUpdatePost extends Mailable
 {
     use Queueable, SerializesModels;
-    public $subject =  'The article has just been updated';
-    public $markdown = 'emails.sendmail';
     /**
      * Create a new message instance.
      */
-    public function __construct(public Post $post)
+    public function __construct(protected Post $post)
     {
         //
     }
@@ -30,7 +26,7 @@ class SendMailForUpdatePost extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->subject,
+            subject: 'The article has just been updated',
         );
     }
 
@@ -40,7 +36,7 @@ class SendMailForUpdatePost extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: $this->markdown,
+            markdown: 'emails.sendmail',
             with: [
                 'post' => $this->post,
             ],
