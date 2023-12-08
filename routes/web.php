@@ -35,6 +35,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
         Route::post('/store', [PostController::class, 'store'])->name('store');
         Route::post('/destroy/{id}', [PostController::class, 'destroy'])->name('destroy');
         Route::get('/show/{id}', [PostController::class, 'show'])->name('show');
+        Route::get('/edit/{id}', [PostController::class, 'edit'])->name('edit');
+        Route::post('/update/{id}', [PostController::class, 'update'])->name('update');
     });
 
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {

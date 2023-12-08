@@ -167,7 +167,6 @@ abstract class BaseRepository
         }
     }
 
-
     /**
      * Update record in table by array data
      * @param string $id
@@ -176,9 +175,8 @@ abstract class BaseRepository
      */
     public function update(string $id, array $data)
     {
-        $primaryKey = $this->model->getKeyName();
         try {
-            return $this->model->where($primaryKey, $id)->update($data);
+            return $this->model->find($id)->update($data);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
 
