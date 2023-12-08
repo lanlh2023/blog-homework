@@ -25,14 +25,17 @@
     cursor: pointer;
 }
 
-.sidebar .menu-item.active {
+.sidebar .menu-item.active, .sidebar .menu-item:hover {
     background-color: white;
     color: #343a40;
 }
 
 .sidebar .menu-item.active i,
 .sidebar .menu-item.active svg,
-.sidebar .menu-item.active a {
+.sidebar .menu-item.active a,
+.idebar .menu-item:hover i,
+.sidebar .menu-item:hover svg,
+.sidebar .menu-item:hover a {
     color: #343a40;
     fill: #343a40;
 }
