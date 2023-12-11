@@ -8,7 +8,9 @@ use App\Repositories\RepositoryEloquent\UserRepository;
 use App\Repositories\RepositoryInterface\PostRepositoryInterface;
 use App\Repositories\RepositoryEloquent\PostRepository;
 use App\Repositories\RepositoryEloquent\RoleRepository;
+use App\Repositories\RepositoryEloquent\SendMailRepostiory;
 use App\Repositories\RepositoryInterface\RoleRepositoryInterface;
+use App\Repositories\RepositoryInterface\SendMailRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,6 +30,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             RoleRepositoryInterface::class,
             RoleRepository::class
+        );
+        $this->app->singleton(
+            SendMailRepositoryInterface::class,
+            SendMailRepostiory::class
         );
     }
 

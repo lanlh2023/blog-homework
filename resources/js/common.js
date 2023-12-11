@@ -65,5 +65,13 @@ $(document).ready(function () {
             $('#wrap-toast').removeClass('open-toast')
         })
     }
+
+    tinymce.init({
+        selector: '#content',
+        skin: false,
+        content_css: false,
+        toolbar: 'undo redo | formatselect| bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table',
+    });
+
 })
 
