@@ -42,7 +42,6 @@ export default {
         },
     },
     mounted() {
-
     },
     methods: {
         handldeChange($event) {
