@@ -25,26 +25,27 @@ export default {
     name: 'Notify',
     data() {
         return {
-            messages: this.$store.state.message
+            messages: this.$store.state.message,
+            show: ref(false),
         };
     },
     computed: {
-        show() {
-            setTimeout(() => {
-                this.handleClickHideNotify()
-            }, 4000)
-
-            return this.$store.state.message != null ? true : false;
-        }
     },
     mounted() {
+        setTimeout(() => {
+            this.show = this.$store.state.message != null ? true : false
+        }, 1000),
+        setTimeout(() => {
+            this.handleClickHideNotify()
+        }, 5000)
     },
     methods: {
         handleClickHideNotify() {
             if (this.$store.state.message != null) {
                 this.$store.commit('setMessage', null)
+                this.show = false
             }
-        }
+        },
     },
 };
 </script>
