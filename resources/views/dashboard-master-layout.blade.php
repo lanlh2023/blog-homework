@@ -18,7 +18,7 @@
     @yield('styles')
 </head>
 
-<body>
+<body style="margin: 0">
     @hasSection('form')
         @yield('form')
     @else
