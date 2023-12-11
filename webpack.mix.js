@@ -27,7 +27,8 @@ mix.js('resources/js/app.js', 'public/js')
 // Group for admin start
 mix.js('resources/js/validation/add-edit-post-form.js', 'public/js/validation/post-validation.js')
     .js('resources/js/admin/post/add.js', 'public/js/admin/post/')
-    .js('resources/js/admin/post/delete.js', 'public/js/admin/post/').version()
+    .js('resources/js/admin/post/delete.js', 'public/js/admin/post/')
+    .js('resources/js/admin/post/update.js', 'public/js/admin/post').version()
     .styles('resources/css/admin/app.css', 'public/css/admin/app.css')
     .styles('resources/css/admin/post.css', 'public/css/admin/post.css');
 
