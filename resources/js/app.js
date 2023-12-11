@@ -2,6 +2,7 @@ window.$ = window.jQuery = require('jquery');
 window.$ = window.jQuery = require('jquery-validation');
 window.Popper = require('popper.js');
 require('bootstrap');
+window.Vue = require('vue').default;
 import 'tinymce/tinymce';
 import 'tinymce/skins/ui/oxide/skin.min.css';
 import 'tinymce/skins/content/default/content.min.css';
