@@ -25,27 +25,17 @@
 
 <script>
 export default {
-    name: 'User',
+    name: 'row',
     props: {
         user: {
             type: Object,
             required: true,
         },
-        path: {
-            type: String,
-            required: true,
-        },
     },
     data() {
         return {
-
+            path: this.$store.state.path
         };
-    },
-    mounted() {
-    },
-    methods: {
     },
 };
 </script>
-
-<style lang="scss" scoped></style>

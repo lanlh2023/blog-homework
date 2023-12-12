@@ -13,21 +13,20 @@
                 </tr>
             </thead>
             <tbody>
-                <User v-for="user in users" :key="user.id" :user="user" :path="path">
-                </User>
+                <row v-for="user in users" :key="user.id" :user="user">
+                </row>
             </tbody>
         </table>
     </div>
 </template>
 
 <script>
-import User from './User.vue'
+import row from './row.vue'
 export default {
-    name: 'Table',
+    name: 'tableUser',
 
     data() {
         return {
-
         };
     },
     props: {
@@ -35,21 +34,9 @@ export default {
             type: Array,
             required: true,
         },
-        path: {
-            type: String,
-            required: true,
-        },
     },
     components: {
-        User,
-    },
-    mounted() {
-    },
-
-    methods: {
-
+        row,
     },
 };
 </script>
-
-<style lang="scss" scoped></style>

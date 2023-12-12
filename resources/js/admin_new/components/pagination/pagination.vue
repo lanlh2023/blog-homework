@@ -29,20 +29,20 @@
                     <!-- Previous Page Link -->
                     <li v-if="meta.current_page == 1" class="page-item disabled" aria-disabled="true"
                         aria-label="@lang('pagination.previousText')">
-                        <span class="page-link" href="1">First</span>
+                        <span class="page-link" href="">First</span>
                     </li>
                     <li v-if="meta.current_page == 1" class="page-item disabled" aria-disabled="true"
                         aria-label="@lang('pagination.previous')">
                         <span class="page-link" aria-hidden="true">&laquo; Previous</span>
                     </li>
                     <li class="page-item" v-if="meta.current_page != 1">
-                        <a class="page-link" href="" rel="prev" @click.prevent="handleClick(1)"
+                        <a class="page-link" :href="`${path}?page=1`" rel="prev" @click.prevent="handleClick(1)"
                             aria-label="&laquo; Previous">
                             First
                         </a>
                     </li>
                     <li class="page-item" v-if="meta.current_page != 1">
-                        <a class="page-link" href="" rel="prev" @click.prevent="handleClick(meta.current_page - 1)"
+                        <a class="page-link" :href="`${path}?page=${meta.current_page - 1}`" rel="prev" @click.prevent="handleClick(meta.current_page - 1)"
                             aria-label="&laquo; Previous">
                             &laquo; Previous
                         </a>
@@ -50,12 +50,12 @@
                     <!-- Pagination Elements -->
                     <li v-for="link in getinks" v-if="link.url != null" class="page-item" :class="{ active: link.active }"
                         aria-current="page">
-                        <a class="page-link" href="" @click.prevent="handleClick(Number(link.label))">{{ link.label }}</a>
+                        <a class="page-link" :href="`${path}?page=${link.label}`" @click.prevent="handleClick(Number(link.label))">{{ link.label }}</a>
                     </li>
                     <!-- Next Page Link -->
                     <li v-if="meta.current_page == meta.last_page" class="page-item disabled" aria-disabled="true"
                         aria-label="@lang('pagination.previousText')">
-                        <span class="page-link" href="1">Next &raquo</span>
+                        <span class="page-link" href="">Next &raquo</span>
                     </li>
                     <li v-if="meta.current_page == meta.last_page" class="page-item disabled" aria-disabled="true"
                         aria-label="@lang('pagination.previous')">
@@ -63,11 +63,11 @@
                     </li>
                     <li class="page-item" v-if="meta.current_page != meta.last_page"
                         @click.prevent="handleClick(meta.current_page + 1)">
-                        <a class="page-link" href="1">Next &raquo;</a>
+                        <a class="page-link" :href="`${path}?page=${meta.current_page + 1}`">Next &raquo;</a>
                     </li>
                     <li class="page-item" v-if="meta.current_page != meta.last_page"
                         @click.prevent="handleClick(meta.last_page)">
-                        <a class="page-link" href="1" rel="prev" aria-label="Last">Last</a>
+                        <a class="page-link" :href="`${path}?page=${meta.last_page}`" rel="prev" aria-label="Last">Last</a>
                     </li>
                 </ul>
             </div>
@@ -83,16 +83,11 @@ export default {
             type: Object,
             required: true,
         },
-        path: {
-            type: String,
-            required: true,
-        },
     },
     data() {
         return {
+            path: this.$store.state.path
         };
-    },
-    mounted() {
     },
     computed: {
         getinks() {
@@ -108,5 +103,3 @@ export default {
     },
 };
 </script>
-
-<style scoped></style>
