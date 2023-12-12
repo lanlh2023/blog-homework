@@ -24,7 +24,6 @@
 import row from './row.vue'
 export default {
     name: 'tableUser',
-
     data() {
         return {
         };
