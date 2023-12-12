@@ -7,8 +7,8 @@
                         <h4 class="card-title"></h4>
                     </div>
                     <div class="card-body">
-                        <GroupInput v-for="(input, key) in inputs" :key="key" :input="input" @setup-form="handleSetupUser">
-                        </GroupInput>
+                        <group-input v-for="(input, key) in inputs" :key="key" :input="input" @setup-form="handleSetupUser">
+                        </group-input>
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-success btn-add-post" @click.prevent="saveUser">Save</button>
@@ -21,13 +21,13 @@
 
 <script>
 import { reactive, ref } from "vue";
-import GroupInput from "../form/GroupInput.vue";
+import groupInput from "../form/group-input.vue";
 
 export default {
     name: "AddEdit",
     props: ['id'],
     components: {
-        GroupInput,
+        groupInput,
     },
     data() {
         return {
