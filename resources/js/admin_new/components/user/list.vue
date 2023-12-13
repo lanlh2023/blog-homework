@@ -26,7 +26,7 @@
 
 <script>
 import { reactive } from 'vue';
-import NotiFy from '../notification/Notify.vue';
+import NotiFy from '../notification/notify.vue';
 import tableUser from './table.vue';
 
 export default {
@@ -37,7 +37,7 @@ export default {
         };
     },
     components: {
-        NotiFy
+        NotiFy,
         tableUser,
     },
     props: [

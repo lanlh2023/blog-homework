@@ -25,9 +25,9 @@
 
 <script>
 import { ref } from 'vue';
-import FormDelete from '../form/FormDelete.vue';
+import FormDelete from '../form/formDelete.vue';
 export default {
-    name: 'Show',
+    name: 'show',
     props: {
         id: {
             type: String,
