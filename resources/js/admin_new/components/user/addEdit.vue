@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import { reactive, ref } from "vue";
-import groupInput from "../form/group-input.vue";
+import { reactive } from "vue";
+import groupInput from "../form/groupInput.vue";
 
 export default {
     name: "AddEdit",
