@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Lang;
 
 class UsersController extends Controller
 {
+    const PAGINATION = 10;
     /**
      * UserController constructor
      * @param UserRepositoryInterface $userRepository
@@ -30,7 +31,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = $this->userRepository->getAll();
+        $users = $this->userRepository->getAll(self::PAGINATION, true, ['role']);
         $users = $users->onEachSide($users->lastPage());
 
         return new UserCollection($users);
