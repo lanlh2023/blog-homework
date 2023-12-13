@@ -114,20 +114,28 @@ abstract class BaseRepository
 
     /**
      * Get all
+     * @param $limit
+     * @param $isActive
+     * @param $relationships
      * @return mixed
      */
-    public function getAll($limit = 10, $isActive = true)
+    public function getAll($limit = 10, $isActive = true, $relationships = [])
     {
         try {
-            return $this->model->when($isActive, function ($query) {
+            $query =  $this->model->when($isActive, function ($query) {
                 return $query->active();
-            })->paginate($limit);
+            })->when(!empty($relationships), function ($query) use ($relationships) {
+                return $query->with($relationships);
+            });
+
+            return empty($limit) ? $query->get() : $query->paginate($limit);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
         }
 
         return [];
     }
+
 
     /**
      * Create new record in table by array data
