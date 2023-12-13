@@ -2,12 +2,11 @@
     <div class="col-12 col-xl-10 col-lg-9 col-md-9 content-table-wrap">
         <NotiFy></NotiFy>
         <div class="pagination-wrap d-flex justify-content-end px-4 pt-4">
-            <pagination v-if="users.data && users.data.length > 0" :meta="users.meta" :path="path"
-                @page-change="pageChange" />
+            <pagination  v-if="users.data && users.data.length > 0" :meta="users.meta" @page-change="pageChange" />
         </div>
         <div class="table w-100 py-4">
             <div class="content-table col-12">
-                <Table v-if="users.data && users.data.length > 0" :users="users.data" :path="path"></Table>
+                <table-user v-if="users.data && users.data.length > 0" :users="users.data"></table-user>
                 <div class="d-flex justify-content-center" style="font-size: 20px" v-else>
                     No User Found
                 </div>
@@ -27,19 +26,19 @@
 
 <script>
 import { reactive } from 'vue';
-import Table from './Table.vue';
 import NotiFy from '../notification/Notify.vue';
+import tableUser from './table.vue';
 
 export default {
-    name: 'UserList',
+    name: 'userList',
     data() {
         return {
             users: reactive({}),
         };
     },
     components: {
-        Table,
         NotiFy
+        tableUser,
     },
     props: [
         'path',
@@ -61,8 +60,9 @@ export default {
         pageChange(page) {
             this.getUserList(page);
         },
+        setPath() {
+            this.$store.commit('setPath', this.path);
+        }
     },
 };
 </script>
-
-<style lang="scss" scoped></style>

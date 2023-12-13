@@ -3,7 +3,7 @@
         <td class="align-middle"> <label>{{ user.id }}</label></td>
         <td class="align-middle"> <label>{{ user.name }}</label></td>
         <td class="align-middle text-center"><img class="rounded-circle avatar-user mw-25" :src="user.avatar" alt=""> </td>
-        <td class="align-middle"> <label>{{ user.position }}</label></td>
+        <td class="align-middle"> <label>{{ user.role.name }}</label></td>
         <td class="align-middle"> <label>{{ user.created_at }}</label></td>
         <td class="align-middle"> <label>{{ user.updated_at }}</label></td>
         <td class="align-middle action-group">
@@ -25,27 +25,17 @@
 
 <script>
 export default {
-    name: 'User',
+    name: 'row',
     props: {
         user: {
             type: Object,
             required: true,
         },
-        path: {
-            type: String,
-            required: true,
-        },
     },
     data() {
         return {
-
+            path: this.$store.state.path
         };
-    },
-    mounted() {
-    },
-    methods: {
     },
 };
 </script>
-
-<style lang="scss" scoped></style>
