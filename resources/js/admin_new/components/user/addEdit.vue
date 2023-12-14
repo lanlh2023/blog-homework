@@ -151,7 +151,7 @@ export default {
         async fetchUser() {
             try {
                 const response = await this.axios.get(`/api/user/edit/${this.id}`);
-                this.user = this.user = JSON.parse(JSON.stringify(response.data.user));
+                this.user = JSON.parse(JSON.stringify(response.data.user));
             } catch (error) {
                 switch (error.response.status) {
                     case 500: {
