@@ -6,8 +6,8 @@ import Vuikit from 'vuikit';
 import VuikitIcons from '@vuikit/icons';
 import '@vuikit/theme'
 
-import addEdit from './components/user/AddEdit.vue'
 import show from './components/user/show.vue'
+import addEdit from './components/user/addEdit.vue'
 import userList from './components/user/list.vue'
 import pagination from './components/pagination/pagination.vue'
 

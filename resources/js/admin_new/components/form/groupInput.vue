@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-3">
+    <div class="mb-3" v-show="input.hidden != true">
         <label :for="input.id" class="form-label">{{ input.label }}
         </label>
         <input
@@ -21,7 +21,7 @@
 </template>
 <script>
 export default {
-    name: 'GroupInput',
+    name: 'groupInput',
     props: {
         input: {
             type: Object,
@@ -40,8 +40,6 @@ export default {
                 this.$emit("setup-form", this.input.name, value);
             },
         },
-    },
-    mounted() {
     },
     methods: {
         handldeChange($event) {
