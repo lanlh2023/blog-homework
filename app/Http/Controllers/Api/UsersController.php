@@ -67,4 +67,68 @@ class UsersController extends Controller
             'success' => false
         ], 500);
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param string $id
+     * redirect| \Illuminate\Contracts\View\View
+     */
+    public function edit(string $id)
+    {
+        $pageTitle = 'Edit User';
+        $user = $this->userRepository->getById($id);
+
+        if ($user) {
+            return response()->json([
+                'pageTitle' => $pageTitle,
+                'user' => $user
+            ], 200);
+        }
+
+        return response()->json([
+            'message' => Lang::get('notification-message.NOT_FOUND', ['model' => "User with $id "]),
+        ], 500);
+    }
+
+     /**
+     * Update user by id
+     *
+     * @param string $id
+     * redirect
+     */
+    public function update(RegisterUserRequest $request, string $id)
+    {
+        $pageTitle = 'Edit User';
+        $data = collect($request->only(['name', 'email']));
+        // Password is optionnal
+        if (!empty($request->password)) {
+            $password = Hash::make($request->password);
+            $data = $data->merge(['password' => $password]);
+        }
+        // avatar is optionnal
+        if ($request->hasFile('avatar')) {
+            $imagePathOfAvatar = File::uploadImageToPublic($request->file('avatar'), FilePath::IMAGE_AVATAR_FOLDER);
+            if ($imagePathOfAvatar) {
+                $data = $data->merge(['avatar' => $imagePathOfAvatar]);
+            }
+        }
+
+        $user = $this->userRepository->update($id, $data->toArray());
+
+        if ($user) {
+            return response()->json([
+                'pageTitle' => $pageTitle,
+                'user' => $user,
+                'success' => true,
+                'message' => Lang::get('notification-message.UPDATE_SUCESS'),
+            ], 200);
+        }
+
+        return response()->json([
+            'pageTitle' => $pageTitle,
+            'success' => false,
+            'message' => Lang::get('notification-message.UPDATE_ERROR'),
+        ], 500);
+    }
 }
