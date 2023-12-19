@@ -17,6 +17,12 @@
             <div class="pagination-wrap d-flex justify-content-end px-4 pt-4">
                 {{ $posts->withQueryString()->links('vendor.pagination.custom') }}
             </div>
+            <a href="{{ route('admin.post.exportCsv') }}" class="ml-3 btn btn-success">Export csv <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                    fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
+                    <path
+                        d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1z" />
+                </svg>
+            </a>
         @endif
         <div class="table w-100 py-4">
             <div class="content-table col-12">
@@ -43,7 +49,8 @@
                                     <td class="align-middle"> <label>{{ $post->created_at }}</label></td>
                                     <td class="align-middle"> <label>{{ $post->updated_at }}</label></td>
                                     <td class="align-middle action-group">
-                                        <a href="{{ route('admin.post.edit', ['id' => $post->id]) }}" class="btn btn-warning">
+                                        <a href="{{ route('admin.post.edit', ['id' => $post->id]) }}"
+                                            class="btn btn-warning">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="1em"
                                                 viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                                                 <path
@@ -85,5 +92,5 @@
     <!--Container Main end-->
 @stop
 @section('scripts')
-   @include('includes.loadNotification')
+    @include('includes.loadNotification')
 @stop

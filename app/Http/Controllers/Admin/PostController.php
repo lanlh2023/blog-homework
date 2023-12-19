@@ -9,6 +9,8 @@ use App\Http\Requests\PostRequest;
 use App\Repositories\RepositoryInterface\PostRepositoryInterface;
 use Illuminate\Support\Facades\Lang;
 use App\Helpers\File as FileHelpers;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
 class PostController extends Controller
@@ -210,5 +212,48 @@ class PostController extends Controller
         return redirect()->route('admin.post.index')
             ->with('message', Lang::get('notification-message.DELETE_ERROR'))
             ->with('success', false);
+    }
+
+    /**
+     * Export csv
+     *
+     * @param App\Http\Requests\Request $request
+     * @return \Illuminate\Http\Response
+     */
+
+    public function exportCsv(Request $request)
+    {
+        $fileName = 'list_post_' . Carbon::now()->format('YmdHis') . '.csv';
+        $header = [
+            'ID',
+            'User',
+            'Post Title',
+            'Post Cotent',
+            'Created Date',
+            'Updated Date',
+        ];
+        $headerRespone = [
+            "Content-Disposition" => "attachment; filename=\"$fileName\"",
+            'Content-Type' => 'text/csv',
+        ];
+
+        $postList = $this->postRepository->getAll(null, true, ['user']);
+
+        $postListToExport = collect($postList)->map(function ($post) {
+            return [
+                'ID' => $post->id,
+                'User' => $post->user->name,
+                'Post Title' => $post->title,
+                'Post Cotent' => $post->content_title,
+                'Created Date' => $post->created_at,
+                'Updated Date' => $post->updated_at,
+            ];
+        })->toArray();
+
+        $result = FileHelpers::exportCSVFile($postListToExport, $header);
+
+        if ($result) {
+            return response($result, 200, $headerRespone);
+        }
     }
 }
