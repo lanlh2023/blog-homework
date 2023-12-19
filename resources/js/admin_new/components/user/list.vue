@@ -1,5 +1,6 @@
 <template>
     <div class="col-12 col-xl-10 col-lg-9 col-md-9 content-table-wrap">
+        <NotiFy></NotiFy>
         <div class="pagination-wrap d-flex justify-content-end px-4 pt-4">
             <pagination  v-if="users.data && users.data.length > 0" :meta="users.meta" @page-change="pageChange" />
         </div>
@@ -25,6 +26,7 @@
 
 <script>
 import { reactive } from 'vue';
+import NotiFy from '../notification/notify.vue';
 import tableUser from './table.vue';
 
 export default {
@@ -35,6 +37,7 @@ export default {
         };
     },
     components: {
+        NotiFy,
         tableUser,
     },
     props: [
@@ -42,8 +45,9 @@ export default {
     ],
     mounted() {
         this.getUserList();
-        this.setPath();
+        this.$store.commit('setPath', this.path);
     },
+    computed: {},
     methods: {
         async getUserList(page = 1) {
             try {

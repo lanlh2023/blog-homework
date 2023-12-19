@@ -1,3 +1,6 @@
+a.post-item-show:hover {
+    text-decoration: none;
+}
 .post-item {
     margin-bottom: 40px;
     padding: 24px;
