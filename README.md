@@ -14,7 +14,8 @@ Laravel(10.32.1), laravel-mix(^6.0.49), vuejs(^2.6.12),...
 - [X] Manage role basic: admin, editor
 - [X] Manage Post: CRUD, send mail to admin after save a post. 
 - [X] Manage User: CRUD, send notification to slack after create user. 
-- [X] Change CRUD user to vuejs 
+- [X] Change CRUD user to vuejs
+- [X] Search and export csv post 
 ## Images of feature
 # Home
 ![image](https://github.com/lanlh2023/blog-homework/assets/147787873/82ce1df3-d289-4c0f-bc62-d5a55a5992f9)
