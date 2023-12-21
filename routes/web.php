@@ -38,7 +38,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
         Route::get('/show/{id}', [PostController::class, 'show'])->name('show');
         Route::get('/edit/{id}', [PostController::class, 'edit'])->name('edit');
         Route::post('/update/{id}', [PostController::class, 'update'])->name('update');
-        Route::match(['get', 'post'],'/exportCsv', [PostController::class, 'exportCsv'])->name('exportCsv');
+        Route::match(['get', 'post'], '/exportCsv', [PostController::class, 'exportCsv'])->name('exportCsv');
     });
 
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
