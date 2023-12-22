@@ -11,6 +11,8 @@ use App\Repositories\RepositoryEloquent\RoleRepository;
 use App\Repositories\RepositoryEloquent\SendMailRepostiory;
 use App\Repositories\RepositoryInterface\RoleRepositoryInterface;
 use App\Repositories\RepositoryInterface\SendMailRepositoryInterface;
+use App\Repositories\RepositoryEloquent\CategoryRepository;
+use App\Repositories\RepositoryInterface\CategoryRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -34,6 +36,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             SendMailRepositoryInterface::class,
             SendMailRepostiory::class
+        );
+        $this->app->singleton(
+            CategoryRepositoryInterface::class,
+            CategoryRepository::class
         );
     }
 

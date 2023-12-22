@@ -56,4 +56,32 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
             return [];
         }
     }
+
+    /**
+     * Get all
+     * @param $limit
+     * @param $isActive
+     * @param $relationships
+     * @param $categoryName
+     * @return mixed
+     */
+    public function getByCategory($limit = 10, $isActive = true, $relationships = [], string $categoryName)
+    {
+        try {
+            $query =  $this->model->when(!empty($categoryName), function ($query) use ($categoryName){
+                return $query->byCategoryName($categoryName);
+            })->when($isActive, function ($query) {
+                return $query->active();
+            })->when(!empty($relationships), function ($query) use ($relationships) {
+                return $query->with($relationships);
+            });
+
+            return empty($limit) ? $query->get() : $query->paginate($limit);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+        }
+
+        return [];
+    }
+
 }

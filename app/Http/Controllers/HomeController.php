@@ -52,4 +52,23 @@ class HomeController extends Controller
             ->with('message', Lang::get('notification-message.NOT_FOUND', ['model' => "Blog with $id "]))
             ->with('success', false);
     }
+
+    /**
+     *
+     *
+     * @param string $name
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function loadByCategory(string $categoryName)
+    {
+        $pageTitle = 'Blog';
+        $posts = $this->postRepository->getByCategory(10, true, null, strtoupper($categoryName));
+
+        if ($posts) {
+            return view('blog.index')
+                ->with('posts', $posts)
+                ->with('pageTitle', $pageTitle)
+                ->with('categoryName', ucfirst($categoryName));
+        }
+    }
 }

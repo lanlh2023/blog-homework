@@ -21,6 +21,7 @@ class Post extends Model
         'image_title',
         'content',
         'content_title',
+        'category_id',
     ];
 
     /**
@@ -29,6 +30,14 @@ class Post extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the category that owns the post
+     */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
 
     /**
@@ -94,6 +103,21 @@ class Post extends Model
     {
         return $query->whereHas('user', function ($subquery) use ($name) {
             $subquery->where('name', 'like', '%' . $name . '%');
+        });
+    }
+
+
+    /**
+     * Scope a query by category name
+     *
+     * @param String $categoryName
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeByCategoryName($query, string $categoryName): Builder
+    {
+        return $query->whereHas('category', function ($subquery) use ($categoryName) {
+            $subquery->where('name', 'like', '%' . $categoryName . '%');
         });
     }
 }

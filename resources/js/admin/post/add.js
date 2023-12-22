@@ -90,12 +90,14 @@ $().ready(function () {
             let title = $('#title').val();
             let contentTitle = $('#content_title').val();
             let imageTitle = $('#image_title').prop('files')[0];
+            let category = $('#category').find(":selected").val();
 
             const data = new FormData();
             data.append('title', title);
             data.append('content_title', contentTitle);
             data.append('image_title', imageTitle);
             data.append('content', JSON.stringify(subContentList));
+            data.append('category', category);
 
             e.preventDefault();
             $.ajax({

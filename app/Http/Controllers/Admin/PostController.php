@@ -9,6 +9,7 @@ use App\Http\Requests\PostRequest;
 use App\Repositories\RepositoryInterface\PostRepositoryInterface;
 use Illuminate\Support\Facades\Lang;
 use App\Helpers\File as FileHelpers;
+use App\Repositories\RepositoryInterface\CategoryRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -17,13 +18,15 @@ class PostController extends Controller
 {
     const PAGINATION = 10;
     protected PostRepositoryInterface $postRepository;
+    protected CategoryRepositoryInterface $categoryRepository;
     /**
      * PostController constructor
      * @param PostRepositoryInterface $PostRepositoryInterface
      */
-    public function __construct(PostRepositoryInterface $postRepository)
+    public function __construct(PostRepositoryInterface $postRepository, CategoryRepositoryInterface $categoryRepository)
     {
         $this->postRepository = $postRepository;
+        $this->categoryRepository = $categoryRepository;
     }
     /**
      * Render screen post list
@@ -53,9 +56,11 @@ class PostController extends Controller
     public function create()
     {
         $pageTitle = 'Add Post';
+        $categories = $this->categoryRepository->getAll(null, false);
 
         return view('admin.post.add-edit')
-            ->with('pageTitle', $pageTitle);
+            ->with('pageTitle', $pageTitle)
+            ->with('categories', $categories);
     }
 
     /**
@@ -93,6 +98,7 @@ class PostController extends Controller
             ->merge([
                 'image_title' => $image,
                 'content' => json_encode($content),
+                'category_id' => $request->category,
             ])
             ->toArray();
 
@@ -116,6 +122,7 @@ class PostController extends Controller
     {
         $pageTitle = 'Post show';
         $post = $this->postRepository->getById($id);
+
         if ($post) {
             return view('admin.post.show')
                 ->with('post', $post)
@@ -137,9 +144,11 @@ class PostController extends Controller
         $pageTitle = 'Post edit';
         $post = $this->postRepository->getById($id);
         if ($post) {
+            $categories = $this->categoryRepository->getAll(null, false);
             return view('admin.post.edit')
                 ->with('post', $post)
-                ->with('pageTitle', $pageTitle);
+                ->with('pageTitle', $pageTitle)
+                ->with('categories', $categories);
         }
         return redirect()->route('admin.post.index')
             ->with('message', Lang::get('notification-message.NOT_FOUND', ['model' => "Post with $id "]))
@@ -190,6 +199,7 @@ class PostController extends Controller
 
         $dataUpdate = $dataUpdate->merge([
             'content' => json_encode($content),
+            'category_id' => $request->category,
         ])
             ->toArray();
 
