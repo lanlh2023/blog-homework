@@ -164,11 +164,13 @@ $().ready(function () {
             let title = $('#title').val();
             let contentTitle = $('#content_title').val();
             let imageTitleFile = $('#image_title').prop('files')[0];
+            let category = $('#category').find(":selected").val();
 
             const data = new FormData();
             data.append('title', title);
             data.append('content_title', contentTitle);
             data.append('content', JSON.stringify(subContentList));
+            data.append('category', category);
 
             if (imageTitleFile) {
                 data.append('image_title', imageTitleFile);

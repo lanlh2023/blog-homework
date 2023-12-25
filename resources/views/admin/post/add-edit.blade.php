@@ -51,6 +51,12 @@
                                     @endif
                                 </div>
                             </div>
+                            <select class="form-control category" name="category" id="category">
+                                @foreach ($categories as $category)
+                                    <option class="" value="{{ $category->id }}">
+                                        {{ $category->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="card-footer">
                             <button type="button" class="btn btn-success btn-add-post"> Save </button>

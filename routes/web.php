@@ -27,6 +27,7 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/register', [UserController::class, 'register'])->name('register');
 Route::post('/checkRegister', [UserController::class, 'checkRegister'])->name('checkRegister');
 Route::post('/checkDuplicateEmail', [UserController::class, 'checkDuplicateEmail'])->name('checkDuplicateEmail');
+Route::get('/{categoryName}', [HomeController::class, 'loadByCategory'])->name('loadByCategory');
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'checkRole']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
 

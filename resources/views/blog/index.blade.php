@@ -13,6 +13,7 @@
     <div class="col-12 col-xl-10 col-lg-9 col-md-9 content-table-wrap m-auto">
         <div class="container">
             <div class="post-list d-flex flex-column align-items-center">
+                <h3 class="font-weight-bold mb-5">{{ $categoryName ?? '' }}</h3>
                 @forelse ($posts as $postItem)
                     <a href="{{ route('blog.show', ['id' => $postItem->id]) }}" class="text-reset post-item-show">
                         <div class="post-item border shadow">
