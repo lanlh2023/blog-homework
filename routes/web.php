@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\RoleUserController;
 use App\Http\Controllers\HomeController;
+use App\Models\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'c
         Route::get('/show/{id}', [PostController::class, 'show'])->name('show');
         Route::get('/edit/{id}', [PostController::class, 'edit'])->name('edit');
         Route::post('/update/{id}', [PostController::class, 'update'])->name('update');
+        Route::match(['get', 'post'],'/exportCsv', [PostController::class, 'exportCsv'])->name('exportCsv');
     });
 
     Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
