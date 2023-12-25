@@ -2,9 +2,10 @@
     <div class="col-12 col-xl-10 col-lg-9 col-md-9 content-table-wrap">
         <NotiFy></NotiFy>
         <div class="pagination-wrap d-flex justify-content-end px-4 pt-4">
-            <pagination  v-if="users.data && users.data.length > 0" :meta="users.meta" @page-change="pageChange" />
+            <pagination v-if="users.data && users.data.length > 0" :meta="users.meta" @page-change="pageChange" />
         </div>
         <div class="table w-100 py-4">
+            <formSearch @search="searchByNameAndPosition"></formSearch>
             <div class="content-table col-12">
                 <table-user v-if="users.data && users.data.length > 0" :users="users.data"></table-user>
                 <div class="d-flex justify-content-center" style="font-size: 20px" v-else>
@@ -25,20 +26,24 @@
 </template>
 
 <script>
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import NotiFy from '../notification/notify.vue';
 import tableUser from './table.vue';
+import formSearch from './formSearch.vue';
 
 export default {
     name: 'userList',
     data() {
         return {
             users: reactive({}),
+            currentPage:ref(1),
+            searchConditions: reactive({}),
         };
     },
     components: {
         NotiFy,
         tableUser,
+        formSearch,
     },
     props: [
         'path',
@@ -49,19 +54,24 @@ export default {
     },
     computed: {},
     methods: {
-        async getUserList(page = 1) {
+        async getUserList() {
             try {
-                const response = await this.axios.get('/api/user?page=' + page);
+                const response = await this.axios.get('/api/user?page=' + this.currentPage, { params: this.searchConditions });
                 this.users = response.data;
             } catch (error) {
                 console.log(error);
             }
         },
         pageChange(page) {
-            this.getUserList(page);
+            this.currentPage = page;
+            this.getUserList();
         },
         setPath() {
             this.$store.commit('setPath', this.path);
+        },
+        searchByNameAndPosition(searchConditions) {
+            this.searchConditions = searchConditions;
+            this.getUserList();
         }
     },
 };

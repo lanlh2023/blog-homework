@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Resources\UserCollection;
 use App\Repositories\RepositoryInterface\UserRepositoryInterface;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Lang;
 
@@ -29,9 +30,13 @@ class UsersController extends Controller
      *
      * @return UserCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = $this->userRepository->getAll(self::PAGINATION, true, ['role']);
+        if(!empty($request->except('page'))) {
+            $users = $this->userRepository->getByConditions($request->except('page'), self::PAGINATION, true, ['role']);
+        } else {
+            $users = $this->userRepository->getAll(self::PAGINATION, true, ['role']);
+        }
         $users = $users->onEachSide($users->lastPage());
 
         return new UserCollection($users);
