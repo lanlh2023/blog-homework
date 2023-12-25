@@ -11,14 +11,42 @@
 
 @section('content')
     <!--Container Main start-->
-    <div class="col-12 col-xl-10 col-lg-9 col-md-9 content-table-wrap">
+    <div class="col-12 p-col-0 col-xl-10 col-lg-9 col-md-9 content-table-wrap">
         @include('partial.form.toast-message')
         @if (!empty($posts))
             <div class="pagination-wrap d-flex justify-content-end px-4 pt-4">
-                {{ $posts->withQueryString()->links('vendor.pagination.custom') }}
+                {{ $posts->appends(request()->all())->links('vendor.pagination.custom') }}
             </div>
-            <a href="{{ route('admin.post.exportCsv') }}" class="ml-3 btn btn-success">Export csv <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                    fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
+            <form action="" method="GET">
+                <div class="row px-4 py-2 mb-2 justify-content-between">
+                    <x-form.group-input>
+                        <x-slot:div class="col-md-12 col-lg-5 p-0">
+                        </x-slot:div>
+                        <x-slot:label>
+                            Content Search:
+                        </x-slot:label>
+                        <x-slot:input value="{{ old('content_search', $conditions['content_search'] ?? '') }}"
+                            name="content_search">
+                        </x-slot:input>
+                    </x-form.group-input>
+                    <x-form.group-input>
+                        <x-slot:div class="col-md-12 col-lg-5 p-0">
+                        </x-slot:div>
+                        <x-slot:label>
+                            User Name:
+                        </x-slot:label>
+                        <x-slot:input value="{{ old('user_name_search', $conditions['user_name_search'] ?? '') }}"
+                            name="user_name_search">
+                        </x-slot:input>
+                    </x-form.group-input>
+                </div>
+                <a class="btn btn-secondary pl-3 float-right mr-4" href="{{ route('admin.post.index') }}">Clear</a>
+                <button class="btn btn-info pl-3 float-right mr-4" type="submit" name="search"
+                    value="search">Search</button>
+            </form>
+            <a href="{{ url('admin/post/exportCsv') . '?' . http_build_query(request()->except('page')) }}"
+                class="ml-3 btn btn-success">Export csv <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                    height="16" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
                     <path
                         d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1z" />
                 </svg>

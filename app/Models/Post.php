@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -41,8 +42,9 @@ class Post extends Model
         return $query->whereNull('deleted_date');
     }
 
-    protected function getUpdatedAtAttribute($value) {
-        if(! isset($value)) {
+    protected function getUpdatedAtAttribute($value)
+    {
+        if (!isset($value)) {
             return $value;
         }
 
@@ -56,5 +58,42 @@ class Post extends Model
         }
 
         return $value;
+    }
+    /**
+     * Scope a query by content
+     *
+     * @param String $content
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSearchByContentTitle($query, string $content): Builder
+    {
+        return $query->orWhere('content_title', 'like', "%$content%");
+    }
+
+     /**
+     * Scope a query by content
+     *
+     * @param String $content
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSearchByTitle($query, string $title): Builder
+    {
+        return $query->orWhere('title', 'like', "%$title%");
+    }
+
+    /**
+     * Scope a query by name
+     *
+     * @param String $content
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSearchByUserName($query, string $name): Builder
+    {
+        return $query->whereHas('user', function ($subquery) use ($name) {
+            $subquery->where('name', 'like', '%' . $name . '%');
+        });
     }
 }

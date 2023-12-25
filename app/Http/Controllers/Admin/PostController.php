@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Response;
 
 class PostController extends Controller
 {
+    const PAGINATION = 10;
     protected PostRepositoryInterface $postRepository;
     /**
      * PostController constructor
@@ -28,15 +29,22 @@ class PostController extends Controller
      * Render screen post list
      * @return \Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
         $pageTitle = 'Post';
-        $posts = $this->postRepository->getAll();
+        if ($request->has('search')) {
+            $orderColumns = ['id' => 'desc'];
+            $posts = $this->postRepository->getByConditions($request->all(), self::PAGINATION, true, null, $orderColumns);
+        } else {
+            $posts = $this->postRepository->getAll();
+        }
+
         $posts = $posts->onEachSide($posts->lastPage());
 
         return view('admin.post.index')
             ->with('posts', $posts)
-            ->with('pageTitle', $pageTitle);
+            ->with('pageTitle', $pageTitle)
+            ->with('conditions', $request->all());
     }
 
     /**
@@ -237,8 +245,12 @@ class PostController extends Controller
             'Content-Type' => 'text/csv',
         ];
 
-        $postList = $this->postRepository->getAll(null, true, ['user']);
-
+        $postList = null;
+        if ($request->has('search')) {
+            $postList = $this->postRepository->getByConditions($request->all(), null, true, ['user']);
+        } else {
+            $postList = $this->postRepository->getAll(null, true, ['user']);
+        }
         $postListToExport = collect($postList)->map(function ($post) {
             return [
                 'ID' => $post->id,
