@@ -5,7 +5,7 @@
                 <tr>
                     <th class="align-middle" scope="col" style="width: 5%"><label>ID</label></th>
                     <th class="align-middle" scope="col" style="width: 20%"><label>User Name</label></th>
-                    <th class="align-middle" scope="col" style="width: 20%"><label>Avatatar</label></th>
+                    <th class="align-middle" scope="col" style="width: 20%"><label>Avatar</label></th>
                     <th class="align-middle" scope="col" style="width: 20%"><label>Position Name</label></th>
                     <th class="align-middle" scope="col" style="width: 10%"><label>Created Date</label></th>
                     <th class="align-middle" scope="col" style="width: 10%"><label>Updated Date</label></th>
