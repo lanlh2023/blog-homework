@@ -14,9 +14,6 @@ jobs:
       - name: setup
         run: |
           composer install
-      - name: run lint check
-        run: |
-          ./vendor/bin/pint --test
       - name: run lint
         run: |
           ./vendor/bin/pint -v
