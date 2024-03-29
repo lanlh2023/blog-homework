@@ -1,34 +1,22 @@
-name: Laravel Tests
-
-on: [push, pull_request]
-
+name: "pint"
+run-name: "check format to changed files"
+on:
+  push:
+    branches:
+      - "main"
+  workflow_dispatch:
 jobs:
-  tests:
-    name: Run PHPUnit tests
+  lint:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: '16'
-        cache: 'npm'
-        cache-dependency-path: script/validate-data/package-lock.json
-    - name: Start Sail
-      run: |
-        sudo ./vendor/bin/sail up -d
-
-    - name: Install dependencies
-      run: |
-        sudo ./vendor/bin/sail composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-
-    - name: Generate application key
-      run: |
-        sudo ./vendor/bin/sail artisan key:generate
-
-    - name: Run tests
-      run: |
-        sudo ./vendor/bin/pint test
-    - name: Run edit
-      run: |
-        sudo ./vendor/bin/pint -v
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: setup
+        run: |
+          composer install
+      - name: run lint check
+        run: |
+          ./vendor/bin/pint --test
+      - name: run lint
+        run: |
+          ./vendor/bin/pint -v
