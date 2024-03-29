@@ -3,10 +3,9 @@ run-name: "check format to changed files"
 on:
   push:
     branches:
-      - "feature/*"
+      - "main"
   pull_request:
     branches:
-      - "feature/*"
       - "main"
   workflow_dispatch:
 jobs:
