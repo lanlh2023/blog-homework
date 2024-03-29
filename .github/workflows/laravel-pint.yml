@@ -1,23 +1,43 @@
-name: Laravel Pint
-run-name: "check format to changed files"
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+name: Laravel Tests
+
+on: [push, pull_request]
+
 jobs:
-  laravel-tests:
+  tests:
+    name: Run PHPUnit tests
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_DATABASE: laravel
+          MYSQL_USER: root
+          MYSQL_PASSWORD: root
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
     steps:
-      - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update && sudo apt-get install -y curl git
+    - name: Start Sail
+      run: |
+        sudo ./vendor/bin/sail up -d
 
-      - name: Clone Sail repository
-        run: git clone https://github.com/laravel/sail.git ./.sail
-      - name: Run Laravel Pint
-        run: |
-          ./vendor/bin/sail up -d
-          ./vendor/bin/pint -v
+    - name: Install dependencies
+      run: |
+        sudo ./vendor/bin/sail composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+    - name: Generate application key
+      run: |
+        sudo ./vendor/bin/sail artisan key:generate
+
+    - name: Run tests
+      run: |
+        sudo ./vendor/bin/pint test
+    - name: Run edit
+      run: |
+        sudo ./vendor/bin/pint -v
