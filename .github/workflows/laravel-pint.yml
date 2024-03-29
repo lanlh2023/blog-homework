@@ -1,17 +1,15 @@
 name: Laravel Pint
-
+run-name: "check format to changed files"
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
 jobs:
   laravel-tests:
-
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
+      - name: Push
+        uses: actions/checkout@v2
       - name: edit pint
-      - run: ./vendor/bin/pint -v
+        run: ./vendor/bin/pint -v
