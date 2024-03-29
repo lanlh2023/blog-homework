@@ -9,7 +9,10 @@ jobs:
   laravel-tests:
     runs-on: ubuntu-latest
     steps:
-      - name: Push
-        uses: actions/checkout@v4
-      - name: edit pint
-        run: ./vendor/bin/pint -v
+      - uses: actions/checkout@v3
+      - name: Install Sail
+        uses: akondas/sail@v1.2.1
+      - name: Run Laravel Pint
+        run: |
+          ./vendor/bin/sail up -d
+          ./vendor/bin/pint
