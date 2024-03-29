@@ -27,9 +27,9 @@ jobs:
     needs: lint # Waits for the 'lint' job to finish successfully
     steps:
       - name: Merge Pull Request
-        uses: actions/merge-pull-request@v9
+        uses: pascalgn/automerge-action@v0.16.2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           merge-method: squash
           commit-message: "Merge pull request "
 
