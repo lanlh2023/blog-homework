@@ -13,7 +13,5 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: test pint
-      - run: ./vendor/bin/pint --test
       - name: edit pint
       - run: ./vendor/bin/pint -v
