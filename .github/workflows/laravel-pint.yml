@@ -17,13 +17,7 @@ jobs:
 
       - name: Clone Sail repository
         run: git clone https://github.com/laravel/sail.git ./.sail
-
-      - name: Install Sail
-        run: |
-          cd ./.sail
-          ./install.sh
-
       - name: Run Laravel Pint
         run: |
           ./vendor/bin/sail up -d
-          ./vendor/bin/pint
+          ./vendor/bin/pint -v
