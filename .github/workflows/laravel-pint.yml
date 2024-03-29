@@ -10,8 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Install Sail prerequisites
+        run: |
+          sudo apt-get update && sudo apt-get install -y docker docker-compose
       - name: Install Sail
-        uses: akondas/sail@v1.2.1
+        uses: laravel/sail@v1.2.0
       - name: Run Laravel Pint
         run: |
           ./vendor/bin/sail up -d
