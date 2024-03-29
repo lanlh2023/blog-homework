@@ -3,7 +3,14 @@ run-name: "check format to changed files"
 on:
   push:
     branches:
+      - "feature/*"
+  pull_request:
+    branches:
+      - "feature/*"
       - "main"
+  push:
+    branches:
+      - "feature/*"
   workflow_dispatch:
 jobs:
   lint:
@@ -26,4 +33,4 @@ jobs:
         name: automerge
         uses: "pascalgn/automerge-action@v0.16.2"
         env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          GITHUB_TOKEN: "${{ secrets.TOKEN }}"
