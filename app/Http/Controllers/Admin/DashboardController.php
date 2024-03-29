@@ -11,7 +11,7 @@ class DashboardController extends      Controller
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function index()
+    public function           index()
     {
         $pageTitle = 'Admin';
 
