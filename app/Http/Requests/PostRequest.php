@@ -23,7 +23,7 @@ class PostRequest extends FormRequest
     public function rules(): array
     {
         $rule['image_title'] = ['required'];
-        if (!$this->id || $this->hasFile('image_title') && $this->id) {
+        if (! $this->id || $this->hasFile('image_title') && $this->id) {
             array_push($rule['image_title'], 'mimes:png,jpeg,jpg');
         }
 
@@ -37,7 +37,7 @@ class PostRequest extends FormRequest
             ],
             'content_title' => [
                 'required',
-            ]
+            ],
         ];
     }
 

@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Helpers\User;
-use App\Rules\RegisterUserRule;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Lang;
@@ -26,9 +25,10 @@ class RegisterUserRequest extends FormRequest
     public function rules(): array
     {
         $rules = $this->getRulesForUser();
+
         return [
             'name' => [
-                'required'
+                'required',
             ],
             'email' => $rules['email'],
             'avatar' => [
@@ -38,19 +38,19 @@ class RegisterUserRequest extends FormRequest
             'password' => $rules['password'],
             'password_confirmation' => [
                 'same:password',
-            ]
+            ],
         ];
     }
 
     /**
      * Get length of value by atrribute name
      *
-     * @param string $attributeName
-     * @return integer
+     * @return int
      */
     public function getLenghtOfValueByAttributeName(string $attributeName)
     {
         $attribute = $this->get($attributeName);
+
         return strlen($attribute);
     }
 
@@ -63,12 +63,13 @@ class RegisterUserRequest extends FormRequest
     {
         $rules['email'] = 'required|email|max:255|unique:users,email';
 
-        if (!empty($this->id)) {
+        if (! empty($this->id)) {
             $rules['password'] = 'nullable';
             $rules['email'] .= ", $this->id";
         } else {
             $rules['password'] = 'required|between:8,20';
         }
+
         return $rules;
     }
 
@@ -86,7 +87,7 @@ class RegisterUserRequest extends FormRequest
             ]),
             'avatar.mimes' => Lang::get('messages.mimes', ['mimes' => 'png,jpeg,jpg']),
             'password.required' => User::getMessage('form-notification.required', [':attribute']),
-            'password.between' =>  User::getMessage('form-notification.between'),
+            'password.between' => User::getMessage('form-notification.between'),
             'password_confirmation.required' => User::getMessage('form-notification.required', [':attribute']),
             'password_confirmation.same' => User::getMessage('form-notification.same'),
         ];

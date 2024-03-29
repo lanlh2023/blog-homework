@@ -15,15 +15,14 @@ use Illuminate\Support\Facades\Lang;
 class UsersController extends Controller
 {
     const PAGINATION = 10;
+
     /**
      * UserController constructor
-     * @param UserRepositoryInterface $userRepository
      */
     public function __construct(protected UserRepositoryInterface $userRepository)
     {
         $this->userRepository = $userRepository;
     }
-
 
     /**
      * Get collection user
@@ -32,7 +31,7 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-        if(!empty($request->except('page'))) {
+        if (! empty($request->except('page'))) {
             $users = $this->userRepository->getByConditions($request->except('page'), self::PAGINATION, true, ['role']);
         } else {
             $users = $this->userRepository->getAll(self::PAGINATION, true, ['role']);
@@ -45,7 +44,6 @@ class UsersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param RegisterUserRequest $request
      * @return mixed array
      */
     public function store(RegisterUserRequest $request)
@@ -63,20 +61,19 @@ class UsersController extends Controller
         if ($this->userRepository->create($data->toArray())) {
             return response()->json([
                 'message' => Lang::get('notification-message.REGISTER_SUCESS'),
-                'success' => true
+                'success' => true,
             ], 200);
         }
 
         return response()->json([
             'message' => Lang::get('notification-message.REGISTER_ERROR'),
-            'success' => false
+            'success' => false,
         ], 500);
     }
 
-     /**
+    /**
      * Display the specified resource.
      *
-     * @param string $id
      * @return redirect| \Illuminate\Contracts\View\View
      */
     public function show(string $id)
@@ -87,17 +84,19 @@ class UsersController extends Controller
             return response()->json([
                 'user' => $user,
                 'success' => true,
-                'pageTitle'=> $pageTitle]);
-            }
+                'pageTitle' => $pageTitle]);
+        }
+
         return response()->json([
             'success' => false,
-            'pageTitle'=> $pageTitle]);
+            'pageTitle' => $pageTitle]);
     }
+
     /**
      * Show the form for editing the specified resource.
      *
-     * @param string $id
-     * redirect| \Illuminate\Contracts\View\View
+     * @param  string  $id
+     *                      redirect| \Illuminate\Contracts\View\View
      */
     public function edit(string $id)
     {
@@ -107,7 +106,7 @@ class UsersController extends Controller
         if ($user) {
             return response()->json([
                 'pageTitle' => $pageTitle,
-                'user' => $user
+                'user' => $user,
             ], 200);
         }
 
@@ -121,7 +120,6 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param string $id
      * @return redirect
      */
     public function destroy(string $id)
@@ -129,28 +127,28 @@ class UsersController extends Controller
         if ($this->userRepository->destroy($id)) {
             return response()->json([
                 'message' => Lang::get('notification-message.DELETE_SUCESS'),
-                'success' => true
+                'success' => true,
             ]);
         }
 
         return response()->json([
             'message' => Lang::get('notification-message.DELETE_ERROR'),
-            'success' => true
+            'success' => true,
         ]);
     }
 
-     /**
+    /**
      * Update user by id
      *
-     * @param string $id
-     * redirect
+     * @param  string  $id
+     *                      redirect
      */
     public function update(RegisterUserRequest $request, string $id)
     {
         $pageTitle = 'Edit User';
         $data = collect($request->only(['name', 'email']));
         // Password is optionnal
-        if (!empty($request->password)) {
+        if (! empty($request->password)) {
             $password = Hash::make($request->password);
             $data = $data->merge(['password' => $password]);
         }

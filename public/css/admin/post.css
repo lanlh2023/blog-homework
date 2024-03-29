@@ -1,0 +1,25 @@
+.content-detail-item {
+    cursor: pointer;
+}
+
+.img-sub-item {
+    max-height: 300px;
+    max-width: 200px;
+    min-height: 200px;
+    object-fit: cover;
+}
+
+#content-detail {
+    min-height: 600px;
+}
+
+.card-header img,
+#content-sub-detail img {
+    max-height: 300px;
+    min-height: 200px;
+    object-fit: cover;
+}
+
+#content-sub-detail img {
+    object-fit: contain;
+}

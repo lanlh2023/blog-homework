@@ -23,7 +23,7 @@ class RoleUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'userId'=> [
+            'userId' => [
                 'required',
             ],
             'roleId' => [

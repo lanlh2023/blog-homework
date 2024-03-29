@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Mail;
 class SendMailCron extends Command
 {
     protected SendMailRepositoryInterface $sendMailRepostiory;
+
     protected PostRepositoryInterface $postRepostiory;
+
     /**
      * The name and signature of the console command.
      *
@@ -45,7 +47,7 @@ class SendMailCron extends Command
      */
     public function handle()
     {
-        Log::info('Start ' . $this->signature . ' : ' . now());
+        Log::info('Start '.$this->signature.' : '.now());
 
         $autoListSendMail = $this->sendMailRepostiory->getAllWithKeySend(['id', 'email', 'post_id']);
 
@@ -60,10 +62,11 @@ class SendMailCron extends Command
                 Log::error($th->getMessage());
                 Log::error("Email send failed with mail $sendMailItem->email");
                 DB::rollBack();
+
                 continue;
             }
         }
 
-        Log::info('End ' . $this->signature . ' : ' . now());
+        Log::info('End '.$this->signature.' : '.now());
     }
 }

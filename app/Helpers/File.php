@@ -4,15 +4,15 @@ namespace App\Helpers;
 
 use App\Enums\FilePath;
 use Carbon\Carbon;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File as FacadesFile;
-use \Illuminate\Http\UploadedFile;
 
 class File
 {
     /**
      * Upload file base64 to public
      *
-     * @param string $file
+     * @param  string  $file
      * @return mixed|null
      */
     public static function uploadFileBase64ToPublic(string $image_base64)
@@ -23,12 +23,12 @@ class File
         }
 
         $extension = explode('/', $mimeType)[1];
-        $imageName = 'post_' . Carbon::now()->format('YmdHisu') . '.' . $extension;
+        $imageName = 'post_'.Carbon::now()->format('YmdHisu').'.'.$extension;
 
-        $path = FilePath::IMAGE_POSTS . $imageName;
+        $path = FilePath::IMAGE_POSTS.$imageName;
 
         if (FacadesFile::put(public_path($path), file_get_contents($image_base64))) {
-            return  $path;
+            return $path;
         }
 
         return false;
@@ -37,7 +37,7 @@ class File
     /**
      * Create tag image
      *
-     * @param string $fileName
+     * @param  string  $fileName
      * @return tag Image
      */
     public static function createNewTagImage($imagePath = null)
@@ -52,7 +52,6 @@ class File
     /**
      * upload image to public
      *
-     * @param UploadedFile $file
      * @return string|false
      */
     public static function uploadImageToPublic(UploadedFile $file, string $folderPublic = '')
@@ -63,11 +62,11 @@ class File
             return false;
         }
 
-        $fileName = $pathInfo['filename'] . '_' . Carbon::now()->format('YmdHisu') . '.' . $pathInfo['extension'];
+        $fileName = $pathInfo['filename'].'_'.Carbon::now()->format('YmdHisu').'.'.$pathInfo['extension'];
 
         $pathFolderPublic = $folderPublic ?? FilePath::IMAGE_POST_TITLE;
 
-        $path = $pathFolderPublic . $fileName;
+        $path = $pathFolderPublic.$fileName;
 
         if (FacadesFile::put(public_path($path), file_get_contents($file))) {
             return $path;
@@ -76,21 +75,21 @@ class File
         return false;
     }
 
-     /**
+    /**
      * Export csv file with array data and fields
      *
-     * @param array $data not null,
-     * @param array $headers not null,
-     * @return string
+     * @param  array  $data  not null,
+     * @param  array  $headers  not null,
      */
-
-     public static function exportCSVFile(array $data, array $headers) :string {
+    public static function exportCSVFile(array $data, array $headers): string
+    {
         $file = fopen('php://output', 'w');
 
         $headerCopy = array_map(function ($value) {
             if (strpos($value, ' ') === false) {
-                $value = '"' . $value . '"';
+                $value = '"'.$value.'"';
             }
+
             return $value;
         }, $headers);
 
@@ -98,15 +97,15 @@ class File
 
         fputcsv($file, $headerCopy);
 
-        foreach($data as $item) {
+        foreach ($data as $item) {
 
             $lineData = [];
 
-            for($i = 0; $i < count($headers); $i++) {
-                $value = $item[$headers[$i]] ?? "";
+            for ($i = 0; $i < count($headers); $i++) {
+                $value = $item[$headers[$i]] ?? '';
 
                 if (strpos($value, ' ') === false) {
-                    $value = '"' . $value . '"';
+                    $value = '"'.$value.'"';
                 }
 
                 $lineData[] = $value;

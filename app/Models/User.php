@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -34,6 +34,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
     /**
      * The attributes that should be cast.
      *
@@ -72,20 +73,18 @@ class User extends Authenticatable
      *
      * @param int roleId
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeSearchByRole($query, int $roleId) : Builder
+    public function scopeSearchByRole($query, int $roleId): Builder
     {
         return $query->where('role_id', $roleId);
     }
+
     /**
      * Scope user by name
      *
-     * @param string $name
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeSearchByName($query, string $name) : Builder
+    public function scopeSearchByName($query, string $name): Builder
     {
         return $query->orWhere('name', 'like', "%$name%");
     }

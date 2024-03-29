@@ -1,0 +1,19 @@
+name: Laravel Pint
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  laravel-tests:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: test pint
+      - run: ./vendor/bin/pint --test
+      - name: edit pint
+      - run: ./vendor/bin/pint -v

@@ -4,32 +4,38 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\FilePath;
 use App\Enums\TypeImage;
+use App\Helpers\File as FileHelpers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
-use App\Repositories\RepositoryInterface\PostRepositoryInterface;
-use Illuminate\Support\Facades\Lang;
-use App\Helpers\File as FileHelpers;
 use App\Repositories\RepositoryInterface\CategoryRepositoryInterface;
+use App\Repositories\RepositoryInterface\PostRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Response;
 
 class PostController extends Controller
 {
     const PAGINATION = 10;
+
     protected PostRepositoryInterface $postRepository;
+
     protected CategoryRepositoryInterface $categoryRepository;
+
     /**
      * PostController constructor
-     * @param PostRepositoryInterface $PostRepositoryInterface
+     *
+     * @param  PostRepositoryInterface  $PostRepositoryInterface
      */
     public function __construct(PostRepositoryInterface $postRepository, CategoryRepositoryInterface $categoryRepository)
     {
         $this->postRepository = $postRepository;
         $this->categoryRepository = $categoryRepository;
     }
+
     /**
      * Render screen post list
+     *
      * @return \Illuminate\Contracts\View\View
      */
     public function index(Request $request)
@@ -66,7 +72,6 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param PostRequest $request
      * @return mixed array
      */
     public function store(PostRequest $request)
@@ -80,14 +85,14 @@ class PostController extends Controller
             if ($imagePath) {
                 $data = [
                     'image' => $imagePath,
-                    'content' => $contentItem->content
+                    'content' => $contentItem->content,
                 ];
                 array_push($content, $data);
             }
         }
 
         $image = FileHelpers::uploadImageToPublic($request->file('image_title'), FilePath::IMAGE_POST_TITLE);
-        if (!$image) {
+        if (! $image) {
             return Response::json([
                 'success' => false,
                 'message' => Lang::get('notification-message.FILE_MOVE_ERROR'),
@@ -128,6 +133,7 @@ class PostController extends Controller
                 ->with('post', $post)
                 ->with('pageTitle', $pageTitle);
         }
+
         return redirect()->route('admin.post.index')
             ->with('message', Lang::get('notification-message.NOT_FOUND', ['model' => "Post with $id "]))
             ->with('success', false);
@@ -136,7 +142,6 @@ class PostController extends Controller
     /**
      * Show the form for editing the post.
      *
-     * @param string $id
      * @return redirect| \Illuminate\Contracts\View\View
      */
     public function edit(string $id)
@@ -145,11 +150,13 @@ class PostController extends Controller
         $post = $this->postRepository->getById($id);
         if ($post) {
             $categories = $this->categoryRepository->getAll(null, false);
+
             return view('admin.post.edit')
                 ->with('post', $post)
                 ->with('pageTitle', $pageTitle)
                 ->with('categories', $categories);
         }
+
         return redirect()->route('admin.post.index')
             ->with('message', Lang::get('notification-message.NOT_FOUND', ['model' => "Post with $id "]))
             ->with('success', false);
@@ -158,8 +165,7 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param string $id
-     * @param PostRequest $request
+     * @param  PostRequest  $request
      *
      * return Illuminate\Support\Facades\Response
      */
@@ -177,7 +183,7 @@ class PostController extends Controller
 
             $data = [
                 'image' => $imagePath,
-                'content' => $contentItem->content
+                'content' => $contentItem->content,
             ];
             array_push($content, $data);
         }
@@ -185,7 +191,7 @@ class PostController extends Controller
         if ($request->hasFile('image_title')) {
 
             $image = FileHelpers::uploadImageToPublic($request->file('image_title'));
-            if (!$image) {
+            if (! $image) {
                 return Response::json([
                     'success' => false,
                     'message' => Lang::get('notification-message.FILE_MOVE_ERROR'),
@@ -235,13 +241,12 @@ class PostController extends Controller
     /**
      * Export csv
      *
-     * @param App\Http\Requests\Request $request
+     * @param  App\Http\Requests\Request  $request
      * @return \Illuminate\Http\Response
      */
-
     public function exportCsv(Request $request)
     {
-        $fileName = 'list_post_' . Carbon::now()->format('YmdHis') . '.csv';
+        $fileName = 'list_post_'.Carbon::now()->format('YmdHis').'.csv';
         $header = [
             'ID',
             'User',
@@ -251,7 +256,7 @@ class PostController extends Controller
             'Updated Date',
         ];
         $headerRespone = [
-            "Content-Disposition" => "attachment; filename=\"$fileName\"",
+            'Content-Disposition' => "attachment; filename=\"$fileName\"",
             'Content-Type' => 'text/csv',
         ];
 

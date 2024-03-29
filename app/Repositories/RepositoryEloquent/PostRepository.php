@@ -18,61 +18,57 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
     {
         return Post::class;
     }
+
     /**
      * Search by conditions
-     * @param array $conditions
-     * @param $limit
-     * @param $isActive
-     * @param $relationships
-     * @param array $orderColumns
+     *
+     * @param  array  $orderColumns
      * @return mixed
      */
     public function getByConditions(array $conditions, $limit = 10, $isActive = true, $relationships = [], $orderColumns = [])
     {
         try {
             $query = $this->model;
-            if (!empty($conditions['content_search'])) {
+            if (! empty($conditions['content_search'])) {
                 $query = $query->searchByContentTitle($conditions['content_search'])
                     ->searchByTitle($conditions['content_search']);
             }
 
-            if (!empty($conditions['user_name_search'])) {
+            if (! empty($conditions['user_name_search'])) {
                 $query = $query->searchByUserName($conditions['user_name_search']);
             }
 
-            $query =  $query->when($isActive, function ($query) {
+            $query = $query->when($isActive, function ($query) {
                 return $query->active();
-            })->when(!empty($relationships), function ($query) use ($relationships) {
+            })->when(! empty($relationships), function ($query) use ($relationships) {
                 return $query->with($relationships);
             });
 
-            foreach($orderColumns as $coluums => $sortDirection) {
+            foreach ($orderColumns as $coluums => $sortDirection) {
                 $query = $query->orderBy($coluums, $sortDirection);
             }
 
             return empty($limit) ? $query->get() : $query->paginate($limit);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
+
             return [];
         }
     }
 
     /**
      * Get all
-     * @param $limit
-     * @param $isActive
-     * @param $relationships
-     * @param $categoryName
+     *
      * @return mixed
      */
-    public function getByCategory($limit = 10, $isActive = true, $relationships = [], string $categoryName)
+    public function getByCategory($limit, $isActive, $relationships, string $categoryName)
     {
         try {
-            $query =  $this->model->when(!empty($categoryName), function ($query) use ($categoryName){
+            $query = $this->model->when(! empty($categoryName), function ($query) use ($categoryName) {
                 return $query->byCategoryName($categoryName);
             })->when($isActive, function ($query) {
                 return $query->active();
-            })->when(!empty($relationships), function ($query) use ($relationships) {
+            })->when(! empty($relationships), function ($query) use ($relationships) {
                 return $query->with($relationships);
             });
 
@@ -83,5 +79,4 @@ class PostRepository extends BaseRepository implements PostRepositoryInterface
 
         return [];
     }
-
 }

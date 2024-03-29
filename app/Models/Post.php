@@ -53,7 +53,7 @@ class Post extends Model
 
     protected function getUpdatedAtAttribute($value)
     {
-        if (!isset($value)) {
+        if (! isset($value)) {
             return $value;
         }
 
@@ -62,30 +62,28 @@ class Post extends Model
 
     protected function getContentAttribute($value)
     {
-        if (!empty($value)) {
+        if (! empty($value)) {
             return json_decode($value);
         }
 
         return $value;
     }
+
     /**
      * Scope a query by content
      *
-     * @param String $content
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      */
     public function scopeSearchByContentTitle($query, string $content): Builder
     {
         return $query->orWhere('content_title', 'like', "%$content%");
     }
 
-     /**
+    /**
      * Scope a query by content
      *
-     * @param String $content
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param  string  $content
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      */
     public function scopeSearchByTitle($query, string $title): Builder
     {
@@ -95,29 +93,25 @@ class Post extends Model
     /**
      * Scope a query by name
      *
-     * @param String $content
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param  string  $content
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      */
     public function scopeSearchByUserName($query, string $name): Builder
     {
         return $query->whereHas('user', function ($subquery) use ($name) {
-            $subquery->where('name', 'like', '%' . $name . '%');
+            $subquery->where('name', 'like', '%'.$name.'%');
         });
     }
-
 
     /**
      * Scope a query by category name
      *
-     * @param String $categoryName
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      */
     public function scopeByCategoryName($query, string $categoryName): Builder
     {
         return $query->whereHas('category', function ($subquery) use ($categoryName) {
-            $subquery->where('name', 'like', '%' . $categoryName . '%');
+            $subquery->where('name', 'like', '%'.$categoryName.'%');
         });
     }
 }

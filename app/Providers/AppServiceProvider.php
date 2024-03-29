@@ -2,17 +2,17 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use App\Repositories\RepositoryInterface\UserRepositoryInterface;
-use App\Repositories\RepositoryEloquent\UserRepository;
-use App\Repositories\RepositoryInterface\PostRepositoryInterface;
+use App\Repositories\RepositoryEloquent\CategoryRepository;
 use App\Repositories\RepositoryEloquent\PostRepository;
 use App\Repositories\RepositoryEloquent\RoleRepository;
 use App\Repositories\RepositoryEloquent\SendMailRepostiory;
+use App\Repositories\RepositoryEloquent\UserRepository;
+use App\Repositories\RepositoryInterface\CategoryRepositoryInterface;
+use App\Repositories\RepositoryInterface\PostRepositoryInterface;
 use App\Repositories\RepositoryInterface\RoleRepositoryInterface;
 use App\Repositories\RepositoryInterface\SendMailRepositoryInterface;
-use App\Repositories\RepositoryEloquent\CategoryRepository;
-use App\Repositories\RepositoryInterface\CategoryRepositoryInterface;
+use App\Repositories\RepositoryInterface\UserRepositoryInterface;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {

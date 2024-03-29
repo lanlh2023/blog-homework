@@ -7,8 +7,8 @@ class User
     /**
      * Get message from message_file, params is optional
      *
-     * @param string $key
-     * @param array $paramArray
+     * @param  string  $key
+     * @param  array  $paramArray
      * @return mixed|null
      */
     public static function getMessage($key, $paramArray = [])

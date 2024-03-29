@@ -12,11 +12,11 @@ use Illuminate\Support\Facades\Response;
 class RoleUserController extends Controller
 {
     protected UserRepositoryInterface $userRepository;
+
     protected RoleRepositoryInterface $roleRepostiory;
 
     /**
      * UserController constructor
-     * @param UserRepositoryInterface $userRepository
      */
     public function __construct(UserRepositoryInterface $userRepository, RoleRepositoryInterface $roleRepostiory)
     {
@@ -45,7 +45,6 @@ class RoleUserController extends Controller
     /**
      * Set role for user
      *
-     * @param RoleUserRequest $request
      * @return mixed array
      */
     public function store(RoleUserRequest $request)

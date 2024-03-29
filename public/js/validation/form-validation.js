@@ -1,1 +1,197 @@
-$().ready((function(){$("#login-form").validate({onclick:!1,rules:{email:{required:!0,email:!0},password:{required:!0}},messages:{email:{required:function(){return jQuery.validator.messages.required("Email")},email:function(){return jQuery.validator.messages.email()}},password:{required:function(){return jQuery.validator.messages.required("Password")}}},errorPlacement:function(e,r){e.addClass("text-danger"),$("div.error-div.error-".concat($(r).attr("name"))).html(e)},onfocusin:function(e){$("div.alert").css("display","none")},onkeyup:function(e){$(e).valid()},onfocusout:function(e){$(e).valid()},submitHandler:function(e){void 0===$(e).data("is-submitted")&&($(e).data("is-submitted",!0),e.submit())}})})),(()=>{function e(r){return e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e(r)}function r(r,t,n){return(t=function(r){var t=function(r,t){if("object"!==e(r)||null===r)return r;var n=r[Symbol.toPrimitive];if(void 0!==n){var i=n.call(r,t||"default");if("object"!==e(i))return i;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===t?String:Number)(r)}(r,"string");return"symbol"===e(t)?t:String(t)}(t))in r?Object.defineProperty(r,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):r[t]=n,r}$().ready((function(){var e;$("#register-form").validate((e={onkeyup:!1,onclick:!1,rules:{name:{required:!0},email:{required:!0,email:!0,maxlength:255,remote:{url:"/checkDuplicateEmail",type:"post",data:{id:function(){return $("input#userID").val()},email:function(){return $("input[name='email']").val()},_token:function(e){function r(){return e.apply(this,arguments)}return r.toString=function(){return e.toString()},r}((function(){return _token=$("input[name='_token']").val()}))},dataFilter:function(e){return"true"!=e}}},avatar:{extension:"png|jpeg|jpg",filesize:"1MB"},password:{required:function(){var e=$("input#userID").val();return!Boolean(e)},stringValueRange:[8,20]},password_confirmation:{required:function(){var e=$("#password").val();return Boolean(e.length)},equalTo:"#password"}},messages:{name:{required:function(e,r){var t=$(r).data("content").slice(0,-1);return jQuery.validator.messages.required(t)}},email:{maxlength:function(e,r){var t=$(r).data("content").slice(0,-1),n=Array.from($(r).val()).length;return jQuery.validator.messages.max(t,e,n)},required:function(e,r){var t=$(r).data("content").slice(0,-1);return jQuery.validator.messages.required(t)},remote:function(){return jQuery.validator.messages.existsEmail()}},avatar:{filesize:function(e){return jQuery.validator.messages.filesize(e)},extension:function(e){return jQuery.validator.messages.extension("IMAGE/JPG")}},password:{required:function(e,r){var t=$(r).data("content").slice(0,-1);return jQuery.validator.messages.required(t)},stringValueRange:function(e,r){var t=$(r).data("content").slice(0,-1);return jQuery.validator.messages.stringValueRange(t,e[0],e[1])}},password_confirmation:{required:function(e,r){var t=$(r).data("content").slice(0,-1);return jQuery.validator.messages.required(t)}}},errorPlacement:function(e,r){e.addClass("text-danger"),$("div.error-div.error-".concat($(r).attr("name"))).html(e)},onfocusin:function(e){$("div.alert").css("display","none")}},r(e,"onkeyup",(function(e){$(e).valid()})),r(e,"onfocusout",(function(e){$(e).valid()})),r(e,"submitHandler",(function(e){void 0===$(e).data("is-submitted")&&($(e).data("is-submitted",!0),e.submit())})),e))}))})();
+/******/ (() => { // webpackBootstrap
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+(() => {
+/*!***********************************************!*\
+  !*** ./resources/js/validation/login-form.js ***!
+  \***********************************************/
+$().ready(function () {
+  $('#login-form').validate({
+    onclick: false,
+    rules: {
+      'email': {
+        required: true,
+        email: true
+      },
+      'password': {
+        required: true
+      }
+    },
+    messages: {
+      'email': {
+        required: function required() {
+          return jQuery.validator.messages.required('Email');
+        },
+        email: function email() {
+          return jQuery.validator.messages.email();
+        }
+      },
+      'password': {
+        required: function required() {
+          return jQuery.validator.messages.required('Password');
+        }
+      }
+    },
+    errorPlacement: function errorPlacement(error, element) {
+      error.addClass('text-danger');
+      var errorDiv = $("div.error-div.error-".concat($(element).attr('name')));
+      errorDiv.html(error);
+    },
+    onfocusin: function onfocusin(element) {
+      $('div.alert').css('display', 'none');
+    },
+    onkeyup: function onkeyup(element) {
+      $(element).valid();
+    },
+    onfocusout: function onfocusout(element) {
+      $(element).valid();
+    },
+    submitHandler: function submitHandler(form) {
+      if ($(form).data('is-submitted') === undefined) {
+        $(form).data('is-submitted', true);
+        form.submit();
+      }
+    }
+  });
+});
+})();
+
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+(() => {
+/*!**************************************************!*\
+  !*** ./resources/js/validation/register-form.js ***!
+  \**************************************************/
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+$().ready(function () {
+  $('#register-form').validate(_defineProperty(_defineProperty(_defineProperty({
+    onkeyup: false,
+    onclick: false,
+    rules: {
+      'name': {
+        required: true
+      },
+      'email': {
+        required: true,
+        email: true,
+        maxlength: 255,
+        remote: {
+          url: "/checkDuplicateEmail",
+          type: "post",
+          data: {
+            id: function id() {
+              return $("input#userID").val();
+            },
+            email: function email() {
+              return $("input[name='email']").val();
+            },
+            _token: function (_token2) {
+              function _token() {
+                return _token2.apply(this, arguments);
+              }
+              _token.toString = function () {
+                return _token2.toString();
+              };
+              return _token;
+            }(function () {
+              return _token = $("input[name='_token']").val();
+            })
+          },
+          dataFilter: function dataFilter(data) {
+            if (data == 'true') {
+              return false;
+            }
+            return true;
+          }
+        }
+      },
+      'avatar': {
+        extension: 'png|jpeg|jpg',
+        filesize: '1MB'
+      },
+      'password': {
+        required: function required() {
+          var userID = $("input#userID").val();
+          return !Boolean(userID);
+        },
+        stringValueRange: [8, 20]
+      },
+      'password_confirmation': {
+        required: function required() {
+          var passWord = $('#password').val();
+          return Boolean(passWord.length);
+        },
+        equalTo: "#password"
+      }
+    },
+    messages: {
+      'name': {
+        required: function required(param, element) {
+          var attributeName = $(element).data('content').slice(0, -1);
+          return jQuery.validator.messages.required(attributeName);
+        }
+      },
+      'email': {
+        maxlength: function maxlength(param, element) {
+          var attributeName = $(element).data('content').slice(0, -1);
+          var length = Array.from($(element).val()).length;
+          return jQuery.validator.messages.max(attributeName, param, length);
+        },
+        required: function required(param, element) {
+          var attributeName = $(element).data('content').slice(0, -1);
+          return jQuery.validator.messages.required(attributeName);
+        },
+        remote: function remote() {
+          return jQuery.validator.messages.existsEmail();
+        }
+      },
+      'avatar': {
+        filesize: function filesize(size) {
+          return jQuery.validator.messages.filesize(size);
+        },
+        extension: function extension(_extension) {
+          return jQuery.validator.messages.extension('IMAGE/JPG');
+        }
+      },
+      'password': {
+        required: function required(param, element) {
+          var attributeName = $(element).data('content').slice(0, -1);
+          return jQuery.validator.messages.required(attributeName);
+        },
+        stringValueRange: function stringValueRange(param, element) {
+          var attributeName = $(element).data('content').slice(0, -1);
+          return jQuery.validator.messages.stringValueRange(attributeName, param[0], param[1]);
+        }
+      },
+      'password_confirmation': {
+        required: function required(param, element) {
+          var attributeName = $(element).data('content').slice(0, -1);
+          return jQuery.validator.messages.required(attributeName);
+        }
+      }
+    },
+    errorPlacement: function errorPlacement(error, element) {
+      error.addClass('text-danger');
+      var errorDiv = $("div.error-div.error-".concat($(element).attr('name')));
+      errorDiv.html(error);
+    },
+    onfocusin: function onfocusin(element) {
+      $('div.alert').css('display', 'none');
+    }
+  }, "onkeyup", function onkeyup(element) {
+    $(element).valid();
+  }), "onfocusout", function onfocusout(element) {
+    $(element).valid();
+  }), "submitHandler", function submitHandler(form) {
+    if ($(form).data('is-submitted') === undefined) {
+      $(form).data('is-submitted', true);
+      form.submit();
+    }
+  }));
+});
+})();
+
+/******/ })()
+;

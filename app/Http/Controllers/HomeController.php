@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\RepositoryInterface\PostRepositoryInterface;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
 
 class HomeController extends Controller
@@ -12,14 +11,17 @@ class HomeController extends Controller
 
     /**
      * PostController constructor
-     * @param PostRepositoryInterface $PostRepositoryInterface
+     *
+     * @param  PostRepositoryInterface  $PostRepositoryInterface
      */
     public function __construct(PostRepositoryInterface $postRepository)
     {
         $this->postRepository = $postRepository;
     }
+
     /**
      * Render screen blog home
+     *
      * @return \Illuminate\Contracts\View\View
      */
     public function index()
@@ -36,7 +38,6 @@ class HomeController extends Controller
     /**
      * Render screen blog detail
      *
-     * @param string $id
      * @return \Illuminate\Contracts\View\View
      */
     public function show(string $id)
@@ -48,15 +49,14 @@ class HomeController extends Controller
                 ->with('post', $post)
                 ->with('pageTitle', $pageTitle);
         }
+
         return redirect()->route('home')
             ->with('message', Lang::get('notification-message.NOT_FOUND', ['model' => "Blog with $id "]))
             ->with('success', false);
     }
 
     /**
-     *
-     *
-     * @param string $name
+     * @param  string  $name
      * @return \Illuminate\Contracts\View\View
      */
     public function loadByCategory(string $categoryName)

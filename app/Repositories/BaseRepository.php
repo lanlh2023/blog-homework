@@ -31,7 +31,7 @@ abstract class BaseRepository
     /**
      * Soft delete entity
      *
-     * @param mixed $entity,
+     * @param  mixed  $entity,
      * @return true|false
      */
     public function delete($entity)
@@ -54,7 +54,7 @@ abstract class BaseRepository
     /**
      * Find data in databse by ID
      *
-     * @param string|int $id,
+     * @param  string|int  $id,
      * @return colection|false
      */
     public function getById($id, $isActive = null)
@@ -81,8 +81,8 @@ abstract class BaseRepository
     /**
      * Save record in table by array data
      *
-     * @param mixed $entity,
-     * @param array $data,
+     * @param  mixed  $entity,
+     * @param  array  $data,
      * @return mixed|false
      */
     public function save($entity, $data)
@@ -104,7 +104,7 @@ abstract class BaseRepository
     /**
      * Save records in table by array data
      *
-     * @param array $data
+     * @param  array  $data
      * @return string|false
      */
     public function saveMany($data)
@@ -114,17 +114,15 @@ abstract class BaseRepository
 
     /**
      * Get all
-     * @param $limit
-     * @param $isActive
-     * @param $relationships
+     *
      * @return mixed
      */
     public function getAll($limit = 10, $isActive = true, $relationships = [])
     {
         try {
-            $query =  $this->model->when($isActive, function ($query) {
+            $query = $this->model->when($isActive, function ($query) {
                 return $query->active();
-            })->when(!empty($relationships), function ($query) use ($relationships) {
+            })->when(! empty($relationships), function ($query) use ($relationships) {
                 return $query->with($relationships);
             });
 
@@ -136,11 +134,10 @@ abstract class BaseRepository
         return [];
     }
 
-
     /**
      * Create new record in table by array data
      *
-     * @param array $data,
+     * @param  array  $data,
      * @return mixed|false
      */
     public function create($data)
@@ -157,7 +154,7 @@ abstract class BaseRepository
     /**
      * Soft destroy entity by id
      *
-     * @param string $id,
+     * @param  string  $id,
      * @return true|false
      */
     public function destroy($id)
@@ -177,8 +174,8 @@ abstract class BaseRepository
 
     /**
      * Update record in table by array data
-     * @param string $id
-     * @param array $data,
+     *
+     * @param  array  $data,
      * @return mixed|false
      */
     public function update(string $id, array $data)

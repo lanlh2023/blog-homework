@@ -12,6 +12,7 @@ use Illuminate\Queue\SerializesModels;
 class SendMailForUpdatePost extends Mailable
 {
     use Queueable, SerializesModels;
+
     /**
      * Create a new message instance.
      */

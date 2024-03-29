@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 
@@ -31,11 +30,11 @@ class RegisterNotification extends Notification
 
     public function toSlack($notifiable)
     {
-        $content = "New user registration "."\n".
-            "------------------------------ "."\n".
+        $content = 'New user registration '."\n".
+            '------------------------------ '."\n".
             "UserID : $notifiable->id,"."\n".
             "User name: $notifiable->name,"."\n".
-            "URL: ".url()->previous();
+            'URL: '.url()->previous();
 
         return (new SlackMessage)
             ->content($content)

@@ -9,10 +9,11 @@ use App\Repositories\RepositoryInterface\UserRepositoryInterface;
 class PostObserver
 {
     protected UserRepositoryInterface $userRepository;
+
     protected SendMailRepositoryInterface $sendMailRepository;
+
     /**
      * UserController constructor
-     * @param UserRepositoryInterface $userRepository
      */
     public function __construct(UserRepositoryInterface $userRepository, SendMailRepositoryInterface $sendMailRepository)
     {

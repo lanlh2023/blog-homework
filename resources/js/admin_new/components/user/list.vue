@@ -70,6 +70,7 @@ export default {
             this.$store.commit('setPath', this.path);
         },
         searchByNameAndPosition(searchConditions) {
+            this.currentPage = 1;
             this.searchConditions = searchConditions;
             this.getUserList();
         }

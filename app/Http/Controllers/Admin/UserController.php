@@ -5,16 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\FilePath;
 use App\Helpers\File;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserRequest;
-use App\Repositories\RepositoryInterface\UserRepositoryInterface;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 use App\Http\Requests\RegisterUserRequest;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Response;
 use App\Notifications\RegisterNotification;
+use App\Repositories\RepositoryInterface\UserRepositoryInterface;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Response;
 
 class userController extends Controller
 {
@@ -22,7 +22,6 @@ class userController extends Controller
 
     /**
      * UserController constructor
-     * @param UserRepositoryInterface $userRepository
      */
     public function __construct(UserRepositoryInterface $userRepository)
     {
@@ -31,18 +30,20 @@ class userController extends Controller
 
     /**
      * Render screen login-form
+     *
      * @return \Illuminate\Contracts\View\View
      */
     public function login()
     {
         $pageTitle = 'Login';
+
         return view('partial.form.login-form', compact('pageTitle'));
     }
 
     /**
      * Handle check account exists or not
      *
-     * @param App\Http\Requests\UserRequest $request
+     * @param  App\Http\Requests\UserRequest  $request
      * @return mixed redirect dashboard | back
      */
     public function checkLogin(UserRequest $request)
@@ -65,7 +66,7 @@ class userController extends Controller
     /**
      * Remove the authentication information from the user's session
      *
-     * @param App\Http\Requests\UserRequest $request
+     * @param  App\Http\Requests\UserRequest  $request
      * @return redirect login
      */
     public function logout(Request $request)
@@ -81,17 +82,20 @@ class userController extends Controller
 
     /**
      * Render screen register-form
+     *
      * @return \Illuminate\Contracts\View\View
      */
     public function register()
     {
         $pageTitle = 'Register';
+
         return view('partial.form.register-form', compact('pageTitle'));
     }
 
     /**
      * Registration new user
-     * @param App\Http\Requests\RegisterUserRequest $request
+     *
+     * @param  App\Http\Requests\RegisterUserRequest  $request
      * @return mixed redirect dashboard | back
      */
     public function checkRegister(RegisterUserRequest $request)
@@ -122,18 +126,19 @@ class userController extends Controller
 
     /**
      * Check duplicate email in database
-     * @param App\Http\Requests\Request $request
-     * @return boolean true|false
+     *
+     * @param  App\Http\Requests\Request  $request
+     * @return bool true|false
      */
     public function checkDuplicateEmail(Request $request)
     {
-        if (!empty($request->id)) {
+        if (! empty($request->id)) {
             $users = $this->userRepository->getByEmail($request->email, $request->id);
         } else {
             $users = $this->userRepository->getByEmail($request->email);
         }
 
-        return Response::json(!empty($users));
+        return Response::json(! empty($users));
     }
 
     /**
@@ -154,6 +159,7 @@ class userController extends Controller
 
     /**
      * Render screen user crate
+     *
      * @return \Illuminate\Contracts\View\View
      */
     public function create()
@@ -167,7 +173,6 @@ class userController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param RegisterUserRequest $request
      * @return mixed array
      */
     public function store(RegisterUserRequest $request)
@@ -196,7 +201,6 @@ class userController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param string $id
      * @return redirect| \Illuminate\Contracts\View\View
      */
     public function show(string $id)
@@ -208,6 +212,7 @@ class userController extends Controller
                 ->with('user', $user)
                 ->with('pageTitle', $pageTitle);
         }
+
         return redirect()->route('admin.user.index')
             ->with('message', Lang::get('notification-message.NOT_FOUND', ['model' => "User with $id "]))
             ->with('success', false);
@@ -216,7 +221,6 @@ class userController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param string $id
      * @return redirect
      */
     public function destroy(string $id)
@@ -235,8 +239,8 @@ class userController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param string $id
-     * redirect| \Illuminate\Contracts\View\View
+     * @param  string  $id
+     *                      redirect| \Illuminate\Contracts\View\View
      */
     public function edit(string $id)
     {
@@ -257,15 +261,15 @@ class userController extends Controller
     /**
      * Update user by id
      *
-     * @param string $id
-     * redirect
+     * @param  string  $id
+     *                      redirect
      */
     public function update(RegisterUserRequest $request, string $id)
     {
         $pageTitle = 'Edit User';
         $data = collect($request->only(['name', 'email']));
         // Password is optionnal
-        if (!empty($request->password)) {
+        if (! empty($request->password)) {
             $password = Hash::make($request->password);
             $data = $data->merge(['password' => $password]);
         }

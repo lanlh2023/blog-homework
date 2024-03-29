@@ -1,12 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\RoleUserController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\HomeController;
-use App\Models\Role;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------

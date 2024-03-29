@@ -22,9 +22,8 @@ class SendMailRepostiory extends BaseRepository implements SendMailRepositoryInt
     /**
      * Get all with key_send
      *
-     * @param array $columns
-     * @param boolean $isKeySendZero
-     *
+     * @param  array  $columns
+     * @param  bool  $isKeySendZero
      * @return mixed
      */
     public function getAllWithKeySend($columns = ['*'], $isKeySendZero = true)

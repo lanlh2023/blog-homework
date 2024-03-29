@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SendMail extends Model
 {
     use HasFactory;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -18,7 +19,6 @@ class SendMail extends Model
         'key_send',
         'post_id',
     ];
-
 
     /**
      * Scope a query to only include key send = 0.

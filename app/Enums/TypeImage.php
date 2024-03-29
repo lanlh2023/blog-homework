@@ -9,5 +9,6 @@ use BenSampo\Enum\Enum;
 final class TypeImage extends Enum
 {
     const PUBLIC = 'PUBLIC';
+
     const BASE64 = 'BASE64';
 }
