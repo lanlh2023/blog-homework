@@ -25,6 +25,4 @@ jobs:
         filters: '.github/filters.yml'
     - name: filter-test
       if: steps.filter.outputs.any != 'true' || steps.filter.outputs.error == 'true'
-      run: |
-        echo "change"
       run: exit 1
