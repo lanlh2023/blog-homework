@@ -27,6 +27,9 @@ jobs:
 
       - name: Print changed files
         run: |
-          echo "Changed files:"
-          echo "--------------"
-          cat changed_files  # Assuming the output from previous steps is saved in a file
+          ./vendor/bin/pint -v
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4.16.0
+        with:
+          commit_message: PHP Linting (Pint)
+          skip_fetch: true
