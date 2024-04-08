@@ -21,20 +21,18 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Get changed files (push event)
+        id: check_changes
         if: github.event_name == 'push'
         run: |
-          git diff --name-only ${{ github.base_ref}} ${{ github.sha }}
-
-      - name: checkout
-        uses: actions/checkout@v4
-      - name: setup
+          if git diff --name-only ${{ github.base_ref}} ${{ github.sha }} | grep "SendMailCron"; then
+            echo "::set-output name=changed::true"
+          else
+            echo "::set-output name=changed::false"
+          fi
+      - name: Run update_mail if UpdateBodyMail changed
+        if: steps.check_changes.outputs.changed == 'true'
         run: |
-          composer install
-      - name: Print changed files
-        run: |
-          ./vendor/bin/pint -v
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4.16.0
-        with:
-          commit_message: PHP Linting (Pint)
-          skip_fetch: true
+          bin/cake update_mail
+        else:
+        run:
+          echo 'No change'
