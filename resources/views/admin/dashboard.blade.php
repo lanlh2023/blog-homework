@@ -11,7 +11,7 @@
 @section('content')
     <!--Container Main start-->
    <h1>
-    dashboard
+    dashboard Test
    </h1>
     <!--Container Main end-->
 @stop
