@@ -2,22 +2,21 @@ name: "Build"
 
 on:
   pull_request:
-    branches: # PRs to the following branches will trigger the workflow
-      - main
+    branches: [ main ]  # Use square brackets for branches list
+
 jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
-        uses: actions/checkout@v4
-      - name: checkout
+      - uses: actions/checkout@v4  # Only one checkout step needed
+      - name: Filter backend changes
+        id: filter  # Consistent naming with step name
         uses: dorny/paths-filter@v3
-        id: filter
         with:
-          filters: |
+          filters: |  # Indentation for readability
             backend:
               - 'app/Console/Commands/SendMailCron.php'
-        - name: backend tests
-        if: steps.filter.outputs.backend == 'true'
+      - name: Run backend tests (if changed)
+        if: steps.filter.outputs.backend  # Use direct access to output
         run: |
           echo 'changed'
