@@ -9,14 +9,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 20
-        cache: 'npm'
-    - run: |
-        npm install
-        npm run all
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: setup
+        run: |
+          composer install
 
   self-test:
     runs-on: ubuntu-latest
@@ -28,4 +25,10 @@ jobs:
         filters: '.github/filters.yml'
     - name: filter-test
       if: steps.filter.outputs.any != 'true' || steps.filter.outputs.error == 'true'
-      run: exit 1
+      run: |
+          ./vendor/bin/pint -v
+    - name: Commit changes
+      uses: stefanzweifel/git-auto-commit-action@v4.16.0
+      with:
+        commit_message: PHP Linting (Pint)
+        skip_fetch: true
