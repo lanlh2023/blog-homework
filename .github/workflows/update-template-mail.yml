@@ -33,6 +33,3 @@ jobs:
         if: steps.check_changes.outputs.changed == 'true'
         run: |
           bin/cake update_mail
-        if: steps.check_changes.outputs.changed == 'false'
-        run: |
-          echo "No change"
