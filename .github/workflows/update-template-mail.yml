@@ -35,7 +35,7 @@ jobs:
         run: |
           composer install
       - name: Run update_mail if UpdateBodyMail changed
-        if: steps.check_changes.outputs.changed == 'false'
+        if: steps.check_changes.outputs.changed == 'true'
         run: |
           ./vendor/bin/pint -v
       - name: Run update_mail if UpdateBodyMail No changed
