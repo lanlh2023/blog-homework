@@ -1,23 +1,31 @@
-name: Deploy
+name: "Build"
+
 on:
   push:
+    paths-ignore: [ '*.md' ]
     branches:
-      - main
+      - master
+
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Check if files changed
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: setup
         run: |
-          git diff --name-only HEAD HEAD~1 | grep -q .
+          composer install
 
-      - name: Run command A if files changed
-        if: ${{ steps.check-if-files-changed.outputs.files-changed }}
-        run: |
-          echo 'changed'
-
-      - name: Deploy to staging environment
-        if: ${{ steps.check-if-files-changed.outputs.files-changed }}
+  self-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: ./
+      id: filter
+      with:
+        filters: '.github/filters.yml'
+    - name: filter-test
+      if: steps.filter.outputs.any != 'true' || steps.filter.outputs.error == 'true'
+      run: |
+        echo "change"
+      run: exit 1
