@@ -23,7 +23,7 @@ jobs:
       - name: Get changed files (push event)
         if: github.event_name == 'push'
         run: |
-          git diff --name-only ${{ github.event.before }} ${{ github.sha }}
+          git diff --name-only ${{ github.base_ref}} ${{ github.sha }}
 
       - name: Print changed files
         run: |
