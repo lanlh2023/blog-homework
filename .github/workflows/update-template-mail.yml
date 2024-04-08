@@ -1,32 +1,31 @@
-name: Check File Changes
+name: "Build"
 
 on:
-  push: branches: [ main ]
-  pull_request:
+  push:
+    paths-ignore: [ '*.md' ]
+    branches:
+      - master
 
 jobs:
-  check-changes:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Get changed files
-        id: changed_files
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: setup
         run: |
-          if [[ ${{ github.event_name }} == 'pull_request' ]]; then
-            git diff --name-only -r HEAD^1 HEAD
-          else
-            git diff --name-only ${{ github.event.before }} ${{ github.event.after }}
-          fi
+          composer install
 
-      - name: Print changed files
-        run: echo "Changed files:" && cat << EOF
-        $(echo ${{ steps.changed_files.outputs.changed_files }})
-        EOF
-
-      - name: Show diff for changed files (optional)
-        run: |
-          for file in $(echo ${{ steps.changed_files.outputs.changed_files }}); do
-            git diff $file
-          done
-        if: ${{ github.event_name == 'pull_request' }}
+  self-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: ./
+      id: filter
+      with:
+        filters: '.github/filters.yml'
+    - name: filter-test
+      if: steps.filter.outputs.any != 'true' || steps.filter.outputs.error == 'true'
+      run: |
+        echo "change"
+      run: exit 1
