@@ -14,7 +14,7 @@ jobs:
       with:
         filters: |
           backend:
-            - 'app/**'
+            - 'app/Console/Commands/SendMailCron.php'
 
     # run only if 'backend' files were changed
     - name: backend tests
