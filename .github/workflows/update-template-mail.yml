@@ -2,7 +2,7 @@ name: "Build"
 
 on:
   push:
-    branches:  # Use square brackets for branches list
+    branches:
       - main
 jobs:
   tests:
@@ -19,6 +19,10 @@ jobs:
     # run only if 'backend' files were changed
     - name: backend tests
       if: steps.filter.outputs.backend == 'true'
-      run: |
-        echo "changed"
+      - name: setup composer
+        run: |
+          composer install
+      - name: run send mail
+        run: |
+          ./vendor/bin/pint -v
 
