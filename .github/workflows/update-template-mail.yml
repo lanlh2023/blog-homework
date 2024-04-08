@@ -1,23 +1,32 @@
-name: Deploy
+name: Check File Changes
+
 on:
-  push:
-    branches:
-      - main
+  push: branches: [ main ]
+  pull_request:
+
 jobs:
-  build-and-deploy:
+  check-changes:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Check if files changed
+      - name: Get changed files
+        id: changed_files
         run: |
-          git diff --name-only HEAD HEAD~1 | grep -q .
+          if [[ ${{ github.event_name }} == 'pull_request' ]]; then
+            git diff --name-only -r HEAD^1 HEAD
+          else
+            git diff --name-only ${{ github.event.before }} ${{ github.event.after }}
+          fi
 
-      - name: Run command A if files changed
-        if: ${{ steps.check-if-files-changed.outputs.files-changed }}
+      - name: Print changed files
+        run: echo "Changed files:" && cat << EOF
+        $(echo ${{ steps.changed_files.outputs.changed_files }})
+        EOF
+
+      - name: Show diff for changed files (optional)
         run: |
-          echo 'changed'
-
-      - name: Deploy to staging environment
-        if: ${{ steps.check-if-files-changed.outputs.files-changed }}
+          for file in $(echo ${{ steps.changed_files.outputs.changed_files }}); do
+            git diff $file
+          done
+        if: ${{ github.event_name == 'pull_request' }}
