@@ -1,0 +1,27 @@
+name: Update Mail
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  update_mail:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Check for email template changes
+      id: check_changes
+      run: |
+        if git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep "SendMailCron"; then
+          echo "::set-output name=changed::true"
+        else
+          echo "::set-output name=changed::false"
+        fi
+
+    - name: Run update_template_mail if SendMailCron changed
+      if: steps.check_changes.outputs.changed == 'true'
+      run: echo "Changed"

@@ -1,28 +1,28 @@
-name: "pint"
-run-name: "check format to changed files"
-on:
-  push:
-    branches:
-      - "feature/*"
-  pull_request:
-    branches:
-      - "feature/*"
-      - "main"
-  workflow_dispatch:
-jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v4
-      - name: setup
-        run: |
-          composer install
-      - name: run lint
-        run: |
-          ./vendor/bin/pint -v
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4.16.0
-        with:
-          commit_message: PHP Linting (Pint)
-          skip_fetch: true
+# name: "pint"
+# run-name: "check format to changed files"
+# on:
+#   push:
+#     branches:
+#       - "feature/*"
+#   pull_request:
+#     branches:
+#       - "feature/*"
+#       - "main"
+#   workflow_dispatch:
+# jobs:
+#   lint:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: checkout
+#         uses: actions/checkout@v4
+#       - name: setup
+#         run: |
+#           composer install
+#       - name: run lint
+#         run: |
+#           ./vendor/bin/pint -v
+#       - name: Commit changes
+#         uses: stefanzweifel/git-auto-commit-action@v4.16.0
+#         with:
+#           commit_message: PHP Linting (Pint)
+#           skip_fetch: true
