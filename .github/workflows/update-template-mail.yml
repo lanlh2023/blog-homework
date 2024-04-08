@@ -5,13 +5,10 @@ on:
     branches: # PRs to the following branches will trigger the workflow
       - main
 jobs:
-  build:
+  tests:
     runs-on: ubuntu-latest
-    # Required permissions
-    permissions:
-      pull-requests: read
     steps:
-    # For pull requests it's not necessary to checkout the code
+    - uses: actions/checkout@v4
     - uses: dorny/paths-filter@v3
       id: filter
       with:
