@@ -26,15 +26,18 @@ jobs:
         run: |
           if git diff --name-only ${{ github.base_ref}} ${{ github.sha }} | grep -E "SendMailCron"; then
             echo  "changed=true" >> "$GITHUB_OUTPUT"
-            echo steps.check_changes.outputs.true
           else
             echo  "changed=false" >> "$GITHUB_OUTPUT"
-            echo steps.check_changes.outputs.changed
           fi
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: setup
+        run: |
+          composer install
       - name: Run update_mail if UpdateBodyMail changed
         if: steps.check_changes.outputs.changed == 'false'
         run: |
-          bin/cake update_mail
+          ./vendor/bin/pint -v
       - name: Run update_mail if UpdateBodyMail No changed
         if: steps.check_changes.outputs.changed == 'false'
         run: |
