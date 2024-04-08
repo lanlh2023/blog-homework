@@ -18,17 +18,15 @@ jobs:
   self-test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: ./
-      id: filter
-      with:
-        filters: '.github/filters.yml'
-    - name: filter-test
-      if: steps.filter.outputs.any != 'true' || steps.filter.outputs.error == 'true'
-      run: |
-          ./vendor/bin/pint -v
-    - name: Commit changes
-      uses: stefanzweifel/git-auto-commit-action@v4.16.0
-      with:
-        commit_message: PHP Linting (Pint)
-        skip_fetch: true
+    - uses: actions/checkout@v3
+
+      - name: Get changed files (push event)
+        if: github.event_name == 'push'
+        run: |
+          git diff --name-only ${{ github.sha }}^..HEAD
+
+      - name: Print changed files
+        run: |
+          echo "Changed files:"
+          echo "--------------"
+          cat changed_files  # Assuming the output from previous steps is saved in a file
