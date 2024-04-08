@@ -19,10 +19,7 @@ jobs:
     # run only if 'backend' files were changed
     - name: backend tests
       if: steps.filter.outputs.backend == 'true'
-      - name: setup composer
         run: |
-          composer install
-      - name: run send mail
-        run: |
+          composer install &&
           ./vendor/bin/pint -v
 
