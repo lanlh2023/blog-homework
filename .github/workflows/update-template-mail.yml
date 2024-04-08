@@ -25,6 +25,11 @@ jobs:
         run: |
           git diff --name-only ${{ github.base_ref}} ${{ github.sha }}
 
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: setup
+        run: |
+          composer install
       - name: Print changed files
         run: |
           ./vendor/bin/pint -v
