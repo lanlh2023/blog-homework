@@ -66,7 +66,7 @@ class SendMailCron extends Command
                 continue;
             }
         }
-
         Log::info('End '.$this->signature.' : '.now());
+
     }
 }

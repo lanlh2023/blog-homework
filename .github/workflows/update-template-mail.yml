@@ -2,30 +2,23 @@ name: "Build"
 
 on:
   push:
-    paths-ignore: [ '*.md' ]
     branches:
-      - master
-
+      - main
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v4
-      - name: setup
-        run: |
-          composer install
-
-  self-test:
+  tests:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: ./
+    - uses: dorny/paths-filter@v3
       id: filter
       with:
-        filters: '.github/filters.yml'
-    - name: filter-test
-      if: steps.filter.outputs.any != 'true' || steps.filter.outputs.error == 'true'
+        filters: |
+          backend:
+            - 'app/Console/Commands/SendMailCron.php'
+
+    # run only if 'backend' files were changed
+    - name: backend tests
+      if: steps.filter.outputs.backend == 'true'
       run: |
-        echo "change"
-      run: exit 1
+          composer install && ./vendor/bin/pint -v
+
